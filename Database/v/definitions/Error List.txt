@@ -1,0 +1,9 @@
+//Error List for the linting tool. This file contains all the
+//Numbers for the errors so that errors can be added and removed
+//From one file. All lines that contain a // will be ignored
+// All Files assumed to be .txt files 
+// Format for errors:
+// Error Pattern using guidelines
+// ERRMSG
+// Error Strings
+01

@@ -1,0 +1,8 @@
+module select.var
+	block 
+	assignment.var.same
+	endblock
+	block
+	assignment.var.same
+	endblock
+endmodule
