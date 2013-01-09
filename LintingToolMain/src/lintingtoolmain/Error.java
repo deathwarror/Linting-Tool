@@ -21,9 +21,9 @@ public class Error {
     
     Error()
     {
-        ErrorMsg = null;
-        ErrorNumber = null;
-        ErrorDef = null;
+        ErrorMsg = "";
+        ErrorNumber = "";
+        ErrorDef = new ArrayList();
     }
     
     Error(String ErrorNum, String ErrorMsg_in, ArrayList<String> ErrorDefinition)

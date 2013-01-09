@@ -9,7 +9,7 @@ package lintingtoolmain;
  *      parsing of the code.  This file stores Variable's name, type, and any
  *      edge sensitivities.
  * 
- *      Add Function Untested.
+ *      Status: Untested.
  */
 import java.util.ArrayList;
 
@@ -23,9 +23,9 @@ public class Variable {
     //Default Constructor
     Variable()
     {
-        name = null;
-        type = null;
-        EdgeSens = null;
+        name = "";
+        type = "";
+        EdgeSens = new ArrayList();
     }
     
     //This constructor will most likely be used in conjuntion with the addEdge
@@ -100,16 +100,70 @@ public class Variable {
     {
         for(int i = 0;(i<EdgeSens.size());i++)
         {
+            //get integer value of relation between two strings
+            int compare = EdgeSens.get(i).compareTo(edge);
             //Look for the edge sensitivity is already in the list
-            if(EdgeSens.get(i).equals(edge))
+            if(compare==0)
             {
-                //return false that it was not added to the list
+                //return false for same
                 return false;
             }
+            //if it goes in the index of the current edge
+            else if(compare > 0)
+            {
+                EdgeSens.add(i,edge);
+                return true;
+            }
+           
         }
-        EdgeSens.add(edge);
-        //Return that is was added to the list.
-        return true;
-        
+        //catch false
+        return false;    
+    }
+    
+    //compares two variable objects to see if they are the same
+    public boolean compareToAll(Variable V)
+    {
+        //see if the name matches
+        if(name.equals(V.getName()))
+        {
+            //see if types are the same
+            if(type.equals(V.getType()))
+            {
+                int i;
+                //if the edge sensitivity arent the same Length
+                if(EdgeSens.size()!=V.getEdge().size())
+                {
+                    return false;
+                }
+                
+                //checks each element of edge sensitivity
+                for(i = 0;i<EdgeSens.size();i++)
+                {
+                    if(!(EdgeSens.get(i).equals(V.getEdge().get(i))))
+                    {
+                        return false;
+                    }
+                }
+                //if they are the same
+                if(i== EdgeSens.size())
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    //compares two variable's name and type for a lower level compare
+    public boolean compareTo(Variable V)
+    {
+        if(name.equals(V.getName()));
+        {
+            if(type.equals(V.getType()))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

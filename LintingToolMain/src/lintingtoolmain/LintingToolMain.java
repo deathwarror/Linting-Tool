@@ -51,7 +51,8 @@ class LintingTool{
             for(int select = 0;select > -1;)
             {
                 System.out.println("-1\t quit\n"
-                        + "1\tRun File Reader");
+                        + "1\tRun File Reader"
+                        + "2\tRun Class Tester");
                 select = sc.nextInt();
                 System.out.println(select);
                 scannerSelect(select);
@@ -64,7 +65,13 @@ class LintingTool{
         {
             FileReaderCall();
         }
+        else if (s == 2)
+        {
+            ClassTester();
+        }
     }
+    
+    //used to fully test and run the file reader class
     public void FileReaderCall()
     {
         //System.out.println("FileReaderCall");
@@ -75,6 +82,29 @@ class LintingTool{
                     + "2\tGet File Name\n"
                     + "3\tGet File Code\n"
                     + "4\tPrint File Information\n");
+            i = sc.nextInt();
+            switch(i){
+                case 1:
+                    fr.newFile();
+                    break;
+                case 2:
+                    fr.getFileName();
+                    break;
+                case 3:
+                    fr.getCode();
+                    break;
+                case 4:
+                    fr.toString();
+                    break;
+                default: break;
+            } 
+        }
+    }
+    public void ClassTester()
+    {
+        for(int i = 0; i >-1;i = i)
+        {
+            System.out.println("");
             i = sc.nextInt();
             switch(i){
                 case 1:

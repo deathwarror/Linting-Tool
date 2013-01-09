@@ -36,8 +36,8 @@ public class FileRead {
     {
       //makes the prompt window for the users file selection
       fileChooser = new JFileChooser();
-      FileName = null;
-      code = null;
+      FileName = "";
+      code = new ArrayList();
       //responsible for initial reading and variable writing.
     }
     
