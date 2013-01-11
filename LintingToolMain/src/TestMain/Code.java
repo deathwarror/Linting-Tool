@@ -1,4 +1,4 @@
-package lintingtoolmain;
+package TestMain;
 
 /** @Author: Kenneth Hassey
  *  @Date: 1/7/2013
@@ -28,17 +28,20 @@ public class Code {
     private ArrayList<Error> error;
     private String SpecificType;
     private ArrayList<Variable> variables;
+    private int LineNumber;
     
     //default constructor
     Code()
     {
         original = parsed = SpecificType = "";
+        LineNumber = 0;
         error = new ArrayList();
         variables = new ArrayList();
     }
     //constructor for most common adding time
     Code(String Orig,String Parse, String type)
     {
+        this();
         original = Orig;
         parsed = Parse;
         SpecificType = type;
@@ -50,11 +53,20 @@ public class Code {
         this(Orig,Parse,type);
         //boolean a gets rid of parse warning in compiler
         boolean a;
-        a =this.addError(e);
+        a = this.addError(e);
     }
     
+    
+    public int getLineNumber()
+    {
+        return LineNumber;
+    }
+    public void setLineNumber(int ln)
+    {
+        LineNumber = ln;
+    }
     //allows checking for duplicate errors and then adds it
-    private boolean addError(Error e)
+    public boolean addError(Error e)
     {
         //goes through the list
         for(int i = 0; i<error.size(); i++)
@@ -122,6 +134,12 @@ public class Code {
      */
     public String toString()
     {
+        //prints out variables for this code item
+        System.out.println("Variables: ");
+        for(int i = 0; i < variables.size();i++)
+        {
+            variables.get(i).toString();
+        }
         //prints out the original and parsed code next to each other in table 
         //format
         if(original!=null && parsed!=null)
@@ -145,6 +163,20 @@ public class Code {
                 System.out.println(" | "+parsed);
             }
         }
+        
+        //prints out the specific type for the code item
+        if(SpecificType != null)
+        {
+            System.out.println("Type: "+SpecificType);
+        }
+        
+        //prints out the errors for this code item.
+        System.out.println("Errors: ");
+        for(int i = 0; i< error.size();i++)
+        {
+            error.get(i).toString();
+        }
+
         return "Successful";
     }
     

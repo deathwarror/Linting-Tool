@@ -1,4 +1,4 @@
-package lintingtoolmain;
+package TestMain;
 
 /**
  * @Author:     Kenneth Hassey

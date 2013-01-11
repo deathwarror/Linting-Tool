@@ -1,4 +1,4 @@
-package lintingtoolmain;
+package TestMain;
 
 /** @Author: Kenneth Hassey
  * @Date: 1/7/2013
@@ -56,7 +56,8 @@ public class Error {
     //used for testing, Displays all information in the object
     public String toString()
     {
-      System.out.println(ErrorNumber+":\n"+ErrorMsg+"\n");
+      System.out.println("Error Number "+ ErrorNumber+":\n"
+              +"Error Message: "+ErrorMsg+"\nError Definition:");
       for(int i = 0; i< ErrorDef.size();i++)
       {
           System.out.println("\t"+ErrorDef.get(i));
@@ -89,7 +90,6 @@ public class Error {
         {
             
             ArrayList<String> edef = e.getErrorDef();
-            
             //checks to see if the definition size is the same
             if(edef.size() == ErrorDef.size())
             {

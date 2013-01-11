@@ -1,4 +1,4 @@
-package lintingtoolmain;
+package TestMain;
 
 /**
  * @Author: Kenneth Hassey
@@ -114,6 +114,11 @@ public class Variable {
                 EdgeSens.add(i,edge);
                 return true;
             }
+            else
+            {
+                EdgeSens.add(edge);
+                return true;
+            }
            
         }
         //catch false
@@ -131,7 +136,7 @@ public class Variable {
             {
                 int i;
                 //if the edge sensitivity arent the same Length
-                if(EdgeSens.size()!=V.getEdge().size())
+                if(EdgeSens.size()!= V.getEdge().size())
                 {
                     return false;
                 }

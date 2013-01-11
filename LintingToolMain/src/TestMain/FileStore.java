@@ -9,7 +9,7 @@
  *      code and errors for each line of code.
  *  Status: Untested/incomplete.
  */
-package lintingtoolmain;
+package TestMain;
 import java.util.ArrayList;
 
 
