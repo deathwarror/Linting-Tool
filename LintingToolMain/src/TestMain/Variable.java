@@ -3,13 +3,13 @@ package TestMain;
 /**
  * @Author: Kenneth Hassey
  * @Date: 1/7/2013
- * @Version 1.000
+ * @Version 1.019
  * Function:
  *      This class is designed to store all the variables that come across in
  *      parsing of the code.  This file stores Variable's name, type, and any
  *      edge sensitivities.
  * 
- *      Status: Untested.
+ *      Status: Tested/Working.
  */
 import java.util.ArrayList;
 
@@ -170,5 +170,18 @@ public class Variable {
             }
         }
         return false;
+    }
+    //returns a new duplicate of the variable object
+    public Variable copy()
+    {
+        Variable v = new Variable(name,type);
+        ArrayList<String> edl = new ArrayList();
+        //duplicates the ArrayList
+        for(int i =0; i <EdgeSens.size();i++)
+        {
+            edl.add(EdgeSens.get(i));
+        }
+        v.setEdge(edl);
+        return v;
     }
 }
