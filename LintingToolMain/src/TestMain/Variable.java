@@ -6,7 +6,7 @@ package TestMain;
  * @Version 1.000
  * Function:
  *      This class is designed to store all the variables that come across in
- *      parsing of the code.  This file stores Variable's name, type, and any
+ *      parsing of the code.  This file stores Variable's name, variableType, and any
  *      edge sensitivities.
  * 
  *      Status: Untested.
@@ -15,27 +15,37 @@ import java.util.ArrayList;
 
 
 public class Variable {
-    private String type;
-    private String name;
-    private ArrayList<String> EdgeSens;
+    protected String variableType; //i.e. reg, wire,
+    protected String variableAttribute; //i.e. Operational modes: input, output,
+    protected String name;
+    protected ArrayList<String> EdgeSens;
     
     
     //Default Constructor
     Variable()
     {
         name = "";
-        type = "";
+        variableType = "";
+        variableAttribute = "";
         EdgeSens = new ArrayList();
     }
     
     //This constructor will most likely be used in conjuntion with the addEdge
-    //function because the variable type may edge may not be registered at first
+    //function because the variable variableType may edge may not be registered at first
     Variable(String name_in, String type_in)
     {
         name = name_in;
-        type = type_in;
+        variableType = type_in;
+        variableAttribute = "";
     }
     
+    Variable(String name_in, String type_in, String attributeIn)
+    {
+        name = name_in;
+        variableType = type_in;
+        variableAttribute = attributeIn;
+    }
+
     //This constructor can be used to allow all three data slots to be filled.
     //Recommended defualt use of 
     //      Variable(String name_in, String type_in)
@@ -43,7 +53,7 @@ public class Variable {
     Variable(String name_in,String type_in, ArrayList<String> Edge)
     {
         name = name_in;
-        type = type_in;
+        variableType = type_in;
         EdgeSens = Edge;
     }
     
@@ -57,25 +67,20 @@ public class Variable {
     //returns the Type of variable
     public String getType()
     {
-        return type;
+        return variableType;
     }
-    
+
+    public String getAttribute()
+    {
+        return variableAttribute;
+    }
+
     //returns the Edge Sensitivity
     public ArrayList<String> getEdge()
     {
         return EdgeSens;
     }
     
-    //Convert all data in the object to be outputted.
-    public String toString()
-    {
-        System.out.println("Name: "+name + " \t\tType: "+type+"\nEdges");
-        for(int i = 0; i <EdgeSens.size();i++)
-        {
-            System.out.println("\t"+EdgeSens.get(i));
-        }
-        return "Successful";
-    }
     
     //Allows the name to be changed.
     public void setName(String Name_in)
@@ -83,10 +88,10 @@ public class Variable {
         name = Name_in;
     }
     
-    //Allows the type to be changed
+    //Allows the variableType to be changed
     public void setType(String Type_in)
     {
-        type = Type_in;
+        variableType = Type_in;
     }
     
     //Allows a new list of edge sensitivity to be placed
@@ -132,7 +137,7 @@ public class Variable {
         if(name.equals(V.getName()))
         {
             //see if types are the same
-            if(type.equals(V.getType()))
+            if(variableType.equals(V.getType()))
             {
                 int i;
                 //if the edge sensitivity arent the same Length
@@ -158,17 +163,41 @@ public class Variable {
         }
         return false;
     }
-    
-    //compares two variable's name and type for a lower level compare
+
+    public int compareVariable(Variable b){
+        if(this.variableAttribute.equals(b.getAttribute())){
+            if(this.variableType.equals(b.getType())){
+                return this.name.compareTo(b.getName());
+            }else{
+                return this.variableType.compareTo(b.getType());
+            }
+        }else{
+            return this.variableAttribute.compareTo(b.getAttribute());
+        }
+    }
+
+    //compares two variable's name and variableType for a lower level compare
     public boolean compareTo(Variable V)
     {
         if(name.equals(V.getName()));
         {
-            if(type.equals(V.getType()))
+            if(variableType.equals(V.getType()))
             {
                 return true;
             }
         }
         return false;
+    }
+
+    //Convert all data in the object to be outputted.
+    @Override
+    public String toString()
+    {
+//        System.out.println("Name: "+name + " \t\tType: "+variableType+"\nEdges");
+//        for(int i = 0; i <EdgeSens.size();i++)
+//        {
+//            System.out.println("\t"+EdgeSens.get(i));
+//        }
+        return variableAttribute + " " + variableType + " " + name;
     }
 }

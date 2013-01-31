@@ -38,7 +38,16 @@ class TestMenu
         TestMenu()
         {
             sc = new Scanner(System.in);
-            start();
+
+            Parser parserTest;
+            ArrayList<String> stringArray;// = new ArrayList();
+
+            FileRead fileReaderTest = new FileRead();
+            fileReaderTest.newFile();
+//            stringArray.add( fileReaderTest.toString() );
+            stringArray = fileReaderTest.getCode();
+            parserTest = new Parser(stringArray);
+//            start();
         }
         private void start()
         {

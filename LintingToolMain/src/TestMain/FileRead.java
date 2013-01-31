@@ -118,17 +118,21 @@ public class FileRead {
     //needed to print out all information about the fileReader
     //this replaced the toString Object.
 
+    @Override
     public String toString()    
     {
+        String comp="";
         //@Override
         //prints out the file name
-        System.out.println(FileName+":");
+//        System.out.println(FileName+":");
         
         //prints out all the code in the files array
         for(int i = 0;i<code.size();i++)
         {
-            System.out.println("\t"+code.get(i));
+//            System.out.println("\t"+code.get(i));
+            comp += code.get(i);
         }
-        return ("Successful");
+//        return ("Successful");
+        return comp;
     }
 }
