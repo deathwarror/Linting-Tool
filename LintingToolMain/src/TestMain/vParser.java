@@ -3,8 +3,8 @@ package TestMain;
 /**
  * @author Kenneth Hassey
  * @date: 1/15/2013
- * @Version 1.000
- * 
+ * @Version 1.001
+ *
  * Function:
  *      This is the specific parser for the Verilog file type.  This parser will
  *      setup all lines inside the code for the Verilog error searcher.
@@ -23,7 +23,7 @@ public class vParser {
     private ErrorDatabase db;
     private ArrayList<String> UnparsedCode;
     private ArrayList<Code> CodeList;
-    
+
     vParser()
     {
         fs = new FileStore();
@@ -42,7 +42,7 @@ public class vParser {
     {
         this(fileType, unp);
     }
-    
+
     //returns the finished file
     public FileStore getFileStore()
     {
@@ -52,19 +52,19 @@ public class vParser {
     {
         return db;
     }
-    
+
     //allows setting of the file type
     public void setFileType(String ft)
     {
         FileType = ft;
     }
-    
+
     //Returns the altered database for the parsed errors.
     public void setErrorDatabase(ErrorDatabase d)
     {
         db = d;
     }
-    
+
     //this contains the list of instructions that the parser must do in a
     //in a certain order.
     public void start()
@@ -72,9 +72,9 @@ public class vParser {
         fs = new FileStore();
         vParserStage1();
     }
-    
-    
-    
+
+
+
     //Stage one is responsible for the seperation of lines that have multiple
     //instructions to them.  This seperates all code into one instruction per
     //line as a per parsing so that the search functions have one line per
@@ -87,14 +87,14 @@ public class vParser {
         e.setErrorMsg("Parser Reporting multiple instruction per line. Parsed"
                 + "Instructions will be changed to multiple lines");
         db.addError(e);
-        
-        
+
+
         String currentLine;
         String StartingLine;
         String newChar;
         int added;
         CodeList = new ArrayList();
-        
+
         //read each line of the unparsed code
         for(int i = 0; i <UnparsedCode.size();i++)
         {
@@ -102,14 +102,14 @@ public class vParser {
             StartingLine = currentLine;
             newChar = " ";
             int ignoresc = 0;
-            
+
             int index = 0;
             while(!(currentLine.equals("")))
             {
                 c = new Code();
                 added = 0;
                  newChar = ""+currentLine.charAt(index);
-                 
+
                  //for loop checking.
                  if(newChar.equals(";"))
                  {
@@ -118,7 +118,7 @@ public class vParser {
                      if(StartingLine.contains(" for(")||StartingLine.contains(" for "))
                      {
                          index++;
-                         
+
                          ignoresc = 1;
                          while(ignoresc != 0)
                          {
@@ -143,9 +143,9 @@ public class vParser {
                          added = 1;
                      }
                  }
-                 
+
                  StartingLine = StartingLine+newChar;
-                 
+
                  //begin Statement Checking.
                  if(StartingLine.contains(" begin ")||StartingLine.contains(" begin\n"))
                  {
@@ -173,11 +173,11 @@ public class vParser {
                      newChar = " ";
                      index = -1;
                      String Temp = "";
-                     Code c2 = new Code(); 
+                     Code c2 = new Code();
                      //Cycle until end of string is hit or a non while space character is hit.
                      while((newChar.equals(" ")||newChar.equals("\t")||newChar.equals("\n")||newChar.equals("\\"))&&(index<currentLine.length()))
                      {
-                         
+
                          index++;
                          newChar = ""+currentLine.charAt(index);
                          Temp = Temp + newChar;
@@ -190,6 +190,12 @@ public class vParser {
                              c2.setOriginal(tempOriginal + currentLine);
                              currentLine = "";
                          }
+
+                     //Cycle until end of string is hit or a non while space character is hit.
+                     while((newChar.equals(" ")||newChar.equals("\t")||newChar.equals("\n"))&&(index<currentLine.length()))
+                     {
+                         index++;
+                         newChar = ""+currentLine.charAt(index);
                      }
                      //if the end of string was hit set it to be the stop point;
                      if(currentLine.length()<index)
@@ -199,7 +205,7 @@ public class vParser {
                      index = -1;
                  }
                  index++;
- 
+
             }
 
         }
