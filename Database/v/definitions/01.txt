@@ -6,3 +6,5 @@ module select.var
 	assignment.var.same
 	endblock
 endmodule
+ERRMSG
+The Variable is the Target of two always block making it a multiply driven signal.
