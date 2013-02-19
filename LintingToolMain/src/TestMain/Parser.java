@@ -14,11 +14,13 @@ public class Parser {
     private Block top;
     private ArrayList<Variable> variables;
     private String cleanInput;
+    private ArrayList<String> usedPieces;
     
     Parser(ArrayList<String> original){
         //initializes "Parser" class members
         top = new Block("Top",null);
         variables = new ArrayList();
+        usedPieces = new ArrayList();
 
         //Checks to see if the ArrayList is Empty, and returns an error
         if(original.isEmpty()){
@@ -50,8 +52,8 @@ public class Parser {
                 }
             }
         }
-  */      System.out.println("\nError, No module detected in code file\n");
-    }
+        System.out.println("\nError, No module detected in code file\n");
+*/    }
     private String removeComments(ArrayList<String> original){
         int i=0,numChars=0;
         String temp="";
@@ -103,6 +105,8 @@ public class Parser {
         spacer = spaceElement(",",spacer);
         spacer = spaceElement("`",spacer);
         spacer = spaceElement(";",spacer);
+        spacer = spaceElement("*",spacer);
+        spacer = spaceElement(":",spacer);
 
         System.out.println("\nEvenly Spaced\n"+spacer+"\n");
         return spacer;
@@ -132,8 +136,13 @@ public class Parser {
         }else if( piece.equals("`")){
             parseCompilerDerective(current);
         }else if( piece.equals("always")){
-            System.out.println("NO, not an always block!!\n");
-            //Always.parseAlways(current,this);
+            Always.parseAlways(current, this);
+        }else if( piece.equals("if")){
+            IfElse.parseIf(current, this);
+        }else if( piece.equals("else")){
+            IfElse.parseElse(current, this);
+        }else if( piece.equals("case")){
+            Case.parseCase(current, this);
         }
     }
     public String getNextPiece(){
@@ -144,7 +153,16 @@ public class Parser {
             piece = cleanInput.split(" ",2);
             cleanInput = piece[1];
         }
+        usedPieces.add(piece[0]);
         return piece[0];
+    }
+
+    public String getPreviousPiece(int traceBack){
+        if(usedPieces.size() > traceBack){
+            return usedPieces.get((usedPieces.size()-1) - traceBack);
+        }else{
+            return "";
+        }
     }
 
     public void parseCompilerDerective(Block current) {
@@ -166,6 +184,8 @@ public class Parser {
             return true;
         else if(piece.equals("parameter"))
             return true;
+        else if(piece.equals("localparam"))
+            return true;
         else if(piece.equals("reg"))
             return true;
         else if(piece.equals("wire"))
@@ -179,6 +199,14 @@ public class Parser {
         else if(piece.equals("end"))
             return true;
         else if(piece.equals("endmodule"))
+            return true;
+        else if(piece.equals("case"))
+            return true;
+        else if(piece.equals("endcase"))
+            return true;
+        else if(piece.equals("default"))
+            return true;
+        else if(piece.equals("forever"))
             return true;
         else{
             return false;

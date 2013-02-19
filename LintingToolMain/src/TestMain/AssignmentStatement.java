@@ -11,7 +11,19 @@ import java.util.ArrayList;
  * @author Hell-o
  */
 public class AssignmentStatement {
-    private Variable LHS;
-    private ArrayList<Variable> RHSvars;
-    private String assignmentText;
+    protected Variable LHS;
+    protected ArrayList<Variable> RHSvars;
+    protected String assignmentText;
+    AssignmentStatement(){
+        assignmentText = "";
+    }
+    AssignmentStatement(String rawText){
+        assignmentText = rawText;
+    }
+
+
+    @Override
+    public String toString(){
+        return assignmentText + ";\n";
+    }
 }

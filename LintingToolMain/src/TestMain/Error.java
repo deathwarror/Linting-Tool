@@ -2,11 +2,11 @@ package TestMain;
 
 /** @Author: Kenneth Hassey
  * @Date: 1/7/2013
- * @Version: 1.021
+ * @Version: 1.000
  * Function
  *      Contains all information about an error, Defintion, Indetification 
  *      Number, and Message Given to the user
- * Status: Tested/Working
+ * Status: Untested
  */
 
 import java.util.ArrayList;
@@ -113,23 +113,5 @@ public class Error {
         }
         //if it failed the first test return false
         return false;
-    }
-    //returns a complete copy of error
-    public Error copy()
-    {
-        Error e = new Error();
-        ArrayList<String> edn = new ArrayList();
-        //duplicates the error definition
-        for(int i = 0; i< ErrorDef.size(); i++)
-        {
-            edn.add(ErrorDef.get(i));
-        }
-        //set all values in new error to current errors values
-        e.setErrorNum(ErrorNumber);
-        e.setErrorMsg(ErrorMsg);
-        e.setErrorDef(edn);
-        
-        return e;
-  
     }
 }

@@ -1,13 +1,13 @@
 /**
  * @Author: Kenneth Hassey
  * @Date: 1/7/2013
- * @Version: 1.022
+ * @Version: 1.000
  *  Function:
  *      This File is responsible for the container of what is in the file.  This
  *      class is responsible for keeping data about the file and holds the 
  *      parsed and original code.  It is also responsible for output of parsed
  *      code and errors for each line of code.
- *  Status: Tested/Working.
+ *  Status: Untested/incomplete.
  */
 package TestMain;
 import java.util.ArrayList;
@@ -58,7 +58,7 @@ public class FileStore {
         codeLines = code;
         variables = var;
     }
-    FileStore(String Filename, String Filetype, ArrayList<Code> code, ArrayList<Variable> var)
+    FileStore(String Filename, String Filetype,ArrayList<Code> code, ArrayList<Variable> var)
     {
         this(Filename,Filetype);
         codeLines = code;
@@ -202,36 +202,5 @@ public class FileStore {
             return true;
         }
         return false;
-    }
-    public FileStore copy()
-    {
-        FileStore fs = new FileStore(FileName,FileType);
-        ArrayList<Variable> vars = new ArrayList();
-        ArrayList<String> mods = new ArrayList();
-        ArrayList<Code> code = new ArrayList();
-        //duplicates the code list
-        for(int i =0; i<codeLines.size();i++)
-        {
-            code.add(codeLines.get(i).copy());
-        }
-        //duplicates the variable list
-        for(int i =0; i<variables.size();i++)
-        {
-            vars.add(variables.get(i).copy());
-        }
-        
-        //duplicates the module list
-        for(int i =0; i<moduleList.size();i++)
-        {
-            mods.add(moduleList.get(i));
-        }
-        //sets all non set values in new object
-        fs.setLinesOfCode(linesOfCode);
-        fs.setCommentCount(commentCount);
-        fs.setCode(code);
-        fs.setVariable(vars);
-        fs.setModuleList(mods);
-        
-        return fs;
     }
 }

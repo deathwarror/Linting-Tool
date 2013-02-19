@@ -66,6 +66,18 @@ public class Block {
             }
         }
     }
+    protected Variable findVariableInParentBlockHierarchy(String varToFind){
+        int i = 0;
+        Block checker = this;
+        do{
+            for(i=0; i<checker.vars.size(); i++){
+                if(checker.vars.get(i).getName().equals(varToFind))
+                    return checker.vars.get(i);
+            }
+            checker = checker.parent;
+        }while(checker != null);
+        return null;
+    }
 
     @Override
     public String toString(){

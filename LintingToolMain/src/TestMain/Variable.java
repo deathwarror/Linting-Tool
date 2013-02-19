@@ -3,24 +3,24 @@ package TestMain;
 /**
  * @Author: Kenneth Hassey
  * @Date: 1/7/2013
- * @Version 1.019
+ * @Version 1.000
  * Function:
  *      This class is designed to store all the variables that come across in
  *      parsing of the code.  This file stores Variable's name, variableType, and any
  *      edge sensitivities.
- *
- *      Status: Tested/Working.
+ * 
+ *      Status: Untested.
  */
 import java.util.ArrayList;
 
 
 public class Variable {
-    protected String variableType; //i.e. reg, wire,
+    protected String variableType; //i.e. reg, wire, parameter, localparam
     protected String variableAttribute; //i.e. Operational modes: input, output,
     protected String name;
     protected ArrayList<String> EdgeSens;
-
-
+    protected String edgeSensitivity;
+    
     //Default Constructor
     Variable()
     {
@@ -29,7 +29,7 @@ public class Variable {
         variableAttribute = "";
         EdgeSens = new ArrayList();
     }
-
+    
     //This constructor will most likely be used in conjuntion with the addEdge
     //function because the variable variableType may edge may not be registered at first
     Variable(String name_in, String type_in)
@@ -38,7 +38,7 @@ public class Variable {
         variableType = type_in;
         variableAttribute = "";
     }
-
+    
     Variable(String name_in, String type_in, String attributeIn)
     {
         name = name_in;
@@ -47,7 +47,7 @@ public class Variable {
     }
 
     //This constructor can be used to allow all three data slots to be filled.
-    //Recommended defualt use of
+    //Recommended defualt use of 
     //      Variable(String name_in, String type_in)
     //to keep duplicate edges from showing up.
     Variable(String name_in,String type_in, ArrayList<String> Edge)
@@ -56,14 +56,14 @@ public class Variable {
         variableType = type_in;
         EdgeSens = Edge;
     }
-
+    
     //returns the Name of the Variable
     public String getName()
     {
         return name;
     }
-
-
+    
+    
     //returns the Type of variable
     public String getType()
     {
@@ -80,26 +80,26 @@ public class Variable {
     {
         return EdgeSens;
     }
-
-
+    
+    
     //Allows the name to be changed.
     public void setName(String Name_in)
     {
         name = Name_in;
     }
-
+    
     //Allows the variableType to be changed
     public void setType(String Type_in)
     {
         variableType = Type_in;
     }
-
+    
     //Allows a new list of edge sensitivity to be placed
     public void setEdge(ArrayList<String> Edge)
     {
         EdgeSens = Edge;
     }
-
+    
     //For adding an edge sensitivity
     public boolean addEdge(String edge)
     {
@@ -124,12 +124,12 @@ public class Variable {
                 EdgeSens.add(edge);
                 return true;
             }
-
+           
         }
         //catch false
-        return false;
+        return false;    
     }
-
+    
     //compares two variable objects to see if they are the same
     public boolean compareToAll(Variable V)
     {
@@ -145,7 +145,7 @@ public class Variable {
                 {
                     return false;
                 }
-
+                
                 //checks each element of edge sensitivity
                 for(i = 0;i<EdgeSens.size();i++)
                 {
@@ -189,9 +189,22 @@ public class Variable {
         return false;
     }
 
+     public String getEdgeSensitivity(){
+         return edgeSensitivity;
+     }
+     public boolean setEdgeSensitivity(String sensitive){
+         if(!edgeSensitivity.equals("")){
+             return false;
+         }else if(sensitive.equals("posedge") || sensitive.equals("negedge")){
+             edgeSensitivity = sensitive;
+             return true;
+         }
+         return false;
+     }
+
 
     //Convert all data in the object to be outputted.
-    //@Override
+    @Override
     public String toString()
     {
 //        System.out.println("Name: "+name + " \t\tType: "+variableType+"\nEdges");
@@ -200,19 +213,5 @@ public class Variable {
 //            System.out.println("\t"+EdgeSens.get(i));
 //        }
         return variableAttribute + " " + variableType + " " + name;
-
-    //returns a new duplicate of the variable object
-    public Variable copy()
-    {
-        Variable v = new Variable(name,type);
-        ArrayList<String> edl = new ArrayList();
-        //duplicates the ArrayList
-        for(int i =0; i <EdgeSens.size();i++)
-        {
-            edl.add(EdgeSens.get(i));
-        }
-        v.setEdge(edl);
-        return v;
-
     }
 }

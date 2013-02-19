@@ -335,7 +335,7 @@ public class Module extends Block{
                if(piece.equals("reg")){
                    lastType = "ERROR";
                    piece = parser.getNextPiece();
-                   module.addVariableToModulePortList(new Variable(piece,lastType,"input"));
+                   module.addVariableToModulePortList(new Reg(piece,"input"));
                }else if(piece.equals("wire")){
                    lastType = "wire";
                    piece = parser.getNextPiece();
@@ -350,9 +350,9 @@ public class Module extends Block{
                lastType = "DEFAULT_NET_TYPE";
                piece = parser.getNextPiece();
                if(piece.equals("reg")){
-                   lastType = "ERROR";
+                   lastType = "reg";
                    piece = parser.getNextPiece();
-                   module.addVariableToModulePortList(new Variable(piece,lastType,"output"));
+                   module.addVariableToModulePortList(new Reg(piece,"output"));
                }else if(piece.equals("wire")){
                    lastType = "wire";
                    piece = parser.getNextPiece();
@@ -417,7 +417,9 @@ public class Module extends Block{
                 }
             }
         }
-
+        for(i=0; i< subBlocks.size(); i++){
+            out += subBlocks.get(i).toString();
+        }
         out+="\nendmodule\n";
         return out;
     }

@@ -2,7 +2,7 @@ package TestMain;
 
 /** @Author: Kenneth Hassey
  *  @Date: 1/7/2013
- *  @Version: 1.023
+ *  @Version: 1.000
  *  Function:
  *      Contains all the code from a parsed file and is used to store in coming
  *      blocks of code for multiple depth.  This function is responsible for
@@ -16,7 +16,7 @@ package TestMain;
  *      Note: No depth added because there may be an issue comparing variables
  *            between two targets in different modules.
  * 
- *  Status: Tested/ Working
+ *  Status: Untested
  * 
  */
 
@@ -57,8 +57,14 @@ public class Code {
     }
     
     
-   
-
+    public int getLineNumber()
+    {
+        return LineNumber;
+    }
+    public void setLineNumber(int ln)
+    {
+        LineNumber = ln;
+    }
     //allows checking for duplicate errors and then adds it
     public boolean addError(Error e)
     {
@@ -120,11 +126,6 @@ public class Code {
     public ArrayList<Variable> getVariables()
     {
         return variables;
-    }
-    //Returns the Line Number
-     public int getLineNumber()
-    {
-        return LineNumber;
     }
     
     //prints out all information in the Code data structure
@@ -206,28 +207,5 @@ public class Code {
     public void setVariables(ArrayList<Variable>  V)
     {
         variables = V;
-    }
-    //allows setting of the line number
-    public void setLineNumber(int ln)
-    {
-        LineNumber = ln;
-    }
-    //returns a duplicate code object
-    public Code copy()
-    {
-        Code c = new Code(original,parsed,SpecificType);
-        c.setLineNumber(LineNumber);
-        //copies all the errors in the original
-        for(int i = 0; i< error.size();i++)
-        {
-            c.addError(error.get(i).copy());
-        }
-        
-        //copies all variables in the original
-        for(int i = 0; i<variables.size(); i++)
-        {
-            c.addVariable(variables.get(i).copy());
-        }
-        return c;
     }
 }
