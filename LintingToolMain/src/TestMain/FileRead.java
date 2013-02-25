@@ -8,7 +8,7 @@ package TestMain;
  *      This File is for reading in files given by the user.
  *      Basic Steps are prompt the user for a file and convert it to an
  *      array list of Strings of code to be parsed.
- * 
+ *
  * Status: Tested Working;
  */
 import javax.swing.JFileChooser;
@@ -20,7 +20,7 @@ import java.util.ArrayList;
  *
  */
 public class FileRead {
-    
+
     //Variables declared here for all functions to use.
     // JFileChooser is used for a gui file selection so that the user doesn't
     // need to place files in a specific location.
@@ -29,8 +29,8 @@ public class FileRead {
     private ArrayList<String> code;
     private String FileName;
     private String FileType;
-    
-    
+
+
     //this constructor is required to set up and allow the files to be read.
     FileRead()
     {
@@ -40,9 +40,10 @@ public class FileRead {
       code = new ArrayList();
       //responsible for initial reading and variable writing.
     }
-    
+
     private void getFile()
     {
+    	try{
         int returnVal=fileChooser.showOpenDialog(null);
         if(returnVal == JFileChooser.APPROVE_OPTION)
         {
@@ -51,27 +52,31 @@ public class FileRead {
         }
         FileName = file.getName();
         FileType = file.getName();
-        
+    	}
+    	catch(Exception e)
+    	{
+    		System.out.println("File Read Error");
+    	}
     }
-    
-    
-    
-    //This function is Responsible for the opening of the file and to conver it
-    //into strings for return.  This function does not return the 
+
+
+
+    //This function is Responsible for the opening of the file and to convert it
+    //into strings for return.  This function does not return the
     //String ArrayList.
     private void readFile()
     {
         code = new ArrayList();
         Scanner inputFile;
-        
+
         //
-        try 
+        try
         {
            inputFile = new Scanner(file);
-           //this block is responsible for converting the file to a arraylist 
+           //this block is responsible for converting the file to a arraylist
            //of strings.
            try{
-                while (inputFile.hasNext()) 
+                while (inputFile.hasNext())
                 {
                   //adds line of code to the Arraylist.
                   code.add(inputFile.nextLine());
@@ -85,31 +90,31 @@ public class FileRead {
                        + "Location: FileReader.readFile()");
            }
         }
-        
+
         //catch an exception most likely dealing with the input file being null
         catch(Exception e)
         {
             System.out.println("File Has Failed to Read\n"
                     + "Location: FileReader.readFile()");
         }
-        
+
     }
-    
-    //used to get a new file from the user and to convert it to a Arraylist of 
+
+    //used to get a new file from the user and to convert it to a Arraylist of
     //Strings.  Call this instead of a New Constructor.
      public void newFile()
     {
         getFile();
         readFile();
     }
-     
-     
+
+
     //Used to return the file name
     public String getFileName()
     {
         return FileName;
     }
-    
+
     //Returns all the code inside the file.
     public ArrayList<String> getCode()
     {
@@ -119,13 +124,13 @@ public class FileRead {
     //this replaced the toString Object.
 
     @Override
-    public String toString()    
+    public String toString()
     {
         String comp="";
         //@Override
         //prints out the file name
 //        System.out.println(FileName+":");
-        
+
         //prints out all the code in the files array
         for(int i = 0;i<code.size();i++)
         {

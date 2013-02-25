@@ -21,12 +21,12 @@ public class AssignmentStatement {
         LHSvars = new ArrayList();
         RHSvars = new ArrayList();
     }
-/*    AssignmentStatement(String rawText){
+    AssignmentStatement(String rawText){
         assignmentText = rawText;
         LHSvars = new ArrayList();
         RHSvars = new ArrayList();
     }
- */   AssignmentStatement(String rawText, Block blockSource){
+    AssignmentStatement(String rawText, Block blockSource){
         assignmentText = rawText;
         LHSvars = new ArrayList();
         RHSvars = new ArrayList();

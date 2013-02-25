@@ -58,7 +58,8 @@ public class IfElse extends Block {
                 temp = parser.getNextPiece();
             }
         }
-        ie.condition = new ConditionStatement(statementText);
+        ie.condition =
+                new ConditionStatement(statementText);
 
         temp = parser.getNextPiece();
         // if there will be multiple sublocks or assginments

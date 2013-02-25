@@ -77,6 +77,7 @@ public class Parser {
                     if(clean[i+1] == '/'){
                         for(;clean[i]!='\n';i++)
                             clean[i]=' ';
+                        clean[i] = ' ';
                     }else if(clean[i+1] == '*'){
                         for(; !(clean[i]=='*' && clean[i+1]=='/') && i+1<numChars; i++)
                             clean[i]=' ';
@@ -172,6 +173,10 @@ public class Parser {
             cleanInput = piece[1];
         }
         usedPieces.add(piece[0]);
+        System.out.print(piece[0]+" ");
+        if(piece[0].equals("end")){
+            piece[0]="end";
+        }
         return piece[0];
     }
 
