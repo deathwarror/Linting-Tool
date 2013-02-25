@@ -22,6 +22,7 @@ public class DatabaseLoader {
     private BufferedReader in;
     private InputStreamReader inStream;
     URL databaseURL;
+    //trys running the input streams
     DatabaseLoader()
     {
         try{
@@ -33,13 +34,14 @@ public class DatabaseLoader {
         {
             System.out.println("Database Url Streams failed to open.");
         }
-    }   
+    }
+    //trys reading in the database
     public ArrayList<ErrorDatabase> load()
     {
-        ArrayList<String> FileTypes = new ArrayList(); 
+        ArrayList<String> FileTypes = new ArrayList();
         FileTypes = getFileTypes();
         ArrayList<ErrorDatabase> ed = new ArrayList();
-        
+
         for(int i = 0; i <FileTypes.size();i++)
         {
             ed.add(getErrors(FileTypes.get(i)));
@@ -56,9 +58,9 @@ public class DatabaseLoader {
     {
         String fileLine = "";
         ArrayList<String> FileTypes = new ArrayList();
-        
+
         try{
-            URL FileTypeURL = new URL((baseURL+FileTypeURLExt));    
+            URL FileTypeURL = new URL((baseURL+FileTypeURLExt));
             inStream = new InputStreamReader(FileTypeURL.openStream());
             in = new BufferedReader(inStream);
         }
@@ -107,12 +109,12 @@ public class DatabaseLoader {
             {
                 System.out.println("Could not open error file:"+ErrorList.get(i));
             }
-            
-            
+
+
             //Tries reading the error file
             try{
                 s = in.readLine();
-                
+
                 ArrayList<String> ErrorDef = new ArrayList();
                 int errorMSGSelect= 0;
                 String ErrorMSG="";
@@ -128,7 +130,7 @@ public class DatabaseLoader {
                        {
                            ErrorDef.add(s);
                        }
-                       
+
                     }
                     else
                     {
@@ -147,8 +149,9 @@ public class DatabaseLoader {
             ed.addError(e);
         }
         return ed;
-        
+
     }
+    //responsible for loading each error file
     private ArrayList<String> getErrorList(String type)
     {
         String s = "";

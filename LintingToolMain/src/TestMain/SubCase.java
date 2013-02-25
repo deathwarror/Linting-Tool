@@ -71,9 +71,9 @@ public class SubCase extends Block{
                     sub.subCaseBlockOrder.add(new Integer(1));
                 }else {
                     for(statementText=""; !temp.equals(";"); temp = parser.getNextPiece()){
-                        statementText+=temp;
+                        statementText+=temp+" ";
                     }
-                    sub.addAssignment(new AssignmentStatement(statementText));
+                    sub.addAssignment(new AssignmentStatement(statementText,sub));
                     sub.subCaseBlockOrder.add(new Integer(0));
                 }
             }
@@ -83,9 +83,9 @@ public class SubCase extends Block{
                 sub.subCaseBlockOrder.add(new Integer(1));
             }else {
                 for(statementText=""; !temp.equals(";"); temp = parser.getNextPiece()){
-                    statementText+=temp;
+                    statementText+=temp+" ";
                 }
-                sub.addAssignment(new AssignmentStatement(statementText));
+                sub.addAssignment(new AssignmentStatement(statementText,sub));
                 sub.subCaseBlockOrder.add(new Integer(0));
             }
         }

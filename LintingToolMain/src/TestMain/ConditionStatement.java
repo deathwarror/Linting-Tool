@@ -6,9 +6,9 @@
 package TestMain;
 
 /**
- *
- * @author Hell-o
+ * This class is to be used for conditional statements used in "if" and "else if",
  */
+
 public class ConditionStatement extends AssignmentStatement {
     ConditionStatement(String rawText){
         assignmentText = rawText;

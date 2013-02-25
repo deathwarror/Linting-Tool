@@ -6,7 +6,8 @@ package TestMain;
  * Function
  *      Contains all information about an error, Defintion, Indetification 
  *      Number, and Message Given to the user
- * Status: Untested
+ * Status: UPDATE
+ * Updated by Danny on 2/24/2013
  */
 
 import java.util.ArrayList;
@@ -32,7 +33,79 @@ public class Error {
         ErrorMsg = ErrorMsg_in;
         ErrorDef = ErrorDefinition;
     }
-    
+
+    public String identifyMultiplyDrivenSignals(Parser parser){
+        String errorOutput="Error: Multiply Driven Signals were detected in the following lines of code:\n";
+        ArrayList<String> tempString;
+        ArrayList<Variable> vars = parser.getVariableList();
+        ArrayList<Block> blocks = parser.getBlockList();
+        ArrayList<AssignmentStatement> statements;
+        Variable currentVar = null;
+        Block currentBlock = null;
+        AssignmentStatement currentStatement = null;
+
+        int i=0; int j=0; int k=0;
+        for(i=0; i<vars.size(); i++, tempString = new ArrayList()){
+            currentVar = vars.get(i);
+            if(currentVar.getClass() == Reg.class){
+                for(j=0, tempString=new ArrayList(), currentBlock=blocks.get(0);
+                j<blocks.size(); j++){
+                    currentBlock=blocks.get(j);
+                    if(currentBlock.getClass() == Always.class){
+                        //Should retrive all assignment statements in the current
+                        //always block
+                        statements = currentBlock.getAllAssignmentStatements();
+                        for(k=0; k<statements.size(); k++){
+                            currentStatement=statements.get(k);
+                            //This block identifies if the (register) variable
+                            //is present in this particular always block, if so
+                            //it breaks to check for the variable's presence
+                            //in the next always block
+                            if(currentStatement.getLHSvars().indexOf( currentVar) != -1 ){
+                                tempString.add(currentVar.toString()
+                                        +" in always number "+j+": "+
+                                        currentStatement.assignmentText + ";\n");
+                                break;
+                            }
+                        }
+                        if(tempString.size() > 1){
+                            errorOutput += tempString+ "\n";
+                        }
+                    }
+                }
+            }
+
+
+            else if( currentVar.getClass() == Wire.class){
+                for(j=0, tempString=new ArrayList(); j<blocks.size(); j++, tempString=new ArrayList() ){
+                    currentBlock=blocks.get(j);
+                    if(currentBlock.getClass() == Module.class){
+                        //Should retrive all assignment statements in the module
+                        //but not in module subBlocks
+                        statements = currentBlock.getBlockAssignmentStatements();
+                        for(k=0; k<statements.size(); k++){
+                            currentStatement=statements.get(k);
+                            if(currentStatement.getLHSvars().indexOf( currentVar) != -1 ){
+                                tempString.add(currentStatement.assignmentText + ";\n");
+                            }
+                        }
+                    }
+                    if(tempString.size() > 1){
+                        errorOutput += tempString+ "\n";
+                    }
+                }
+            }
+        }
+
+
+        if(!errorOutput.equals("Error: Multiply Driven Signals were detected in the following lines of code:\n")){
+            System.out.println(errorOutput);
+            return errorOutput;
+        }else{
+            System.out.println("No Multiply Driven Signals Detected!\n");
+            return "No Multiply Driven Signals Detected!\n";
+        }
+    }
     
     //Returns the Error Number;
     public String getErrorNum()

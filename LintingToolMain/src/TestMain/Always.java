@@ -42,13 +42,13 @@ public class Always extends Block{
         if(temp.equals("begin")){
             temp = parser.getNextPiece();
             for(; !temp.equals("end"); temp=parser.getNextPiece()){
-                //will need to hangle: if, switch, assignments,
+                //will need to handle: if, switch, assignments,
                 //Syntax error if there are: nested always,
                 if(!parser.pieceIsKeyword(temp)){
                     for(; !temp.equals(";"); temp = parser.getNextPiece()){
-                        statementText += temp;
+                        statementText += temp+" ";
                     }
-                    always.addAssignment(new AssignmentStatement(statementText));
+                    always.addAssignment(new AssignmentStatement(statementText,always));
                     always.alwaysBlockOrder.add(new Integer(0));
                     statementText = "";
                 }else{//need suppprt for adding other subBlocks
@@ -60,9 +60,9 @@ public class Always extends Block{
             if(!parser.pieceIsKeyword(temp)){
                 if(!parser.pieceIsKeyword(temp)){
                     for(; !temp.equals(";"); temp = parser.getNextPiece()){
-                        statementText += temp;
+                        statementText += temp+" ";
                     }
-                    always.addAssignment(new AssignmentStatement(statementText));
+                    always.addAssignment(new AssignmentStatement(statementText,always));
                     always.alwaysBlockOrder.add(new Integer(0));
                     statementText = "";
                 }else{//need suppprt for adding other subBlocks

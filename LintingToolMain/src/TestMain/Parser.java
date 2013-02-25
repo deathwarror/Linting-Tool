@@ -12,7 +12,8 @@ import java.util.ArrayList;
  */
 public class Parser {
     private Block top;
-    private ArrayList<Variable> variables;
+    private ArrayList<Variable> variables; // A complete list of all variables
+    private ArrayList<Block> Blocks; // A complete list of all Blocks/subBlocks
     private String cleanInput;
     private ArrayList<String> usedPieces;
     
@@ -21,6 +22,7 @@ public class Parser {
         top = new Block("Top",null);
         variables = new ArrayList();
         usedPieces = new ArrayList();
+        Blocks = new ArrayList();
 
         //Checks to see if the ArrayList is Empty, and returns an error
         if(original.isEmpty()){
@@ -34,6 +36,10 @@ public class Parser {
 //        for(bob=""; !bob.equals("module"); bob=getNextPiece());
         checkForNewBlock(top,bob);
         System.out.println("\n"+top.toString());
+
+        variables.addAll(top.getAllVariables());
+        System.out.println("\nVariables: "+variables.toString());
+        Blocks.addAll(top.getAllBlocks());
 
 
         /*The outer loop traverses every string line in the file, allowing the 
@@ -107,6 +113,18 @@ public class Parser {
         spacer = spaceElement(";",spacer);
         spacer = spaceElement("*",spacer);
         spacer = spaceElement(":",spacer);
+        spacer = spaceElement("+",spacer);
+        spacer = spaceElement("-",spacer);
+        spacer = spaceElement("=",spacer);
+        spacer = spaceElement("<",spacer);
+        spacer = spaceElement(">",spacer);
+        spacer = spaceElement("/",spacer);
+        spacer = spaceElement("%",spacer);
+        spacer = spaceElement("!",spacer);
+        spacer = spaceElement("`",spacer);
+        spacer = spaceElement("^",spacer);
+        spacer = spaceElement("|",spacer);
+        spacer = spaceElement("&",spacer);
 
         System.out.println("\nEvenly Spaced\n"+spacer+"\n");
         return spacer;
@@ -211,5 +229,12 @@ public class Parser {
         else{
             return false;
         }
+    }
+
+    public ArrayList<Variable> getVariableList(){
+        return variables;
+    }
+    public ArrayList<Block> getBlockList(){
+        return Blocks;
     }
 }

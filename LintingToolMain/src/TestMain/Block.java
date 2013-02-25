@@ -79,6 +79,37 @@ public class Block {
         return null;
     }
 
+    public ArrayList<Variable> getAllVariables(){
+        ArrayList<Variable> collection = new ArrayList();
+        collection.addAll(vars);
+        for(int i=0; i<subBlocks.size(); i++){
+            collection.addAll( subBlocks.get(i).getAllVariables());
+        }
+        return collection;
+    }
+
+    public ArrayList<Block> getAllBlocks(){
+        ArrayList<Block> collection = new ArrayList();
+        collection.addAll(subBlocks);
+        for(int i=0; i<subBlocks.size(); i++){
+            collection.addAll( subBlocks.get(i).getAllBlocks());
+        }
+        return collection;
+    }
+
+    public ArrayList<AssignmentStatement> getAllAssignmentStatements(){
+        ArrayList<AssignmentStatement> collection = new ArrayList();
+        collection.addAll(assignments);
+        for(int i=0; i<subBlocks.size(); i++){
+            collection.addAll( subBlocks.get(i).getAllAssignmentStatements() );
+        }
+        return collection;
+    }
+
+    public ArrayList<AssignmentStatement> getBlockAssignmentStatements(){
+        return assignments;
+    }
+
     @Override
     public String toString(){
         int i=0;

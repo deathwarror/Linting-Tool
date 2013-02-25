@@ -69,9 +69,9 @@ public class IfElse extends Block {
                     ie.ifElseBlockOrder.add(new Integer(1));
                 }else {
                     for(statementText=""; !temp.equals(";"); temp = parser.getNextPiece()){
-                        statementText+=temp;
+                        statementText+=temp+" ";
                     }
-                    ie.addAssignment(new AssignmentStatement(statementText));
+                    ie.addAssignment(new AssignmentStatement(statementText,ie));
                     ie.ifElseBlockOrder.add(new Integer(0));
                 }
             }
@@ -81,9 +81,9 @@ public class IfElse extends Block {
                 ie.ifElseBlockOrder.add(new Integer(1));
             }else {
                 for(statementText=""; !temp.equals(";"); temp = parser.getNextPiece()){
-                    statementText+=temp;
+                    statementText+=temp+" ";
                 }
-                ie.addAssignment(new AssignmentStatement(statementText));
+                ie.addAssignment(new AssignmentStatement(statementText,ie));
                 ie.ifElseBlockOrder.add(new Integer(0));
             }
         }
@@ -108,9 +108,9 @@ public class IfElse extends Block {
                     ie.ifElseBlockOrder.add(new Integer(1));
                 }else {
                     for(statementText=""; !temp.equals(";"); temp = parser.getNextPiece()){
-                        statementText+=temp;
+                        statementText+=temp+" ";
                     }
-                    ie.addAssignment(new AssignmentStatement(statementText));
+                    ie.addAssignment(new AssignmentStatement(statementText,ie));
                     ie.ifElseBlockOrder.add(new Integer(0));
                 }
             }
@@ -123,9 +123,9 @@ public class IfElse extends Block {
                 ie.ifElseBlockOrder.add(new Integer(1));
             }else {
                 for(statementText=""; !temp.equals(";"); temp = parser.getNextPiece()){
-                    statementText+=temp;
+                    statementText+=temp+" ";
                 }
-                ie.addAssignment(new AssignmentStatement(statementText));
+                ie.addAssignment(new AssignmentStatement(statementText,ie));
                 ie.ifElseBlockOrder.add(new Integer(0));
             }
         }

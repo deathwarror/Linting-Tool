@@ -42,11 +42,16 @@ class TestMenu
             Parser parserTest;
             ArrayList<String> stringArray;// = new ArrayList();
 
+
             FileRead fileReaderTest = new FileRead();
             fileReaderTest.newFile();
 //            stringArray.add( fileReaderTest.toString() );
             stringArray = fileReaderTest.getCode();
             parserTest = new Parser(stringArray);
+
+            Error error = new Error();
+            error.identifyMultiplyDrivenSignals(parserTest);
+
 //            start();
         }
         private void start()

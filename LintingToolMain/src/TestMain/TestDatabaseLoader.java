@@ -1,13 +1,11 @@
 package TestMain;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- *
- * @author Deathwarror
+ * @Author: Kenneth Hassey
+ * @Date:2/22/2013
+ * @Version: 1.000
+ * Function:
+ *     	This Class is responsible for testing the database loader
  */
 import java.util.ArrayList;
 public class TestDatabaseLoader {
@@ -17,10 +15,9 @@ public class TestDatabaseLoader {
     {
         db = new DatabaseLoader();
     }
-    
+
     public void run()
     {
         ed = db.load();
-        
     }
 }

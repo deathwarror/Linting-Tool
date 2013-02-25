@@ -27,6 +27,7 @@ public class ErrorDatabase {
         this();
         FileType = Type;
     }
+
     ErrorDatabase(String Type, ArrayList<Error> Ed)
     {
         FileType = Type;

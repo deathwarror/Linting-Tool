@@ -16,10 +16,12 @@ public class Module extends Block{
     protected ArrayList<Variable> preParameters;
     protected ArrayList<Variable> parameters;
     protected ArrayList<Variable> portVariables;
+    String statementText;
 
     Module(){
         BlockType = "";
         BlockName = "";
+        statementText = "";
         vars = new ArrayList();
         subBlocks = new ArrayList();
         assignments = new ArrayList();
@@ -288,7 +290,12 @@ public class Module extends Block{
                 else
                     System.out.println("ERROR: variable "+temp+" is declared more than once\n");
             }
-            else if(temp.equals("assign")){}
+            else if(temp.equals("assign")){
+                for(module.statementText="", temp=""; !temp.equals(";"); temp = parser.getNextPiece()){
+                    module.statementText += temp+" ";
+                }
+                module.assignments.add(new ContinuousAssignment(module.statementText,module));
+            }
             else if(temp.equals("module")){}
             else{
                 /* If the string temp is a keyword then once it is back in the
@@ -419,6 +426,9 @@ public class Module extends Block{
         }
         for(i=0; i< subBlocks.size(); i++){
             out += subBlocks.get(i).toString();
+        }
+        for(i=0; i<assignments.size(); i++){
+            out += assignments.get(i).toString();
         }
         out+="\nendmodule\n";
         return out;
