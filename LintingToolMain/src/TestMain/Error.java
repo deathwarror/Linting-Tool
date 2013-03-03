@@ -4,7 +4,7 @@ package TestMain;
  * @Date: 1/7/2013
  * @Version: 1.000
  * Function
- *      Contains all information about an error, Defintion, Indetification 
+ *      Contains all information about an error, Defintion, Indetification
  *      Number, and Message Given to the user
  * Status: UPDATE
  * Updated by Danny on 2/24/2013
@@ -19,14 +19,14 @@ public class Error {
     private String ErrorNumber;
     //Stores the Definition of the Error.
     private ArrayList<String> ErrorDef;
-    
+
     Error()
     {
         ErrorMsg = "";
         ErrorNumber = "";
         ErrorDef = new ArrayList();
     }
-    
+
     Error(String ErrorNum, String ErrorMsg_in, ArrayList<String> ErrorDefinition)
     {
         ErrorNumber = ErrorNum;
@@ -52,7 +52,7 @@ public class Error {
                 j<blocks.size(); j++){
                     currentBlock=blocks.get(j);
                     if(currentBlock.getClass() == Always.class){
-                        //Should retrive all assignment statements in the current
+                        //Should retrieve all assignment statements in the current
                         //always block
                         statements = currentBlock.getAllAssignmentStatements();
                         for(k=0; k<statements.size(); k++){
@@ -106,25 +106,25 @@ public class Error {
             return "No Multiply Driven Signals Detected!\n";
         }
     }
-    
+
     //Returns the Error Number;
     public String getErrorNum()
     {
         return ErrorNumber;
     }
-    
+
     //Returns the ErrorMsg
     public String getErrorMsg()
     {
         return ErrorMsg;
     }
-    
+
     //Returns the Error Defintion in ArrayList Form
     public ArrayList<String> getErrorDef()
     {
         return ErrorDef;
     }
-    
+
     //@Override the default to string statement
     //used for testing, Displays all information in the object
     public String toString()
@@ -137,7 +137,7 @@ public class Error {
       }
       return "Successful";
     }
-    
+
     //allows the error number to be set afterwards
     public void setErrorNum(String e)
     {
@@ -153,32 +153,32 @@ public class Error {
     {
         ErrorMsg = msg;
     }
-    
-    
+
+
     //Used to keep duplicate errors from being placed in the array.
     public boolean compareTo(Error e)
     {
         //checks to see if the error number and msg are the same
         if((e.getErrorNum().equals(ErrorNumber))&&(e.getErrorMsg().equals(ErrorMsg)))
         {
-            
+
             ArrayList<String> edef = e.getErrorDef();
             //checks to see if the definition size is the same
             if(edef.size() == ErrorDef.size())
             {
                 int i;
-                
+
                 //used to compare each line of the definition is the same
                 for(i = 0; i< ErrorDef.size();i++)
                 {
-                    
-                  //if any line is not equal to the other return they are not 
+
+                  //if any line is not equal to the other return they are not
                   //equal
                   if(!(edef.get(i).equals(ErrorDef.get(i))))
                   {
                       return false;
                   }
-                  
+
                 }
                 //return true if all tests have been passed.
                 return true;
