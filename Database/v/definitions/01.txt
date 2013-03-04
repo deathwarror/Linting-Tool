@@ -1,5 +1,5 @@
-module select.var
-	block 
+module 
+	block
 	assignment.var.same
 	endblock
 	block

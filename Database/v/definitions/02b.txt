@@ -1,4 +1,4 @@
-module select.var
+module 
 	block
 	assignment.blocking.var.same
 	assignment.nonblocking.var.same
