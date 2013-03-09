@@ -49,7 +49,7 @@ class TestMenu
             stringArray = fileReaderTest.getCode();
             parserTest = new Parser(stringArray);
 
-            Error error = new Error();
+            ErrorSearcher error = new ErrorSearcher();
             error.identifyMultiplyDrivenSignals(parserTest);
 
 //            start();
