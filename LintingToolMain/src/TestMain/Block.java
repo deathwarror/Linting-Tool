@@ -17,6 +17,7 @@ public class Block {
     protected ArrayList<Block> subBlocks;
     protected ArrayList<AssignmentStatement> assignments;
     protected Block parent;
+    protected int LineNumber;
 
     Block(){
         BlockType = "";
@@ -24,6 +25,7 @@ public class Block {
         vars = new ArrayList();
         subBlocks = new ArrayList();
         assignments = new ArrayList();
+        LineNumber = Parser.currentLineNumber;
 
     }
     Block(String type, Block comesFrom){
@@ -33,6 +35,7 @@ public class Block {
         subBlocks = new ArrayList();
         assignments = new ArrayList();
         parent = comesFrom;
+        LineNumber = Parser.currentLineNumber;
     }
     Block(String type, Block comesFrom, String name){
         BlockType = type;
@@ -41,6 +44,7 @@ public class Block {
         subBlocks = new ArrayList();
         assignments = new ArrayList();
         parent = comesFrom;
+        LineNumber = Parser.currentLineNumber;
     }
     public void addVariable(Variable newVariable){
         vars.add(newVariable);
@@ -78,6 +82,21 @@ public class Block {
         }while(checker != null);
         return null;
     }
+    
+    protected ArrayList<Variable> findVectorNameInParentBlockHierarchy(String varToFind){
+        int i = 0;
+        Block checker = this;
+        ArrayList<Variable> vectorVars = new ArrayList();
+        do{
+            for(i=0; i<checker.vars.size(); i++){
+                if(checker.vars.get(i).getVectorName().equals(varToFind)){
+                    vectorVars.add(checker.vars.get(i));
+                }
+            }
+            checker = checker.parent;
+        }while(checker != null);
+        return vectorVars;        
+    }
 
     public ArrayList<Variable> getAllVariables(){
         ArrayList<Variable> collection = new ArrayList();
@@ -108,6 +127,10 @@ public class Block {
 
     public ArrayList<AssignmentStatement> getBlockAssignmentStatements(){
         return assignments;
+    }
+    
+    public int getBlockLineNumber(){
+        return LineNumber;
     }
 
     @Override

@@ -29,6 +29,7 @@ public class IfElse extends Block {
         ifElseBlockOrder = new ArrayList();
 
         parent = comesFrom;
+        LineNumber = Parser.currentLineNumber;
     }
 
     public static IfElse parseIf(Block current, Parser parser){
@@ -40,8 +41,11 @@ public class IfElse extends Block {
         temp = parser.getNextPiece(); // temp should get a "(" back
         //This loop parses the condition statement at the beginning of the if block
         for(ifConditionStatementBreak=1, temp=parser.getNextPiece(), 
-                statementText=""; ifConditionStatementBreak!=-1; ){
-            if(temp.equals("(")){
+                statementText=""; ifConditionStatementBreak!=-1 
+                && !temp.equals("##END_OF_MODULE_CODE"); ){
+            if(temp.equals("$#")){
+                parser.updateLineNumber();
+            }else if(temp.equals("(")){
                 ifConditionStatementBreak++;
                 statementText += temp+ " ";
                 temp = parser.getNextPiece();
@@ -59,17 +63,22 @@ public class IfElse extends Block {
             }
         }
         ie.condition =
-                new ConditionStatement(statementText);
+                new ConditionStatement(statementText, ie);
 
         temp = parser.getNextPiece();
         // if there will be multiple sublocks or assginments
+        if(temp.equals("$#")){
+            parser.updateLineNumber();
+            temp = parser.getNextPiece();
+        }
         if(temp.equals("begin")){
-            for(temp=parser.getNextPiece(); !temp.equals("end"); temp=parser.getNextPiece() ){
+            for(temp=parser.getNextPiece(); !temp.equals("end") && !temp.equals("##END_OF_MODULE_CODE"); temp=parser.getNextPiece() ){
                 if(parser.pieceIsKeyword(temp)){
                     parser.checkForNewBlock(ie, temp);
-                    ie.ifElseBlockOrder.add(new Integer(1));
+                    if(!temp.equals("$#"))
+                        ie.ifElseBlockOrder.add(new Integer(1));
                 }else {
-                    for(statementText=""; !temp.equals(";"); temp = parser.getNextPiece()){
+                    for(statementText=""; !temp.equals(";") && !temp.equals("##END_OF_MODULE_CODE"); temp = parser.getNextPiece()){
                         statementText+=temp+" ";
                     }
                     ie.addAssignment(new AssignmentStatement(statementText,ie));
@@ -79,9 +88,10 @@ public class IfElse extends Block {
         }else {
             if(parser.pieceIsKeyword(temp)){
                 parser.checkForNewBlock(ie, temp);
-                ie.ifElseBlockOrder.add(new Integer(1));
+                if(!temp.equals("$#"))
+                    ie.ifElseBlockOrder.add(new Integer(1));
             }else {
-                for(statementText=""; !temp.equals(";"); temp = parser.getNextPiece()){
+                for(statementText=""; !temp.equals(";") && !temp.equals("##END_OF_MODULE_CODE"); temp = parser.getNextPiece()){
                     statementText+=temp+" ";
                 }
                 ie.addAssignment(new AssignmentStatement(statementText,ie));
@@ -94,6 +104,10 @@ public class IfElse extends Block {
     public static String parseElse(Block current, Parser parser){
         String temp = parser.getNextPiece();
         String statementText = "";
+        if(temp.equals("$#")){
+            parser.updateLineNumber();
+            temp = parser.getNextPiece();
+        }
         //if this "else" statement is really and "else if" then parse it like
         // an "if" statment, othewise parse it as an "else"
         if(temp.equals("if")){
@@ -103,12 +117,13 @@ public class IfElse extends Block {
             IfElse ie = new IfElse(current, "");
             current.addSubBlock(ie);
             ie.setIfElseType(2);
-            for(temp=parser.getNextPiece(); !temp.equals("end"); temp=parser.getNextPiece() ){
+            for(temp=parser.getNextPiece(); !temp.equals("end") && !temp.equals("##END_OF_MODULE_CODE"); temp=parser.getNextPiece() ){
                 if(parser.pieceIsKeyword(temp)){
                     parser.checkForNewBlock(ie, temp);
-                    ie.ifElseBlockOrder.add(new Integer(1));
+                    if(!temp.equals("$#"))
+                        ie.ifElseBlockOrder.add(new Integer(1));
                 }else {
-                    for(statementText=""; !temp.equals(";"); temp = parser.getNextPiece()){
+                    for(statementText=""; !temp.equals(";") && !temp.equals("##END_OF_MODULE_CODE"); temp = parser.getNextPiece()){
                         statementText+=temp+" ";
                     }
                     ie.addAssignment(new AssignmentStatement(statementText,ie));
@@ -121,9 +136,10 @@ public class IfElse extends Block {
             ie.setIfElseType(2);
             if(parser.pieceIsKeyword(temp)){
                 parser.checkForNewBlock(ie, temp);
-                ie.ifElseBlockOrder.add(new Integer(1));
+                if(!temp.equals("$#"))
+                    ie.ifElseBlockOrder.add(new Integer(1));
             }else {
-                for(statementText=""; !temp.equals(";"); temp = parser.getNextPiece()){
+                for(statementText=""; !temp.equals(";") && !temp.equals("##END_OF_MODULE_CODE"); temp = parser.getNextPiece()){
                     statementText+=temp+" ";
                 }
                 ie.addAssignment(new AssignmentStatement(statementText,ie));
@@ -137,6 +153,10 @@ public class IfElse extends Block {
     public void setIfElseType(int type){
         this.ifElseType = type;
     }
+    public ConditionStatement getConditionStatement()
+    {
+        return condition;
+    }
     public int getIfElseType(){
         return this.ifElseType;
     }
@@ -147,7 +167,8 @@ public class IfElse extends Block {
         if(this.ifElseType == 0){
             temp += "if("; 
             temp += this.condition.toString();
-            temp += ") begin\n";
+            temp += ") begin \\\\LINE: "+LineNumber+", Vars in Condition: "
+                    +condition.conditionVars.toString()+"\n";
             for(i=0, subBlockCount=0, assignmentStatementCount=0;
                 i< this.ifElseBlockOrder.size(); i++){
                 if(ifElseBlockOrder.get(i) == 1){
@@ -160,7 +181,8 @@ public class IfElse extends Block {
             }
             temp += "end //ends if()\n";
         }else if(this.ifElseType==1){
-            temp += "else if("; temp += this.condition.toString(); temp += ") begin\n";
+            temp += "else if("; temp += this.condition.toString(); temp += ") begin "
+                    + "//Vars in Condition: "+condition.conditionVars.toString()+"\n";
             for(i=0, subBlockCount=0, assignmentStatementCount=0;
                 i< this.ifElseBlockOrder.size(); i++){
                 if(ifElseBlockOrder.get(i) == 1){

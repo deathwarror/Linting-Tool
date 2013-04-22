@@ -17,9 +17,13 @@ import java.util.ArrayList;
 public class Variable {
     protected String variableType; //i.e. reg, wire, parameter, localparam
     protected String variableAttribute; //i.e. Operational modes: input, output,
+    protected String variableSign; //i.e. Signed, Unsigned, or Unspecified
+    protected String vectorParentName;
     protected String name;
     protected ArrayList<String> EdgeSens;
     protected String edgeSensitivity;
+    protected int LineNumber;
+    protected int arraySize;
     
     //Default Constructor
     Variable()
@@ -28,6 +32,10 @@ public class Variable {
         variableType = "";
         variableAttribute = "";
         EdgeSens = new ArrayList();
+        vectorParentName = "";
+        variableSign = "";
+        arraySize = 0;
+        LineNumber = Parser.currentLineNumber;
     }
     
     //This constructor will most likely be used in conjuntion with the addEdge
@@ -37,6 +45,10 @@ public class Variable {
         name = name_in;
         variableType = type_in;
         variableAttribute = "";
+        vectorParentName = "";
+        variableSign = "";
+        arraySize = 0;
+        LineNumber = Parser.currentLineNumber;
     }
     
     Variable(String name_in, String type_in, String attributeIn)
@@ -44,6 +56,21 @@ public class Variable {
         name = name_in;
         variableType = type_in;
         variableAttribute = attributeIn;
+        vectorParentName = "";
+        variableSign = "";
+        arraySize = 0;
+        LineNumber = Parser.currentLineNumber;
+    }
+
+    Variable(String name_in, String type_in, String attributeIn, String sign_in, int arraySizeIn)
+    {
+        name = name_in;
+        variableType = type_in;
+        variableAttribute = attributeIn;
+        vectorParentName = "";
+        variableSign = sign_in;
+        arraySize = arraySizeIn;
+        LineNumber = Parser.currentLineNumber;
     }
 
     //This constructor can be used to allow all three data slots to be filled.
@@ -55,12 +82,21 @@ public class Variable {
         name = name_in;
         variableType = type_in;
         EdgeSens = Edge;
+        vectorParentName = "";
+        variableSign = "";
+        arraySize = 0;
+        LineNumber = Parser.currentLineNumber;
     }
     
     //returns the Name of the Variable
     public String getName()
     {
         return name;
+    }
+    
+    public String getVectorName()
+    {
+        return vectorParentName;
     }
     
     
@@ -179,7 +215,7 @@ public class Variable {
     //compares two variable's name and variableType for a lower level compare
     public boolean compareTo(Variable V)
     {
-        if(name.equals(V.getName()));
+        if(name.equals(V.getName()))
         {
             if(variableType.equals(V.getType()))
             {
@@ -201,8 +237,66 @@ public class Variable {
          }
          return false;
      }
+     
+     //the "params" array list is assumed to come from the module that is currently being worked in
+     public static ArrayList createVariablesFromVector(Variable template, String vecStart, String vecEnd){
+         ArrayList<Variable> vectorVars = new ArrayList();
 
+         String temp; //parser "freshPiece" string value should currently be set to a "["
+         
+         String number;
+         int MSB=0;
+         int LSB=0;
+         number = Parser.parseNumberFromExpression(vecStart);
+         if(Parser.isANumber(number)==1){
+             MSB = Integer.parseInt(number);
+         }else{
+             MSB = 0;
+         }
+         number = Parser.parseNumberFromExpression(vecEnd);
+         if(Parser.isANumber(number)==1){
+            LSB = Integer.parseInt(number);
+         }else{
+             LSB = 0;
+         }
+         if(MSB < LSB){
+             int num = MSB; MSB = LSB; LSB = num;
+         }
+         
+         for(int i=0; MSB-i >= LSB; i++){
+             if(template.getClass() == Reg.class){
+                 vectorVars.add(new Reg(template.name+"_"+(LSB+i), template.variableAttribute, template.name, template.variableSign, template.arraySize));
+             }else if(template.getClass() == Wire.class){
+                 vectorVars.add(new Wire(template.name+"_"+(LSB+i), template.variableAttribute, template.name, template.variableSign, template.arraySize));
+             }
+         }
+         
+         return vectorVars;
+     }
 
+     public static int parseVariableArraySize(String arrayStart, String arrayEnd){
+         String number;
+         int MSB=0;
+         int LSB=0;
+         number = Parser.parseNumberFromExpression(arrayStart);
+         if(Parser.isANumber(number)==1){
+             MSB = Integer.parseInt(number);
+         }else{
+             return -1;
+         }
+         number = Parser.parseNumberFromExpression(arrayEnd);
+         if(Parser.isANumber(number)==1){
+            LSB = Integer.parseInt(number);
+         }else{
+             return -1;
+         }
+         if(MSB==0 && LSB==0)
+         if(MSB < LSB){
+             int num = MSB; MSB = LSB; LSB = num;
+         }
+         return MSB+1-LSB;
+     }
+     
     //Convert all data in the object to be outputted.
     @Override
     public String toString()
@@ -212,6 +306,6 @@ public class Variable {
 //        {
 //            System.out.println("\t"+EdgeSens.get(i));
 //        }
-        return variableAttribute + " " + variableType + " " + name;
+        return variableAttribute + " " + variableType + " " + name + " Array Size: " + arraySize + " LINE: " + LineNumber;
     }
 }

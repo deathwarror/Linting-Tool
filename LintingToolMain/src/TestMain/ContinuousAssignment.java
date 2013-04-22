@@ -7,7 +7,7 @@ package TestMain;
 
 import java.util.ArrayList;
 /**
- * This Class is to be used for assignments assiciated with type WIRE
+ * This Class is to be used for assignments associated with type WIRE
  */
 
 public class ContinuousAssignment extends AssignmentStatement {
@@ -16,6 +16,8 @@ public class ContinuousAssignment extends AssignmentStatement {
         LHSvars = new ArrayList();
         RHSvars = new ArrayList();
         parent = blockSource;
+        LineNumber = Parser.currentLineNumber;
+
         identifyLHSvariables();
         identifyRHSvariables();
     }
@@ -36,14 +38,26 @@ public class ContinuousAssignment extends AssignmentStatement {
         assignmentText = preserve;
     }
 
+    @Override
     protected void identifyRHSvariables(){
+        String preserve = assignmentText;
+        assignmentText = assignmentText.substring(assignmentText.indexOf("="));
+        String temp;
+        for(temp=getNextPiece(); !temp.equals("##END_OF_STATEMENT"); temp=getNextPiece()){
+                        if( parent.findVariableInParentBlockHierarchy(temp) != null){
+                RHSvars.add(parent.findVariableInParentBlockHierarchy(temp));
+            }else {
+                RHSvars.addAll(parent.findVectorNameInParentBlockHierarchy(temp));
+            }
+        }
+        assignmentText = preserve;
     }
     @Override
     public String toString(){
         String text = "";
         text += "assign " + assignmentText + ";\\\\ ";
         text +=  "LHSvars: "+LHSvars.toString();
-        text +=  ",   RHSvars: "+RHSvars.toString()+"\n";
+        text +=  ",   RHSvars: "+RHSvars.toString()+" LINE: "+LineNumber+"\n";
         return text;
     }
 

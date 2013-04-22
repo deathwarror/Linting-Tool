@@ -17,6 +17,10 @@ public class Reg extends Variable{
         variableType = "reg";
         variableAttribute = "";
         edgeSensitivity = "";
+        vectorParentName = "";
+        LineNumber = Parser.currentLineNumber;
+        variableSign = "";
+        arraySize = 0;
     }
      Reg(String name_in, String attributeIn)
     {
@@ -24,6 +28,43 @@ public class Reg extends Variable{
         variableType = "reg";
         variableAttribute = attributeIn;
         edgeSensitivity = "";
+        vectorParentName = "";
+        LineNumber = Parser.currentLineNumber;
+        variableSign = "";
+        arraySize = 0;
+    }
+     Reg(String name_in, String attributeIn, String vectorParent)
+    {
+        name = name_in;
+        variableType = "reg";
+        variableAttribute = attributeIn;
+        edgeSensitivity = "";
+        vectorParentName = vectorParent;
+        LineNumber = Parser.currentLineNumber;
+        variableSign = "";
+        arraySize = 0;
+    }
+     Reg(String name_in, String attributeIn, String vectorParent, String signIn, int arraySizeIn)
+    {
+        name = name_in;
+        variableType = "reg";
+        variableAttribute = attributeIn;
+        edgeSensitivity = "";
+        vectorParentName = vectorParent;
+        LineNumber = Parser.currentLineNumber;
+        variableSign = signIn;
+        arraySize = arraySizeIn;
+    }
+     Reg(String name_in, String attributeIn, String signIn, int arraySizeIn)
+    {
+        name = name_in;
+        variableType = "reg";
+        variableAttribute = attributeIn;
+        edgeSensitivity = "";
+        vectorParentName = "";
+        LineNumber = Parser.currentLineNumber;
+        variableSign = signIn;
+        arraySize = arraySizeIn;
     }
 //     public String getEdgeSensitivity(){
 //         return edgeSensitivity;
@@ -40,6 +81,7 @@ public class Reg extends Variable{
 
    @Override
     public String toString(){
-        return variableAttribute + " " + variableType + " " + name;
+        return variableAttribute + " " + variableType + " " + variableSign + " " +
+                name + "; Array Size: " + arraySize + " LINE: " + LineNumber;
     }
 }

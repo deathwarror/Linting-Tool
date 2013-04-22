@@ -28,6 +28,7 @@ public class Case extends Block {
         caseBlockOrder = new ArrayList();
 
         parent = comesFrom;
+        LineNumber = Parser.currentLineNumber;
     }
 
     public static String parseCase(Block current, Parser parser){
@@ -39,8 +40,10 @@ public class Case extends Block {
         temp = parser.getNextPiece(); // temp should get a "(" back
         //This loop parses the condition statement at the beginning of the case block
         for(caseConditionStatementBreak=1, temp=parser.getNextPiece(),
-                statementText=""; caseConditionStatementBreak!=-1; ){
-            if(temp.equals("(")){
+                statementText=""; caseConditionStatementBreak!=-1 && !temp.equals("##END_OF_MODULE_CODE"); ){
+            if(temp.equals("$#")){
+                parser.updateLineNumber();
+            }else if(temp.equals("(")){
                 caseConditionStatementBreak++;
                 statementText += temp+ " ";
                 temp = parser.getNextPiece();
@@ -57,10 +60,14 @@ public class Case extends Block {
                 temp = parser.getNextPiece();
             }
         }
-        cs.condition = new ConditionStatement(statementText);
+        cs.condition = new ConditionStatement(statementText, cs);
 
-        for(temp = parser.getNextPiece(); !temp.equals("endcase"); temp=parser.getNextPiece()){
-            SubCase.parseSubCase(cs, parser, temp);
+        for(temp = parser.getNextPiece(); !temp.equals("endcase") && !temp.equals("##END_OF_MODULE_CODE"); temp=parser.getNextPiece()){
+            if(temp.equals("$#")){
+                parser.updateLineNumber();
+            }else{
+                SubCase.parseSubCase(cs, parser, temp);
+            }
         }
         return temp;
     }
@@ -69,7 +76,8 @@ public class Case extends Block {
     public String toString(){
         String temp="";
         int i=0;
-        temp += "case( "+condition.toString()+" )\n";
+        temp += "case( "+condition.toString()+" ) \\\\LINE: "+LineNumber+
+                ", Vars in Condition: "+condition.conditionVars.toString()+"\n";
         for(i=0; i<this.subBlocks.size(); i++){
             temp += this.subBlocks.get(i).toString();
         }

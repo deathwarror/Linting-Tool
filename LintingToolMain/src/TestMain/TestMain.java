@@ -50,7 +50,8 @@ class TestMenu
             parserTest = new Parser(stringArray);
 
             ErrorSearcher error = new ErrorSearcher();
-            error.identifyMultiplyDrivenSignals(parserTest);
+            error.Start(parserTest);
+ //           error.identifyMultiplyDrivenSignals(parserTest);
 
 //            start();
         }

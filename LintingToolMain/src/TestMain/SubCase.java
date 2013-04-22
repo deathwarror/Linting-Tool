@@ -28,6 +28,7 @@ public class SubCase extends Block{
         subCaseBlockOrder = new ArrayList();
 
         parent = comesFrom;
+        LineNumber = Parser.currentLineNumber;
     }
 
     public static String parseSubCase(Block current, Parser parser, String firstTemp){
@@ -39,8 +40,11 @@ public class SubCase extends Block{
 //        temp = parser.getNextPiece(); // temp should get a "(" back
         //This loop parses the condition statement at the beginning of the case block
         for(subCaseConditionStatementBreak=0, 
-        statementText=""; subCaseConditionStatementBreak!=-1; ){
-            if(temp.equals(":")){
+        statementText=""; subCaseConditionStatementBreak!=-1 && !temp.equals("##END_OF_MODULE_CODE"); ){
+            if(temp.equals("$#")){
+                parser.updateLineNumber();
+                temp = parser.getNextPiece();
+            }else if(temp.equals(":")){
                 if(subCaseConditionStatementBreak == 0){
                     subCaseConditionStatementBreak = -1;
                 }else {
@@ -60,17 +64,18 @@ public class SubCase extends Block{
                 temp = parser.getNextPiece();
             }
         }
-        sub.condition = new ConditionStatement(statementText);
+        sub.condition = new ConditionStatement(statementText, sub);
 
         temp = parser.getNextPiece();
         // if there will be multiple sublocks or assginments
         if(temp.equals("begin")){
-            for(temp=parser.getNextPiece(); !temp.equals("end"); temp=parser.getNextPiece() ){
+            for(temp=parser.getNextPiece(); !temp.equals("end") && !temp.equals("##END_OF_MODULE_CODE"); temp=parser.getNextPiece() ){
                 if(parser.pieceIsKeyword(temp)){
                     parser.checkForNewBlock(sub, temp);
-                    sub.subCaseBlockOrder.add(new Integer(1));
+                    if(!temp.equals("$#"))
+                        sub.subCaseBlockOrder.add(new Integer(1));
                 }else {
-                    for(statementText=""; !temp.equals(";"); temp = parser.getNextPiece()){
+                    for(statementText=""; !temp.equals(";") && !temp.equals("##END_OF_MODULE_CODE"); temp = parser.getNextPiece()){
                         statementText+=temp+" ";
                     }
                     sub.addAssignment(new AssignmentStatement(statementText,sub));
@@ -80,9 +85,10 @@ public class SubCase extends Block{
         }else {
             if(parser.pieceIsKeyword(temp)){
                 parser.checkForNewBlock(sub, temp);
-                sub.subCaseBlockOrder.add(new Integer(1));
+                if(!temp.equals("$#"))
+                    sub.subCaseBlockOrder.add(new Integer(1));
             }else {
-                for(statementText=""; !temp.equals(";"); temp = parser.getNextPiece()){
+                for(statementText=""; !temp.equals(";") && !temp.equals("##END_OF_MODULE_CODE"); temp = parser.getNextPiece()){
                     statementText+=temp+" ";
                 }
                 sub.addAssignment(new AssignmentStatement(statementText,sub));
@@ -96,7 +102,8 @@ public class SubCase extends Block{
     public String toString(){
         String temp="";
         int i=0; int subBlockCount=0; int assignmentStatementCount=0;
-        temp += condition.toString()+": begin\n";
+        temp += condition.toString()+": begin \\\\LINE: "+LineNumber+
+                ", Vars in Condition: "+condition.conditionVars.toString()+"\n";
 
         for(i=0, subBlockCount=0, assignmentStatementCount=0;
             i< this.subCaseBlockOrder.size(); i++){

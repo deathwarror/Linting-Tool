@@ -17,6 +17,8 @@ public class Always extends Block{
      * 0 - indicates an assignment statement,
      * 1- indicates the presence of another subBlock
      */
+    
+    private String statementText;
     private ArrayList<Integer> alwaysBlockOrder;
 
     Always(Block comesFrom, String name){
@@ -27,8 +29,10 @@ public class Always extends Block{
         assignments = new ArrayList();
         sensitivityList = new ArrayList();
         alwaysBlockOrder = new ArrayList();
-
+        statementText = "";
+        
         parent = comesFrom;
+        LineNumber = Parser.currentLineNumber;
     }
 
     public static String parseAlways(Block current, Parser parser){
@@ -41,25 +45,26 @@ public class Always extends Block{
         //if there is more than one action in the always block
         if(temp.equals("begin")){
             temp = parser.getNextPiece();
-            for(; !temp.equals("end"); temp=parser.getNextPiece()){
+            for(; !temp.equals("end") && !temp.equals("##END_OF_MODULE_CODE"); temp=parser.getNextPiece()){
                 //will need to handle: if, switch, assignments,
                 //Syntax error if there are: nested always,
                 if(!parser.pieceIsKeyword(temp)){
-                    for(; !temp.equals(";"); temp = parser.getNextPiece()){
+                    for(; !temp.equals(";") && !temp.equals("##END_OF_MODULE_CODE"); temp = parser.getNextPiece()){
                         statementText += temp+" ";
                     }
                     always.addAssignment(new AssignmentStatement(statementText,always));
                     always.alwaysBlockOrder.add(new Integer(0));
                     statementText = "";
-                }else{//need suppprt for adding other subBlocks
+                }else{
                     parser.checkForNewBlock(always, temp);
-                    always.alwaysBlockOrder.add(new Integer(1));
+                    if(!temp.equals("$#"))
+                        always.alwaysBlockOrder.add(new Integer(1));
                 }
             }
         }else{
             if(!parser.pieceIsKeyword(temp)){
                 if(!parser.pieceIsKeyword(temp)){
-                    for(; !temp.equals(";"); temp = parser.getNextPiece()){
+                    for(; !temp.equals(";") && !temp.equals("##END_OF_MODULE_CODE"); temp = parser.getNextPiece()){
                         statementText += temp+" ";
                     }
                     always.addAssignment(new AssignmentStatement(statementText,always));
@@ -74,29 +79,46 @@ public class Always extends Block{
         return temp;
     }
     private void parseAlwaysHead(Parser parser){
+        statementText = "always";
         String temp = parser.getNextPiece(); //temp will equal "@"
+        statementText += (" "+temp);
         Variable tempVar; Reg tempReg; Wire tempWire;
         temp = parser.getNextPiece(); //temp will equal "(" or "*"
+        statementText += (" "+temp);
         if(temp.equals("*")){ //if the sensitivities are not explicitely specified
-
-        }else {
+            sensitivityList.add(new Variable("*",""));
+            BlockType = "levelSensitive";
+        }else { //if temp == "("
             temp = parser.getNextPiece(); //temp will equal the first item of interrest
-            for(; !temp.equals(")"); temp = parser.getNextPiece() ){
-                if(temp.equals("posedge")){
+            statementText += (" "+temp);
+            for(; !temp.equals(")") && !temp.equals("##END_OF_MODULE_CODE"); 
+                    temp = parser.getNextPiece(), statementText+=(" "+temp) ){
+                if(temp.equals("$#")){
+                    parser.updateLineNumber();
+                }else if(temp.equals("*")){
+                    sensitivityList.add(new Variable("*",""));
+                    BlockType = "levelSensitive";
+                }
+                else if(temp.equals("posedge")){
                     if(!(BlockType.equals("") || BlockType.equals("edgeSensitive")) ){
-                        System.out.println("Error: Edge and Level Sensitivities mixed\n");
-                        return;
+                        addErrorMixedSensitivity(parser);
+//                        return;
                     }
                     BlockType = "edgeSensitive";
-                    temp = parser.getNextPiece();
+                    temp = parser.getNextPiece(); statementText+=(" "+temp);
                     tempVar = this.findVariableInParentBlockHierarchy(temp);
                     if(tempVar != null){
-                        if(tempVar.setEdgeSensitivity("posedge")){
+                        if(tempVar.arraySize > 1){ // if the variable in question is an array
+                            addErrorVectorArrayInSensList(temp, parser);
+                        }
+                        else if(true){//(tempVar.setEdgeSensitivity("posedge")){
                             sensitivityList.add(tempVar);
                         }else{
                             System.out.println("Error: Variable "+temp+" is already " +
                                     "driven on "+tempVar.getEdgeSensitivity());
                         }
+                    }else if( !this.findVectorNameInParentBlockHierarchy(temp).isEmpty() ){ //if the variable is a vector
+                        addErrorVectorArrayInSensList(temp, parser);
                     }
                     else{
                         System.out.println("Error: Variable "+temp+" in sensitivity list not defined!");
@@ -105,34 +127,47 @@ public class Always extends Block{
                 }
                 else if(temp.equals("negedge")){
                     if(!(BlockType.equals("") || BlockType.equals("edgeSensitive")) ){
-                        System.out.println("Error: Edge and Level Sensitivities mixed\n");
-                        return;
+                        addErrorMixedSensitivity(parser);
+//                        return;
                     }
                     BlockType = "edgeSensitive";
-                    temp = parser.getNextPiece();
+                    temp = parser.getNextPiece(); statementText+=(" "+temp);
                     tempVar = this.findVariableInParentBlockHierarchy(temp);
-                    if(tempVar != null)
-                        if(tempVar.setEdgeSensitivity("negedge")){
+                    if(tempVar != null){
+                        if(tempVar.arraySize > 1){ // if the variable in question is an array
+                            addErrorVectorArrayInSensList(temp, parser);
+                        }
+                        else if(true){//(tempVar.setEdgeSensitivity("negedge")){
                             sensitivityList.add(tempVar);
                         }else{
                             System.out.println("Error: Variable "+temp+" is already " +
                                     "driven on "+tempVar.getEdgeSensitivity());
                         }
+                    }else if( !this.findVectorNameInParentBlockHierarchy(temp).isEmpty() ){ //if the variable is a vector
+                        addErrorVectorArrayInSensList(temp, parser);
+                    }
                     else{
                         System.out.println("Error: Variable "+temp+" in sensitivity list not defined!");
                     }
 
                 }
-                else if(temp.equals("or"));
+                else if(temp.equals("or") || temp.equals(","));
                 else{
                     if(!(BlockType.equals("") || BlockType.equals("levelSensitive")) ){
-                        System.out.println("Error: Edge and Level Sensitivities mixed\n");
-                        return;
+                        addErrorMixedSensitivity(parser);
+//                        return;
                     }
                     BlockType = "levelSensitive";
                     tempVar = this.findVariableInParentBlockHierarchy(temp);
-                    if(tempVar != null)
-                        sensitivityList.add(tempVar);
+                    if(tempVar != null){
+                        if(tempVar.arraySize > 1){ // if the variable in question is an array
+                            addErrorVectorArrayInSensList(temp, parser);
+                        }else{
+                            sensitivityList.add(tempVar);
+                        }
+                    }else if( !this.findVectorNameInParentBlockHierarchy(temp).isEmpty() ){ //if the variable is a vector
+                        addErrorVectorArrayInSensList(temp, parser);
+                    }
                     else{
                         System.out.println("Error: Variable "+temp+" in sensitivity list not defined!");
                     }
@@ -144,7 +179,37 @@ public class Always extends Block{
         this.alwaysBlockOrder.add(num);
     }
     public int getFromAlwaysBlockOrder(int index){
-        return this.alwaysBlockOrder.get(index);
+        if(index< alwaysBlockOrder.size() && index>=0){
+            return this.alwaysBlockOrder.get(index);
+        }else{
+            return this.alwaysBlockOrder.get(0);
+        }
+    }
+    public String getAlwaysStatement(){
+        return statementText;
+    }
+    public ArrayList<Variable> getSensitivityList()
+    {
+        return sensitivityList;
+    }
+    private void addErrorVectorArrayInSensList(String varName, Parser parser){
+        Error e = new Error();
+        e.setErrorNum("10");
+        String errorOutput = "Error: Vector or Array Series in Always Block:\n";
+        errorOutput += "\tin always on line : "+this.LineNumber+"\n\tVariable Name: ";
+        errorOutput += varName;
+        System.out.println(errorOutput+"\n");
+        e.setErrorMsg(errorOutput);
+        parser.addErrorToParserErrorList(e);
+    }
+    private void addErrorMixedSensitivity(Parser parser){
+        Error e = new Error();
+        e.setErrorNum("11");
+        String errorOutput = "Error: Mixing of Level and Edge Sensitivity detected in Always Block:\n";
+        errorOutput += "\tin always on line : "+this.LineNumber+"\n";
+        System.out.println(errorOutput);
+        e.setErrorMsg(errorOutput);
+        parser.addErrorToParserErrorList(e);
     }
     @Override
     public String toString(){
@@ -166,7 +231,7 @@ public class Always extends Block{
                 temp+= " "; temp+= sensitivityList.get(i).name;
             }
         }
-        temp += ")"; temp += "begin\n";
+        temp += " )"; temp += "begin \\\\LINE: "+LineNumber+" Statement Text: "+statementText+"\n";
         for(i=0, subBlockCount=0, assignmentStatementCount=0; i<alwaysBlockOrder.size() ; i++){
            if(alwaysBlockOrder.get(i) == 0){
                temp+= assignments.get(assignmentStatementCount).toString();
