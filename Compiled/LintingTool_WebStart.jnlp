@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jnlp spec="1.0+" codebase=
+"https://github.com/deathwarror/Linting-Tool/tree/master/Compiled" 
+    href="LintingTool_WebStart.jnlp">
+    <information>
+        <title>Linting Tool</title>
+        <vendor>UCCS</vendor>
+    </information>
+    <resources>
+        <!-- Application Resources -->
+        <j2se version="1.7+"
+              href="http://java.sun.com/products/autodl/j2se"/>
+        <jar href="LintingTool.jar"
+            main="true" />
+
+    </resources>
+    <application-desc
+         name="Linting Tool Jar File"
+         main-class=
+           "TestMain.MainGUI"
+         width="300"
+         height="300">
+     </application-desc>
+     <update check="background"/>
+</jnlp>    
