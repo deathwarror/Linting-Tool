@@ -139,7 +139,6 @@ public class DatabaseLoader {
                     s = in.readLine();
                 }
                 e.setErrorNum(ErrorList.get(i));
-                e.setErrorDef(ErrorDef);
                 e.setErrorMsg(ErrorMSG);
             }
             catch(Exception E)

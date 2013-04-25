@@ -65,6 +65,7 @@ public class Error09IdentifyIncompleteSensList {
                         e.setErrorNum("07");
                         errorOutput = "Error: No Clock Detected or clock is used in always block:\n";
                         errorOutput += "\tin always on line : "+currentBlock.LineNumber +"\n\tUnused Variable(s): ";
+                        e.addLineNumber(currentBlock.LineNumber);
                         for(int varCount = 0;varCount <(SensList.size()-1);varCount++)
                         {
                             errorOutput+= SensList.get(varCount).getName()+", ";

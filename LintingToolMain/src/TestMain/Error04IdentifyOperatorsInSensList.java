@@ -145,6 +145,7 @@ public class Error04IdentifyOperatorsInSensList {
                     Error e = new Error();
                     e.setErrorMsg(errorOutput);
                     e.setErrorNum("04");
+                    e.addLineNumber(currentBlock.LineNumber);
                     ErrorList.add(e);
                     System.out.println(errorOutput);
                     

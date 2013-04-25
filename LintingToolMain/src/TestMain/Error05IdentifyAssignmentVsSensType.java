@@ -83,6 +83,7 @@ public class Error05IdentifyAssignmentVsSensType {
                            //put the error message into the error list
                            Error e = new Error();
                            e.setErrorMsg(errorOutput);
+                           e.addLineNumber(statements.get(j).LineNumber);
                            e.setErrorNum("05");
                            ErrorList.add(e);
                     }

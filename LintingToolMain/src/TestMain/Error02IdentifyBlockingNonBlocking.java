@@ -68,6 +68,8 @@ public class Error02IdentifyBlockingNonBlocking {
                                     Error e = new Error();
                                     e.setErrorMsg(errorOutput);
                                     e.setErrorNum("02");
+                                    e.addLineNumber(statements.get(j).LineNumber);
+                                    e.addLineNumber(statements.get(k).LineNumber);
                                     ErrorList.add(e);
                                     System.out.println(errorOutput);
                                     

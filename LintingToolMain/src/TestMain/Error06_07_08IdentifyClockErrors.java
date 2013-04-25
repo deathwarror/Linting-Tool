@@ -40,7 +40,8 @@ public class Error06_07_08IdentifyClockErrors {
                         Error e = new Error();
                         e.setErrorNum("06");
                         errorOutput = "Error: No Reset or clock Detected in Flip Flop type always block:\n";
-                        errorOutput += "\tin always on line :"+currentBlock.LineNumber;  
+                        errorOutput += "\tin always on line :"+currentBlock.LineNumber;
+                        e.addLineNumber(currentBlock.LineNumber);
                         e.setErrorMsg(errorOutput);
                         System.out.println(errorOutput + "\n");
                         ErrorList.add(e);
@@ -81,6 +82,7 @@ public class Error06_07_08IdentifyClockErrors {
                             e.setErrorNum("07");
                             errorOutput = "Error: No Clock Detected or clock is used in always block:\n";
                             errorOutput += "\tin always on line : "+currentBlock.LineNumber;  
+                            e.addLineNumber(currentBlock.LineNumber);
                             e.setErrorMsg(errorOutput);
                             System.out.println(errorOutput + "\n");
                             ErrorList.add(e);
@@ -93,6 +95,7 @@ public class Error06_07_08IdentifyClockErrors {
                             e.setErrorNum("07");
                             errorOutput = "Error: Multiple Clocks or unused signals detected in always block:\n";
                             errorOutput += "\tin always on line : "+currentBlock.LineNumber;  
+                            e.addLineNumber(currentBlock.LineNumber);
                             e.setErrorMsg(errorOutput);
                             System.out.println(errorOutput + "\n");
                             ErrorList.add(e);

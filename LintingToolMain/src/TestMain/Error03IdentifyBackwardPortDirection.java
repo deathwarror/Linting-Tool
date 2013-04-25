@@ -56,6 +56,7 @@ public class Error03IdentifyBackwardPortDirection {
                            //put the error message into the error list
                            Error e = new Error();
                            e.setErrorMsg(errorOutput);
+                           e.addLineNumber(statements.get(j).LineNumber);
                            e.setErrorNum("03");
                            ErrorList.add(e);
                            System.out.println(errorOutput);
@@ -81,6 +82,7 @@ public class Error03IdentifyBackwardPortDirection {
                            Error e = new Error();
                            e.setErrorMsg(errorOutput);
                            e.setErrorNum("03");
+                           e.addLineNumber(statements.get(j).LineNumber);
                            ErrorList.add(e);
                            System.out.println(errorOutput);
                                     

@@ -48,9 +48,11 @@ public class Error11LogicalNotWithVector {
             }
         }
         
-        //get the top block
-        currentBlock = blocks.get(0);
-        //get all assignment statements in the code
+        if(blocks.size()>0)
+        {
+            //get the top block
+            currentBlock = blocks.get(0);
+            //get all assignment statements in the code
             As= currentBlock.getAllAssignmentStatements();
             for(int j = 0; j < As.size(); j++)
             {
@@ -89,6 +91,7 @@ public class Error11LogicalNotWithVector {
                                         errorOutput = "Error: Vector or Array Series is being operated on with the logical not operator:\n";
                                         errorOutput += "\tin always on line : "+As.get(j).LineNumber+"\n\tVariable Name: ";
                                         errorOutput += currentVar;
+                                        e.addLineNumber(As.get(j).LineNumber);
                                         System.out.println(errorOutput+"\n");
                                         e.setErrorMsg(errorOutput);
                                         ErrorList.add(e);
@@ -107,6 +110,7 @@ public class Error11LogicalNotWithVector {
                                             errorOutput = "Error: Vector or Array Series is being operated on with the logical not operator:\n";
                                             errorOutput += "\tin always on line : "+As.get(j).LineNumber+"\n\tVariable Name: ";
                                             errorOutput += currentVar;
+                                            e.addLineNumber(As.get(j).LineNumber);
                                             System.out.println(errorOutput+"\n");
                                             e.setErrorMsg(errorOutput);
                                             ErrorList.add(e); 
@@ -117,7 +121,7 @@ public class Error11LogicalNotWithVector {
                     }
                 }
             }
-            
+        }
         
         if(errorOutput.equals("No Error"))
         {

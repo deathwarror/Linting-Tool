@@ -69,6 +69,7 @@ public class Error10VectorArrayInSensList {
                                 e.setErrorNum("10");
                                 errorOutput = "Error: Vector or Array Series in Edge Sensitive Always Block:\n";
                                 errorOutput += "\tin always on line : "+currentBlock.LineNumber;
+                                e.addLineNumber(currentBlock.LineNumber);
                                 System.out.println(errorOutput+"\n");
                                 e.setErrorMsg(errorOutput);
                                 ErrorList.add(e);
@@ -88,6 +89,7 @@ public class Error10VectorArrayInSensList {
                                 errorOutput = "Error: Vector or Array Series in Edge Sensitive Always Block:\n";
                                 errorOutput += "\tin always on line : "+currentBlock.LineNumber+"\n\tVariable Name: ";
                                 errorOutput += currentVar;
+                                e.addLineNumber(currentBlock.LineNumber);
                                 System.out.println(errorOutput+"\n");
                                 e.setErrorMsg(errorOutput);
                                 ErrorList.add(e);

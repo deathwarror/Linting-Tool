@@ -220,7 +220,7 @@ public class Parser {
                 freshPieces.remove(i);
                 String errorText="Error: Named Block Detected \n\ton line "+currentLineNumber;
                 System.out.println(errorText);
-                addErrorToParserErrorList(new Error("17",errorText,new ArrayList()) );
+                addErrorToParserErrorList(new Error("17",errorText) );
             }
         }
     }

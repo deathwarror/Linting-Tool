@@ -30,7 +30,7 @@ public class TestError {
         ArrayList<String> ed = new ArrayList();
         ed.add("Module");
         ed.add("endModule");
-        return new Error(en,em,ed);
+        return new Error(en,em);
     }
     public void start()
     {
@@ -98,7 +98,7 @@ public class TestError {
             System.out.println("-1\t quit\n"
                     + "1\tContinue\n");
         }
-        e = new Error(en,em,ed);
+        e = new Error(en,em);
     }
     private void setEN()
     {
@@ -125,7 +125,7 @@ public class TestError {
     }
     private void dupE()
     {
-        e2 = new Error(e.getErrorNum(),e.getErrorMsg(),e.getErrorDef());
+        e2 = new Error(e.getErrorNum(),e.getErrorMsg());
         System.out.println("Error Duplicated\n\n");
         System.out.println("New Error:\n");
         e2.toString();

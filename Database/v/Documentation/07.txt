@@ -1,0 +1,12 @@
+The Signal used for the clock could be explicitly used in a if statement.
+This is usually flagged for an always block that has no unused signals in the
+sensitivity list.
+
+	Always @("Sensitiviy List")begin
+		if("Sensitivity List Item")begin
+			//lines
+		end
+		else if("Last Item In sensitivity List Used") begin
+			//lines
+		end
+	end

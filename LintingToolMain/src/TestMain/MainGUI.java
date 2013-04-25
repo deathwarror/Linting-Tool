@@ -8,21 +8,30 @@ import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
+import javax.swing.ListSelectionModel;
 /**
  *
  * @author Deathwarror
  */
 public class MainGUI extends javax.swing.JFrame {
 
-    DefaultListModel listModel;
+    DefaultListModel FileListModel;
+    DefaultListModel ErrorListModel;
+    DefaultListModel CodeListModel;
     /**
      * Creates new form MainGUI
      */
     public MainGUI() {
         initComponents();
 
-        listModel = new DefaultListModel();
-        FileListBox.setModel(listModel);
+        FileListModel = new DefaultListModel();
+        ErrorListModel = new DefaultListModel();
+        CodeListModel = new DefaultListModel();
+        FileListBox.setModel(FileListModel);
+        ErrorListBox.setModel(ErrorListModel);
+        CodeListBox.setModel(CodeListModel);
+        RemoveButton.setEnabled(false);
     }
 
     /**
@@ -33,17 +42,17 @@ public class MainGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
+        FileListPane = new javax.swing.JScrollPane();
         FileListBox = new javax.swing.JList();
         AddButton = new javax.swing.JButton();
         RemoveButton = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        CodeBox = new javax.swing.JTextArea();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        ErrorBox = new javax.swing.JTextArea();
         FileListTitle = new javax.swing.JLabel();
         CodeListTitle = new javax.swing.JLabel();
         ErrorMsgTitle = new javax.swing.JLabel();
+        ErrorListPane = new javax.swing.JScrollPane();
+        ErrorListBox = new javax.swing.JList();
+        CodeListPane = new javax.swing.JScrollPane();
+        CodeListBox = new javax.swing.JList();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Linting Tool");
@@ -58,7 +67,7 @@ public class MainGUI extends javax.swing.JFrame {
                 FileListBoxValueChanged(evt);
             }
         });
-        jScrollPane1.setViewportView(FileListBox);
+        FileListPane.setViewportView(FileListBox);
 
         AddButton.setText("Load File");
         AddButton.addActionListener(new java.awt.event.ActionListener() {
@@ -74,19 +83,35 @@ public class MainGUI extends javax.swing.JFrame {
             }
         });
 
-        CodeBox.setColumns(20);
-        CodeBox.setRows(5);
-        jScrollPane2.setViewportView(CodeBox);
-
-        ErrorBox.setColumns(20);
-        ErrorBox.setRows(5);
-        jScrollPane3.setViewportView(ErrorBox);
-
         FileListTitle.setText("Files Opened");
 
         CodeListTitle.setText("File data");
 
         ErrorMsgTitle.setText("Error Messages");
+
+        ErrorListBox.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        ErrorListBox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ErrorListBoxMouseClicked(evt);
+            }
+        });
+        ErrorListBox.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                ErrorListBoxValueChanged(evt);
+            }
+        });
+        ErrorListPane.setViewportView(ErrorListBox);
+
+        CodeListBox.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        CodeListPane.setViewportView(CodeListBox);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -95,10 +120,10 @@ public class MainGUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3)
+                    .addComponent(ErrorListPane)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(FileListPane, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(FileListTitle)
                             .addComponent(ErrorMsgTitle)
                             .addGroup(layout.createSequentialGroup()
@@ -109,8 +134,9 @@ public class MainGUI extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(CodeListTitle)
-                                .addContainerGap())
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)))))
+                                .addGap(0, 241, Short.MAX_VALUE))
+                            .addComponent(CodeListPane))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -121,17 +147,16 @@ public class MainGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
+                        .addComponent(FileListPane, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(AddButton)
-                            .addComponent(RemoveButton))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ErrorMsgTitle))
-                    .addComponent(jScrollPane2))
+                            .addComponent(RemoveButton)))
+                    .addComponent(CodeListPane))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(ErrorMsgTitle)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ErrorListPane, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -150,13 +175,9 @@ public class MainGUI extends javax.swing.JFrame {
             newFile.setName(FR.getFileName());
             parser = new Parser(newFile.getCode());
             newFile.setErrorList(ES.Start(parser));
-            listModel.addElement(newFile);
-            FileListBox.setSelectedIndex(listModel.size()-1);
-            FileListBox.ensureIndexIsVisible(listModel.size()-1);
-            ErrorBox.setEditable(false);
-            ErrorBox.setWrapStyleWord(true);
-            CodeBox.setEditable(false);
-            CodeBox.setWrapStyleWord(true);
+            FileListModel.addElement(newFile);
+            FileListBox.setSelectedIndex(FileListModel.size()-1);
+            FileListBox.ensureIndexIsVisible(FileListModel.size()-1);
         }
         else
         {
@@ -174,58 +195,60 @@ public class MainGUI extends javax.swing.JFrame {
             SimpleFileStore WorkingStore;
             ArrayList<String> Code;
             ArrayList<Error> Errors;
-            String FileCode = "";
-            String ErrorList = "";
+            String FileCode;
+            
+            
+            //Clear The ErrorList and the Code List here
+            ErrorListModel.clear();
+            CodeListModel.clear();
             if(index == -1)
             {
                 RemoveButton.setEnabled(false);
-                CodeBox.setText(" ");
-                ErrorBox.setText(" ");
             }
             else
             {
-                WorkingStore = (SimpleFileStore) listModel.get(index);
+                WorkingStore = (SimpleFileStore) FileListModel.get(index);
                 Code = WorkingStore.getCode();
                 Errors = WorkingStore.getErrorList();
                 RemoveButton.setEnabled(true);
                 for(int i = 0; i<Code.size();i++)
                 {
-                    FileCode = FileCode+(i+1)+":\t"+Code.get(i)+"\n";
+                    FileCode = AdjustLine(i+1,Code.get(i));
+                    CodeListModel.addElement("<html>"+FileCode+"</html>");
                 }
-                CodeBox.setText(FileCode);
+                
                 for(int i = 0; i<Errors.size();i++)
                 {
                     Error e = Errors.get(i);
-                    ErrorList = ErrorList+e.getErrorNum()+":  "+e.getErrorMsg()+"\n\n";
+                    String Temp = convertToHTML(e.getErrorNum()+":  "+e.getErrorMsg()+"\n\n");
+                    ErrorListModel.addElement("<html>"+Temp+"</html>");
                 }
-                if(ErrorList.equals(""))
+                if(Errors.isEmpty())
                 {
-                    ErrorBox.setText("No Errors Detected");
-                }
-                else
-                {
-                    ErrorBox.setText(ErrorList);
+                    ErrorListModel.addElement("No Errors Detected");
                 }
             }
         }
     }//GEN-LAST:event_FileListBoxValueChanged
 
+
+
     private void RemoveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemoveButtonActionPerformed
         int index = FileListBox.getSelectedIndex();
         if(index != -1)
         {
-             String FileName = ((SimpleFileStore) listModel.get(index)).getName();
-             listModel.remove(index);
+             String FileName = ((SimpleFileStore) FileListModel.get(index)).getName();
+             FileListModel.remove(index);
         }
 
-        int size = listModel.getSize();
+        int size = FileListModel.getSize();
         if(size == 0)
         {
             RemoveButton.setEnabled(false);
         }
         else
         {
-            if(index == listModel.getSize())
+            if(index == FileListModel.getSize())
             {
                 index--;
             }
@@ -235,6 +258,123 @@ public class MainGUI extends javax.swing.JFrame {
 
     }//GEN-LAST:event_RemoveButtonActionPerformed
 
+    private void ErrorListBoxValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_ErrorListBoxValueChanged
+        // TODO add your handling code here:
+        if(evt.getValueIsAdjusting()==false)
+        {
+            int index = ErrorListBox.getSelectedIndex();
+            int FileIndex = FileListBox.getSelectedIndex();
+            SimpleFileStore WorkingStore;
+            Error e;
+            ArrayList<Error> EL;
+            ArrayList<Integer> ErrorLines;
+            ArrayList<String> Code;
+            String FileCode;
+            //if nothing is selected
+            
+            if(index == -1)
+            {
+            }
+            else
+            {
+                
+              WorkingStore = (SimpleFileStore) FileListModel.get(FileIndex);
+              EL = WorkingStore.getErrorList();
+              Code = WorkingStore.getCode();
+              
+              if(EL.size() >0)
+              {
+                    //if Something was selected 
+                    CodeListModel.clear();
+                    
+                    e = EL.get(index);
+                    ErrorLines = SortNumberList(e.getLineNumbers());
+                    //fill the cell with 
+                    int j = 0;
+
+                    //rebuilds the HTML code so that the error lines are highlighted
+                     for(int i = 0; i<Code.size();i++)
+                    {
+                          FileCode = AdjustLine(i+1,Code.get(i));
+                          if(j < ErrorLines.size())
+                          {
+                              if(ErrorLines.get(j).intValue()-1 == i)
+                              {
+                                  FileCode = "<body bgcolor=\"#DF0101\">"+FileCode;
+                                  j++;
+                              }
+                          }
+                          CodeListModel.addElement("<html>"+FileCode+"</html>");
+                    }
+              }
+            }
+        }
+    }//GEN-LAST:event_ErrorListBoxValueChanged
+
+    private void ErrorListBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ErrorListBoxMouseClicked
+        //if the right mouse button was used
+        if(evt.getButton() ==java.awt.event.MouseEvent.BUTTON3)
+        {
+            ErrorDocumentationLoader EDL = new ErrorDocumentationLoader();
+            
+            String Description;
+            SimpleFileStore WorkingStore;
+            ArrayList<Error> EL;
+            String ErrorNumber;
+            
+            int FileIndex = FileListBox.getSelectedIndex();
+            int index = ErrorListBox.getSelectedIndex();
+            if(index>=0)
+            {
+                WorkingStore = (SimpleFileStore) FileListModel.get(FileIndex);
+                EL = WorkingStore.getErrorList();
+                JFrame frame = new JFrame();
+                if(EL.size()>0)
+                {
+                    ErrorNumber = EL.get(index).getErrorNum();
+                    Description = EDL.load(ErrorNumber);
+                    JOptionPane.showMessageDialog(frame, Description,("Error: "+ ErrorNumber),JOptionPane.INFORMATION_MESSAGE );
+                }
+            }
+            
+        }
+    }//GEN-LAST:event_ErrorListBoxMouseClicked
+
+    //converts the arraylist of numbers to an integer array
+    private ArrayList<Integer> SortNumberList(ArrayList<Integer> AL)
+    {
+        ArrayList<Integer> intA = new ArrayList();
+        ArrayList<Integer> Temp = new ArrayList();
+        Temp.addAll(AL);
+        int Lowest;
+        int LowestIndex;
+        while(Temp.size()>0)
+        {
+            Lowest = Temp.get(0);
+            LowestIndex = 0;
+            for(int i = 1; i <Temp.size();i++)
+            {
+                if(Temp.get(i) != null)
+                {
+                    if(Lowest>Temp.get(i))
+                    {
+                        Lowest = Temp.get(i).intValue();
+                    }
+                    //Remove Same line index
+                    else if(Lowest == Temp.get(i))
+                    {
+                        Temp.remove(i);
+                        i--;
+                    }
+                }
+            }
+            //add the next Highest number to the list
+            Temp.remove(LowestIndex);
+            intA.add(Lowest);
+        }
+        return intA;
+        
+    }
     /**
      * @param args the command line arguments
      */
@@ -269,17 +409,35 @@ public class MainGUI extends javax.swing.JFrame {
             }
         });
     }
+    private String AdjustLine(int i, String text)
+    {
+        String Temp = i+":&#8202;";
+        String inte = ""+i;
+        for(int j = 0; j<(4-inte.length());j++)
+        {
+            Temp= Temp+"&nbsp;&nbsp;";
+        }
+        return Temp+convertToHTML(text);
+    }
+    private String convertToHTML(String S)
+    {
+        String Temp = S;
+        Temp = Temp.replaceAll("\n","<br>");
+        Temp = Temp.replaceAll("\t","&nbsp;&nbsp;&nbsp;&nbsp;");
+        Temp = Temp.replaceAll(" ","&nbsp;");
+        return Temp;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddButton;
-    private javax.swing.JTextArea CodeBox;
+    private javax.swing.JList CodeListBox;
+    private javax.swing.JScrollPane CodeListPane;
     private javax.swing.JLabel CodeListTitle;
-    private javax.swing.JTextArea ErrorBox;
+    private javax.swing.JList ErrorListBox;
+    private javax.swing.JScrollPane ErrorListPane;
     private javax.swing.JLabel ErrorMsgTitle;
     private javax.swing.JList FileListBox;
+    private javax.swing.JScrollPane FileListPane;
     private javax.swing.JLabel FileListTitle;
     private javax.swing.JButton RemoveButton;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     // End of variables declaration//GEN-END:variables
 }

@@ -19,7 +19,7 @@ public class ErrorSearcher {
     {
         ClearErrorList();
         merge(parser.getParserErrorList());
-/*        merge(Error01IdentifyMultiplyDrivenSignals.getErrors(parser));
+//        merge(Error01IdentifyMultiplyDrivenSignals.getErrors(parser));
         merge(Error02IdentifyBlockingNonBlocking.getErrors(parser));
         merge(Error03IdentifyBackwardPortDirection.getErrors(parser));
         merge(Error04IdentifyOperatorsInSensList.getErrors(parser));
@@ -28,8 +28,8 @@ public class ErrorSearcher {
         merge(Error09IdentifyIncompleteSensList.getErrors(parser));
         merge(Error10VectorArrayInSensList.getErrors(parser));
         merge(Error11LogicalNotWithVector.getErrors(parser));
-*/        
-        merge(Error16IdentifyLatches.getErrors(parser));
+       
+//        merge(Error16IdentifyLatches.getErrors(parser));
         return EL;
     }
     private void ClearErrorList()
