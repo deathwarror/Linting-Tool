@@ -8,7 +8,7 @@
     </information>
     <resources>
         <!-- Application Resources -->
-        <j2se version="1.6+"
+        <j2se version="1.7+"
               href="http://java.sun.com/products/autodl/j2se"/>
         <jar href="LintingTool.jar"
             main="true" />
@@ -17,7 +17,7 @@
     <application-desc
          name="UCCS Linting Tool"
          main-class=
-           "TestMain.MainGUi"
+           "TestMain.MainGUI"
          width="300"
          height="300">
      </application-desc>
