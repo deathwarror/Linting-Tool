@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jnlp spec="1.0+" codebase=
-"https://github.com/deathwarror/Linting-Tool/raw/master/Compiled/" 
-    href="LintingTool_webstart.jnlp">
+"https://code.google.com/p/linting-tool/source/browse/Compiled" 
+    href="LintingTool_WebStart.jnlp">
     <information>
         <title>Linting Tool</title>
         <vendor>UCCS</vendor>
