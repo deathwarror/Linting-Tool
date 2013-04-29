@@ -6,7 +6,7 @@
 
     href="LintingTool_WebStart.jnlp"
 
-    version="20130426171653">
+    version="20130426173711">
 
     <information>
 
@@ -46,7 +46,7 @@
 
      </application-desc>
 
-     <update check="always" policy="always"/>
+     <update check="background"/>
 
 <security>
 
