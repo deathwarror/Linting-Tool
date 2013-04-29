@@ -1,8 +1,0 @@
-module 
-	block
-	assignment.nonblocking.var.same
-	assignment.blocking.var.same
-	endblock
-endmodule
-ERRMSG
-The variable is the target of a nonblocking and blocking assignment.

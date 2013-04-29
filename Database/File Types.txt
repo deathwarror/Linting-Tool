@@ -1,5 +1,0 @@
-//This File Contains the list of all supported file types to //allow any and all file specific rules to be added here.
-//Lines with // will be ignored and folder will need a 
-//"Error List.txt" File containing all the errors for the given
-// file type.
-v
