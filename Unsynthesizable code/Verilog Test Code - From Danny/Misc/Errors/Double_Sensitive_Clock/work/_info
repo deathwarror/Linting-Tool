@@ -1,0 +1,45 @@
+m255
+K3
+13
+cModel Technology
+Z0 dC:\School\ECE 4899 - Senior Design\Verilog Test Code\FSM\Sequence_Analyzer
+vDouble_Sensitive_Clock
+!s100 YQ427onG<KVOY52j88jMb0
+IHSaBg0m8kA9;LmB>UZ3mG0
+V77WZl[bYIDXK8::Q9ID140
+Z1 dC:\School\ECE 4899 - Senior Design\Verilog Test Code\Misc\Errors\Double_Sensitive_Clock
+w1357636700
+8C:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Errors/Double_Sensitive_Clock/Double_Sensitive_Clock.v
+FC:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Errors/Double_Sensitive_Clock/Double_Sensitive_Clock.v
+L0 1
+Z2 OP;L;10.0d;49
+r1
+!s85 0
+31
+!s108 1357636890.484000
+!s107 C:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Errors/Double_Sensitive_Clock/Double_Sensitive_Clock.v|
+!s90 -reportprogress|300|-work|work|-nocovercells|C:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Errors/Double_Sensitive_Clock/Double_Sensitive_Clock.v|
+!s101 -O0
+Z3 !s102 -nocovercells
+Z4 o-work work -nocovercells -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -O0
+n@double_@sensitive_@clock
+vDouble_Sensitive_Clock_TB
+Z5 IF>@HWe=mS0DeY41cK`SeR2
+Z6 Vjb>9T32TzidlL[z?C@AVN0
+R1
+Z7 w1357636887
+Z8 8C:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Errors/Double_Sensitive_Clock/Double_Sensitive_Clock_TB.v
+Z9 FC:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Errors/Double_Sensitive_Clock/Double_Sensitive_Clock_TB.v
+L0 1
+R2
+r1
+31
+R4
+Z10 n@double_@sensitive_@clock_@t@b
+Z11 !s100 963kzahUV8mb>glIdUT=<0
+!s85 0
+Z12 !s108 1357636890.125000
+Z13 !s107 C:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Errors/Double_Sensitive_Clock/Double_Sensitive_Clock_TB.v|
+Z14 !s90 -reportprogress|300|-work|work|-nocovercells|C:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Errors/Double_Sensitive_Clock/Double_Sensitive_Clock_TB.v|
+!s101 -O0
+R3

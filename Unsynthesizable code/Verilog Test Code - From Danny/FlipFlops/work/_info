@@ -1,0 +1,105 @@
+m255
+K3
+13
+cModel Technology
+Z0 dC:\School\ECE 4899 - Senior Design\Verilog Test Code\FlipFlops
+vFlipFlops_TB
+Z1 ITf6KY4mBjBjdTMRbE4[nh3
+Z2 V=_OD:`@I=Rj18zWV[=FG=2
+Z3 dC:\School\ECE 4899 - Senior Design\Verilog Test Code\FlipFlops
+Z4 w1357633775
+Z5 8C:/School/ECE 4899 - Senior Design/Verilog Test Code/FlipFlops/FlipFlops_TB.v
+Z6 FC:/School/ECE 4899 - Senior Design/Verilog Test Code/FlipFlops/FlipFlops_TB.v
+L0 1
+Z7 OP;L;10.0d;49
+r1
+31
+Z8 !s90 -reportprogress|300|-work|work|-nocovercells|C:/School/ECE 4899 - Senior Design/Verilog Test Code/FlipFlops/FlipFlops_TB.v|
+Z9 !s102 -nocovercells
+Z10 o-work work -nocovercells -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -O0
+Z11 n@flip@flops_@t@b
+Z12 !s100 fmMd`45feh6bLNhcBKL=o2
+Z13 !s108 1357633781.828000
+Z14 !s107 C:/School/ECE 4899 - Senior Design/Verilog Test Code/FlipFlops/FlipFlops_TB.v|
+!s85 0
+!s101 -O0
+vNAR_NAS
+Z15 IiCR5a1nP=cZTl;@^Pzknf1
+Z16 V3mhQ62nUF;P88R__hjhF<3
+R3
+Z17 w1357633423
+Z18 8C:/School/ECE 4899 - Senior Design/Verilog Test Code/FlipFlops/NAR_NAS.v
+Z19 FC:/School/ECE 4899 - Senior Design/Verilog Test Code/FlipFlops/NAR_NAS.v
+L0 1
+R7
+r1
+31
+R9
+R10
+Z20 n@n@a@r_@n@a@s
+Z21 !s100 ?MH=cPBEN6`zVKI_Y6RdD3
+Z22 !s108 1357633782.218000
+Z23 !s107 C:/School/ECE 4899 - Senior Design/Verilog Test Code/FlipFlops/NAR_NAS.v|
+Z24 !s90 -reportprogress|300|-work|work|-nocovercells|C:/School/ECE 4899 - Senior Design/Verilog Test Code/FlipFlops/NAR_NAS.v|
+!s85 0
+!s101 -O0
+vNAR_NSS
+!s100 :LYYgDjhTOc1jiJTllWXV1
+I=0B3GQXmJ`HzZHI_e6jNV1
+V?`T6io<K^D1@PQQ`AEU7J3
+R3
+w1357633592
+8C:/School/ECE 4899 - Senior Design/Verilog Test Code/FlipFlops/NAR_NoSet.v
+FC:/School/ECE 4899 - Senior Design/Verilog Test Code/FlipFlops/NAR_NoSet.v
+L0 1
+R7
+r1
+!s85 0
+31
+!s108 1357633783.156000
+!s107 C:/School/ECE 4899 - Senior Design/Verilog Test Code/FlipFlops/NAR_NoSet.v|
+!s90 -reportprogress|300|-work|work|-nocovercells|C:/School/ECE 4899 - Senior Design/Verilog Test Code/FlipFlops/NAR_NoSet.v|
+!s101 -O0
+R9
+R10
+Z25 n@n@a@r_@n@s@s
+vNAR_PSS
+Z26 I[gklm=fO]TU4`fl=P]W533
+Z27 VO>V>Kl`b<WZ;RKHWJTKUZ0
+R3
+Z28 w1357633466
+Z29 8C:/School/ECE 4899 - Senior Design/Verilog Test Code/FlipFlops/NAR_PSS.v
+Z30 FC:/School/ECE 4899 - Senior Design/Verilog Test Code/FlipFlops/NAR_PSS.v
+L0 1
+R7
+r1
+31
+R9
+R10
+Z31 n@n@a@r_@p@s@s
+Z32 !s100 X[A8n9R2hKDLJd@oO9g3h2
+Z33 !s108 1357633782.593000
+Z34 !s107 C:/School/ECE 4899 - Senior Design/Verilog Test Code/FlipFlops/NAR_PSS.v|
+Z35 !s90 -reportprogress|300|-work|work|-nocovercells|C:/School/ECE 4899 - Senior Design/Verilog Test Code/FlipFlops/NAR_PSS.v|
+!s85 0
+!s101 -O0
+vNSR_NSS
+Z36 IYfaM7lJSCX@NN]B;@FWeR1
+Z37 VQ9W[Rbc]F`_dVB1KHOfZV1
+R3
+Z38 w1357633542
+Z39 8C:/School/ECE 4899 - Senior Design/Verilog Test Code/FlipFlops/NSR_NSS.v
+Z40 FC:/School/ECE 4899 - Senior Design/Verilog Test Code/FlipFlops/NSR_NSS.v
+L0 1
+R7
+r1
+31
+R9
+R10
+Z41 n@n@s@r_@n@s@s
+Z42 !s100 k^M4oPBNPo`bd66[jPYVL3
+!s85 0
+Z43 !s108 1357633782.953000
+Z44 !s107 C:/School/ECE 4899 - Senior Design/Verilog Test Code/FlipFlops/NSR_NSS.v|
+Z45 !s90 -reportprogress|300|-work|work|-nocovercells|C:/School/ECE 4899 - Senior Design/Verilog Test Code/FlipFlops/NSR_NSS.v|
+!s101 -O0

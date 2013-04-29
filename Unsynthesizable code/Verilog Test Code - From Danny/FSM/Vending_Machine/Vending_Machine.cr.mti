@@ -1,0 +1,15 @@
+{C:/School/ECE 4899 - Senior Design/Verilog Test Code/FSM/Vending_Machine/Vending_Machine.v} {1 {vlog -work work -nocovercells {C:/School/ECE 4899 - Senior Design/Verilog Test Code/FSM/Vending_Machine/Vending_Machine.v}
+Model Technology ModelSim PE Student Edition vlog 10.0d Compiler 2011.10 Oct 30 2011
+-- Compiling module Vending_Machine
+
+Top level modules:
+	Vending_Machine
+
+} {} {}} {C:/School/ECE 4899 - Senior Design/Verilog Test Code/FSM/Vending_Machine/Vending_Machine_TB.v} {1 {vlog -work work -nocovercells {C:/School/ECE 4899 - Senior Design/Verilog Test Code/FSM/Vending_Machine/Vending_Machine_TB.v}
+Model Technology ModelSim PE Student Edition vlog 10.0d Compiler 2011.10 Oct 30 2011
+-- Compiling module Vending_Machine_TB
+
+Top level modules:
+	Vending_Machine_TB
+
+} {} {}}

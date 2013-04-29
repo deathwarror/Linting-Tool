@@ -1,0 +1,11 @@
+{C:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Errors/Twice_Assigned_Output/Twice_Assigned_Output.v} {1 {vlog -work work -nocovercells {C:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Errors/Twice_Assigned_Output/Twice_Assigned_Output.v}
+Model Technology ModelSim PE Student Edition vlog 10.0d Compiler 2011.10 Oct 30 2011
+-- Compiling module Twice_Assigned_Output
+
+Top level modules:
+	Twice_Assigned_Output
+
+} {} {}} {C:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Errors/Twice_Assigned_Output/Twice_Assigned_Output_TB.v} {1 {vlog -work work -nocovercells {C:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Errors/Twice_Assigned_Output/Twice_Assigned_Output_TB.v}
+Model Technology ModelSim PE Student Edition vlog 10.0d Compiler 2011.10 Oct 30 2011
+
+} {} {}}

@@ -1,0 +1,48 @@
+module Sequence_Analyzer(input wire serialInput, clk, reset, output wire out);
+  reg [1:0] current;
+  reg [1:0] next;
+  
+  parameter start = 2'b00;
+  parameter got1 = 2'b01;
+  parameter got10 = 2'b10;
+  parameter got100 = 2'b11;
+
+  always@(serialInput or current)begin
+    case(current)
+      start:begin
+        if(serialInput)
+          next=got1;
+        else
+          next=start;
+      end
+      got1:begin
+        if(serialInput)
+          next=got1;
+        else
+          next=got10;
+      end
+      got10:begin
+        if(serialInput)
+          next=got1;
+        else
+          next=got100;
+      end
+      got100:begin
+        if(serialInput)
+          next=got1;
+        else
+          next=start;
+      end
+      default:next=start;
+    endcase
+  end
+  
+  always@(posedge clk or posedge reset)begin
+    if(reset)
+      current<=start;
+    else
+      current<=next;
+  end
+  
+  assign out = (current==got100);
+endmodule

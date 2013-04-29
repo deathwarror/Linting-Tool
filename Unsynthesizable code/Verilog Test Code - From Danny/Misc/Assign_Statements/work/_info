@@ -1,0 +1,64 @@
+m255
+K3
+13
+cModel Technology
+Z0 dC:\School\ECE 4899 - Senior Design\Verilog Test Code\FlipFlops
+vshell
+Z1 !s100 Oi4WaX^40^<7G<B==_4OX1
+Z2 IS<NN;Q7J]5Qje9O[nE7RR2
+Z3 VH8b:MglbWPUc:<V3i^SLA2
+Z4 dC:\School\ECE 4899 - Senior Design\Verilog Test Code\Misc\Assign_Statements
+w1358822833
+Z5 8C:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Assign_Statements/Shell.v
+Z6 FC:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Assign_Statements/Shell.v
+L0 3
+Z7 OP;L;10.0d;49
+r1
+!s85 0
+31
+!s108 1358822841.781000
+!s107 C:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Assign_Statements/Shell.v|
+Z8 !s90 -reportprogress|300|-work|work|-nocovercells|C:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Assign_Statements/Shell.v|
+!s101 -O0
+Z9 !s102 -nocovercells
+Z10 o-work work -nocovercells -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -O0
+vWire_Mid_Module
+Z11 IDjMfShWK;3^7a36FK^bVm1
+Z12 VM1@VHU2<Og_T0jIQA2cCF0
+R4
+Z13 w1358579157
+Z14 8C:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Assign_Statements/Wire_Mid_Module.v
+Z15 FC:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Assign_Statements/Wire_Mid_Module.v
+L0 1
+R7
+r1
+31
+Z16 !s90 -reportprogress|300|-work|work|-nocovercells|C:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Assign_Statements/Wire_Mid_Module.v|
+R9
+R10
+Z17 n@wire_@mid_@module
+Z18 !s100 @<TATL0iPi;JP]c:LdFN32
+Z19 !s108 1358579165.156000
+Z20 !s107 C:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Assign_Statements/Wire_Mid_Module.v|
+!s85 0
+!s101 -O0
+vWire_Tests
+Z21 !s100 6kH1zmb995Re<Z:]J:i[:2
+Z22 IJWd_WYA9BF1J0ic^V]K;83
+Z23 V]lQ_hLQMlgOmYLIda8`^b3
+R4
+Z24 w1358741168
+Z25 8C:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Assign_Statements/Wire_Tests.v
+Z26 FC:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Assign_Statements/Wire_Tests.v
+L0 1
+R7
+r1
+31
+Z27 !s90 -reportprogress|300|-work|work|-nocovercells|C:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Assign_Statements/Wire_Tests.v|
+R9
+R10
+Z28 n@wire_@tests
+Z29 !s108 1358743735.531000
+Z30 !s107 C:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Assign_Statements/Wire_Tests.v|
+!s85 0
+!s101 -O0

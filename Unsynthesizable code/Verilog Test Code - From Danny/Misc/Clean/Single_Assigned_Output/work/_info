@@ -1,0 +1,65 @@
+m255
+K3
+13
+cModel Technology
+Z0 dC:\School\ECE 4899 - Senior Design\Verilog Test Code\Misc\Errors\Twice_Assigned_Output
+vOutput_Assigned_From_Reg_Inputs
+Z1 !s100 Q9l47hMY<9iKMi66EzdGR1
+Z2 I=X=A`zLLh`DWeg6n[fPUg0
+Z3 Vbj=Kh[1H4LY:S9PV;Y[Ce1
+Z4 dC:\School\ECE 4899 - Senior Design\Verilog Test Code\Misc\Clean\Single_Assigned_Output
+Z5 w1358564254
+Z6 8C:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Clean/Single_Assigned_Output/Output_Assigned_From_Reg_Inputs.v
+Z7 FC:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Clean/Single_Assigned_Output/Output_Assigned_From_Reg_Inputs.v
+L0 1
+Z8 OP;L;10.0d;49
+r1
+!s85 0
+31
+!s108 1358564257.187000
+!s107 C:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Clean/Single_Assigned_Output/Output_Assigned_From_Reg_Inputs.v|
+Z9 !s90 -reportprogress|300|-work|work|-nocovercells|C:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Clean/Single_Assigned_Output/Output_Assigned_From_Reg_Inputs.v|
+!s101 -O0
+Z10 !s102 -nocovercells
+Z11 o-work work -nocovercells -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -O0
+Z12 n@output_@assigned_@from_@reg_@inputs
+vOutput_Assigned_Reg
+Z13 !s100 Qi7?=[Q[@081K8U0WXcjl1
+Z14 IB?YZF6U3kzHM>KYToJG3>1
+Z15 Vh<F]nbPmN7nA_b0n[FdVE1
+R4
+Z16 w1357637871
+Z17 8C:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Clean/Single_Assigned_Output/Output_Assigned_Reg.v
+Z18 FC:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Clean/Single_Assigned_Output/Output_Assigned_Reg.v
+L0 1
+R8
+r1
+31
+Z19 !s90 -reportprogress|300|-work|work|-nocovercells|C:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Clean/Single_Assigned_Output/Output_Assigned_Reg.v|
+R10
+R11
+Z20 n@output_@assigned_@reg
+Z21 !s108 1358564166.515000
+Z22 !s107 C:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Clean/Single_Assigned_Output/Output_Assigned_Reg.v|
+!s85 0
+!s101 -O0
+vSingle_Assigned_Output
+Z23 !s100 9GFTc=nRJ`_`oF_F>[eVY3
+Z24 IXo3b<V_0IjbLmLGZKfzK<2
+Z25 VMaNRz[SShCK1EhU4XPD<M0
+R4
+Z26 w1357637608
+Z27 8C:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Clean/Single_Assigned_Output/Single_Assigned_Output.v
+Z28 FC:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Clean/Single_Assigned_Output/Single_Assigned_Output.v
+L0 1
+R8
+r1
+31
+Z29 !s90 -reportprogress|300|-work|work|-nocovercells|C:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Clean/Single_Assigned_Output/Single_Assigned_Output.v|
+R10
+R11
+Z30 n@single_@assigned_@output
+Z31 !s108 1358564166.250000
+Z32 !s107 C:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Clean/Single_Assigned_Output/Single_Assigned_Output.v|
+!s85 0
+!s101 -O0

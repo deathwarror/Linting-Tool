@@ -1,0 +1,45 @@
+m255
+K3
+13
+cModel Technology
+Z0 dC:\School\ECE 4899 - Senior Design\Verilog Test Code\FSM\Vending_Machine
+vSequence_Analyzer
+Z1 !s100 `WJ5SHS<g?W;>J2ggZ0o:2
+Z2 IdILU>S]Lg]2ccS7?mD[9W1
+Z3 V3zi>EP]6E0jR1DSH;2hla1
+Z4 dC:\School\ECE 4899 - Senior Design\Verilog Test Code\FSM\Sequence_Analyzer
+Z5 w1357635997
+Z6 8C:/School/ECE 4899 - Senior Design/Verilog Test Code/FSM/Sequence_Analyzer/Sequence_Analyzer.v
+Z7 FC:/School/ECE 4899 - Senior Design/Verilog Test Code/FSM/Sequence_Analyzer/Sequence_Analyzer.v
+L0 1
+Z8 OP;L;10.0d;49
+r1
+!s85 0
+31
+!s108 1357636219.187000
+!s107 C:/School/ECE 4899 - Senior Design/Verilog Test Code/FSM/Sequence_Analyzer/Sequence_Analyzer.v|
+Z9 !s90 -reportprogress|300|-work|work|-nocovercells|C:/School/ECE 4899 - Senior Design/Verilog Test Code/FSM/Sequence_Analyzer/Sequence_Analyzer.v|
+!s101 -O0
+Z10 !s102 -nocovercells
+Z11 o-work work -nocovercells -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -O0
+Z12 n@sequence_@analyzer
+vSequence_Analyzer_TB
+Z13 IbSL4fLF3:>17zWG?G3Inj3
+Z14 V^@8ABC[z`56P^jDAo;OCM0
+R4
+Z15 w1357636216
+Z16 8C:/School/ECE 4899 - Senior Design/Verilog Test Code/FSM/Sequence_Analyzer/Sequence_Analyzer_TB.v
+Z17 FC:/School/ECE 4899 - Senior Design/Verilog Test Code/FSM/Sequence_Analyzer/Sequence_Analyzer_TB.v
+L0 1
+R8
+r1
+31
+R10
+R11
+Z18 n@sequence_@analyzer_@t@b
+Z19 !s100 9SlBUiG18S@<Yh;IBEGTQ0
+!s85 0
+Z20 !s108 1357636218.734000
+Z21 !s107 C:/School/ECE 4899 - Senior Design/Verilog Test Code/FSM/Sequence_Analyzer/Sequence_Analyzer_TB.v|
+Z22 !s90 -reportprogress|300|-work|work|-nocovercells|C:/School/ECE 4899 - Senior Design/Verilog Test Code/FSM/Sequence_Analyzer/Sequence_Analyzer_TB.v|
+!s101 -O0

@@ -1,0 +1,15 @@
+{C:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Errors/Double_Sensitive_Clock/Double_Sensitive_Clock.v} {1 {vlog -work work -nocovercells {C:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Errors/Double_Sensitive_Clock/Double_Sensitive_Clock.v}
+Model Technology ModelSim PE Student Edition vlog 10.0d Compiler 2011.10 Oct 30 2011
+-- Compiling module Double_Sensitive_Clock
+
+Top level modules:
+	Double_Sensitive_Clock
+
+} {} {}} {C:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Errors/Double_Sensitive_Clock/Double_Sensitive_Clock_TB.v} {1 {vlog -work work -nocovercells {C:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Errors/Double_Sensitive_Clock/Double_Sensitive_Clock_TB.v}
+Model Technology ModelSim PE Student Edition vlog 10.0d Compiler 2011.10 Oct 30 2011
+-- Compiling module Double_Sensitive_Clock_TB
+
+Top level modules:
+	Double_Sensitive_Clock_TB
+
+} {} {}}

@@ -1,0 +1,7 @@
+module Twice_Assigned_Output(input wire a, b, c, output wire out);
+//  reg [2:0] two_input;
+  always@(a or b)begin
+    out = a+b;
+  end
+//  assign out = b+c;  
+endmodule

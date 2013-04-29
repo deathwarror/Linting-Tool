@@ -1,0 +1,43 @@
+{C:/School/ECE 4899 - Senior Design/Verilog Test Code/FlipFlops/NAR_NSS.v} {1 {vlog -work work -nocovercells {C:/School/ECE 4899 - Senior Design/Verilog Test Code/FlipFlops/NAR_NSS.v}
+Model Technology ModelSim PE Student Edition vlog 10.0d Compiler 2011.10 Oct 30 2011
+-- Compiling module NAR_NSS
+
+Top level modules:
+	NAR_NSS
+
+} {} {}} {C:/School/ECE 4899 - Senior Design/Verilog Test Code/FlipFlops/FlipFlops_TB.v} {1 {vlog -work work -nocovercells {C:/School/ECE 4899 - Senior Design/Verilog Test Code/FlipFlops/FlipFlops_TB.v}
+Model Technology ModelSim PE Student Edition vlog 10.0d Compiler 2011.10 Oct 30 2011
+-- Compiling module FlipFlops_TB
+
+Top level modules:
+	FlipFlops_TB
+
+} {} {}} {C:/School/ECE 4899 - Senior Design/Verilog Test Code/FlipFlops/NAR_NoSet.v} {1 {vlog -work work -nocovercells {C:/School/ECE 4899 - Senior Design/Verilog Test Code/FlipFlops/NAR_NoSet.v}
+Model Technology ModelSim PE Student Edition vlog 10.0d Compiler 2011.10 Oct 30 2011
+-- Compiling module NAR_NSS
+
+Top level modules:
+	NAR_NSS
+
+} {} {}} {C:/School/ECE 4899 - Senior Design/Verilog Test Code/FlipFlops/NAR_NAS.v} {1 {vlog -work work -nocovercells {C:/School/ECE 4899 - Senior Design/Verilog Test Code/FlipFlops/NAR_NAS.v}
+Model Technology ModelSim PE Student Edition vlog 10.0d Compiler 2011.10 Oct 30 2011
+-- Compiling module NAR_NAS
+
+Top level modules:
+	NAR_NAS
+
+} {} {}} {C:/School/ECE 4899 - Senior Design/Verilog Test Code/FlipFlops/NAR_PSS.v} {1 {vlog -work work -nocovercells {C:/School/ECE 4899 - Senior Design/Verilog Test Code/FlipFlops/NAR_PSS.v}
+Model Technology ModelSim PE Student Edition vlog 10.0d Compiler 2011.10 Oct 30 2011
+-- Compiling module NAR_PSS
+
+Top level modules:
+	NAR_PSS
+
+} {} {}} {C:/School/ECE 4899 - Senior Design/Verilog Test Code/FlipFlops/NSR_NSS.v} {1 {vlog -work work -nocovercells {C:/School/ECE 4899 - Senior Design/Verilog Test Code/FlipFlops/NSR_NSS.v}
+Model Technology ModelSim PE Student Edition vlog 10.0d Compiler 2011.10 Oct 30 2011
+-- Compiling module NSR_NSS
+
+Top level modules:
+	NSR_NSS
+
+} {} {}}

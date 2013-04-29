@@ -1,0 +1,15 @@
+{C:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Assign_Statements/Wire_Tests.v} {1 {vlog -work work -nocovercells {C:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Assign_Statements/Wire_Tests.v}
+Model Technology ModelSim PE Student Edition vlog 10.0d Compiler 2011.10 Oct 30 2011
+-- Compiling module Wire_Tests
+
+Top level modules:
+	Wire_Tests
+
+} {} {}} {C:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Assign_Statements/Wire_Mid_Module.v} {1 {vlog -work work -nocovercells {C:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Assign_Statements/Wire_Mid_Module.v}
+Model Technology ModelSim PE Student Edition vlog 10.0d Compiler 2011.10 Oct 30 2011
+-- Compiling module Wire_Mid_Module
+
+Top level modules:
+	Wire_Mid_Module
+
+} {} {}}

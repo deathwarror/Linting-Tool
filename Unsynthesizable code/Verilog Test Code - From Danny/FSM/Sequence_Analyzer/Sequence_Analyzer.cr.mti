@@ -1,0 +1,15 @@
+{C:/School/ECE 4899 - Senior Design/Verilog Test Code/FSM/Sequence_Analyzer/Sequence_Analyzer.v} {1 {vlog -work work -nocovercells {C:/School/ECE 4899 - Senior Design/Verilog Test Code/FSM/Sequence_Analyzer/Sequence_Analyzer.v}
+Model Technology ModelSim PE Student Edition vlog 10.0d Compiler 2011.10 Oct 30 2011
+-- Compiling module Sequence_Analyzer
+
+Top level modules:
+	Sequence_Analyzer
+
+} {} {}} {C:/School/ECE 4899 - Senior Design/Verilog Test Code/FSM/Sequence_Analyzer/Sequence_Analyzer_TB.v} {1 {vlog -work work -nocovercells {C:/School/ECE 4899 - Senior Design/Verilog Test Code/FSM/Sequence_Analyzer/Sequence_Analyzer_TB.v}
+Model Technology ModelSim PE Student Edition vlog 10.0d Compiler 2011.10 Oct 30 2011
+-- Compiling module Sequence_Analyzer_TB
+
+Top level modules:
+	Sequence_Analyzer_TB
+
+} {} {}}

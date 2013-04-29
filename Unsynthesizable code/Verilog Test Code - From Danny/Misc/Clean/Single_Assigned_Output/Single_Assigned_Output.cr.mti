@@ -1,0 +1,22 @@
+{C:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Clean/Single_Assigned_Output/Output_Assigned_Reg.v} {1 {vlog -work work -nocovercells {C:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Clean/Single_Assigned_Output/Output_Assigned_Reg.v}
+Model Technology ModelSim PE Student Edition vlog 10.0d Compiler 2011.10 Oct 30 2011
+-- Compiling module Output_Assigned_Reg
+
+Top level modules:
+	Output_Assigned_Reg
+
+} {} {}} {C:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Clean/Single_Assigned_Output/Single_Assigned_Output.v} {1 {vlog -work work -nocovercells {C:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Clean/Single_Assigned_Output/Single_Assigned_Output.v}
+Model Technology ModelSim PE Student Edition vlog 10.0d Compiler 2011.10 Oct 30 2011
+-- Compiling module Single_Assigned_Output
+
+Top level modules:
+	Single_Assigned_Output
+
+} {} {}} {C:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Clean/Single_Assigned_Output/Output_Assigned_From_Reg_Inputs.v} {1 {vlog -work work -nocovercells {C:/School/ECE 4899 - Senior Design/Verilog Test Code/Misc/Clean/Single_Assigned_Output/Output_Assigned_From_Reg_Inputs.v}
+Model Technology ModelSim PE Student Edition vlog 10.0d Compiler 2011.10 Oct 30 2011
+-- Compiling module Output_Assigned_From_Reg_Inputs
+
+Top level modules:
+	Output_Assigned_From_Reg_Inputs
+
+} {} {}}
