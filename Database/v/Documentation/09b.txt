@@ -1,0 +1,13 @@
+09b:	This error is flagged there was a variable in a level sensitive always block
+	was used in a calculation but wasn't listed in the sensitivity list.
+
+Example:
+module IncompleteSensList("inputs and outputs");
+	reg c;
+	always @(a)begin //b flagged as un listed
+		c = a*b;
+	end	
+endmodule
+
+To fix remove unused variables from sensitivity list or include it in an
+assignment statement.

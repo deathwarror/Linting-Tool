@@ -65,8 +65,15 @@ public class Case extends Block {
         for(temp = parser.getNextPiece(); !temp.equals("endcase") && !temp.equals("##END_OF_MODULE_CODE"); temp=parser.getNextPiece()){
             if(temp.equals("$#")){
                 parser.updateLineNumber();
-            }else{
+            }
+            //if temp is a legal start to a verilog sub-case value
+            else if(Parser.isANumber(temp)==1
+                    || Module.checkVariableName(temp)
+                    || temp.equals("(")
+                    || temp.equals("{")){
                 SubCase.parseSubCase(cs, parser, temp);
+            }else{
+                //add piece identification error
             }
         }
         return temp;

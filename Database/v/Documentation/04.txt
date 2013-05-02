@@ -1,0 +1,30 @@
+04:	This error is flagged if any operator character is found in the sensitivity
+	list.
+	
+	List of characters:
+		=
+		|
+		&
+		*
+		^
+		/
+		+
+		-
+		!
+		~
+		<
+		>
+		?
+
+
+Example:
+module OperatorInSensList(input wire a, input wire b,
+			     output wire c);
+	
+	always @(a+b)begin//will flag line for '+' character in the list
+		c = a*b;
+	end
+endmodule
+
+To fix remove any of the characters from the flagged line is in the list of characters
+above.

@@ -1,0 +1,25 @@
+05:	This error is flagged if the assignment operators in an always block do not
+	match the type of always block.
+
+Example:
+module AssignmentVsSensType(input wire clk, input wire reset,
+			     input wire a, input wire b,
+			     output reg c, output d);
+	
+	always @(a)begin//level sensitive
+		c <= a;//Line will be flagged because the usage of <= in a 
+				level sensitive block
+	end
+	always @(posedge clk or posedge reset)begin//edge sensitive
+		if (reset)begin
+			d <= 0;
+		end
+		else
+			d = b;//Line will be flagged because a blocking statement is
+				being used in a edge sensitive block
+		end
+	end	
+endmodule
+
+To fix make all edge sensitive blocks contain non blocking statments and all level
+sensitive blocks contain blocking statments. 

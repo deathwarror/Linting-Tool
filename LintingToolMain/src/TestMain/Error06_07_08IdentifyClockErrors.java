@@ -21,6 +21,7 @@ public class Error06_07_08IdentifyClockErrors {
         ConditionStatement currentStatement;
         ArrayList<Variable> Clocks = new ArrayList(); 
         ArrayList<Variable> SensList;
+        ArrayList<Integer> LineNumbers = new ArrayList();
         
         
         
@@ -103,6 +104,7 @@ public class Error06_07_08IdentifyClockErrors {
                         //if there is only one variable that isnt used in the sensitivity list then assumes its the clock
                         else
                         {
+                            LineNumbers.add(currentBlock.LineNumber);
                             Clocks.add(SensList.get(0));
                         }
                     }
@@ -124,6 +126,8 @@ public class Error06_07_08IdentifyClockErrors {
                 errorOutput = "Error: Multible Clocks detected in module\n";
                 errorOutput += "\tFirst Clock: "+currentVar.getName()+"\n\tSecond Clock: "+Clocks.get(i).getName();
                 e.setErrorMsg(errorOutput);
+                e.addLineNumber(LineNumbers.get(0));
+                e.addLineNumber(LineNumbers.get(i));
                 System.out.println(errorOutput + "\n");
                 ErrorList.add(e);               
             }

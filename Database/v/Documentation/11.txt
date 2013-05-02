@@ -1,0 +1,15 @@
+11:	This error is flagged for a vector series with a logical not (!) symbol proceding 
+	the vector name.  This will not flag if the vector is inside parathesis.
+	!(vector) will not trigger the error because it assumes some sort of calculation.
+	
+	Error is flagged because logical not caused a single bit to be return, and on
+	vectors it returns least significant bit with the not operand.
+
+Example:
+module LogicalNotWithVector("inputs and outputs");
+	wire [4:0] vect;
+	reg [4:0] out;
+	assign out = !vect; //flags vector usage with the logical not
+endmodule
+
+To fix remove switch the character (!) with (~) the bit wise not character

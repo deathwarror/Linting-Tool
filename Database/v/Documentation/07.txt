@@ -1,12 +1,13 @@
-The Signal used for the clock could be explicitly used in a if statement.
-This is usually flagged for an always block that has no unused signals in the
-sensitivity list.
-
-	Always @("Sensitiviy List")begin
-		if("Sensitivity List Item")begin
+07:	The Signal used for the clock could be explicitly used in a if statement.
+	This is usually flagged for an always block that has no unused signals in the
+	sensitivity list.
+module ClkErrors("inputs and outputs")
+	Always @("Sensitivity List")begin
+		if("One of the Sensitivity List Items")begin
 			//lines
 		end
-		else if("Last Item In sensitivity List Used") begin
+		//more else if statements
+		else if("Last Sensitivity List item causing all to be used") begin
 			//lines
 		end
 	end

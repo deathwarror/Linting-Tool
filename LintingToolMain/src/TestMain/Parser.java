@@ -17,6 +17,7 @@ public class Parser {
     private String cleanInput;
     private ArrayList<String> usedPieces;
     private ArrayList<String> freshPieces;
+    private ArrayList<String> taskOrFunctionNames;
     private int freshPieceIndex;
     public static int currentLineNumber;
     
@@ -30,6 +31,7 @@ public class Parser {
         freshPieces = new ArrayList();
         Blocks = new ArrayList();
         parserErrorList = new ArrayList();
+        taskOrFunctionNames = new ArrayList();
         freshPieceIndex = -1;
         currentLineNumber=0;
         
@@ -48,6 +50,7 @@ public class Parser {
         if(!parserErrorList.isEmpty()){
             return;
         }
+        getTaskAndFunctionNames();
         
         String bob = getNextPiece();
         checkForNewBlock(top,bob); //this gets the first line number,
@@ -93,10 +96,10 @@ public class Parser {
                 case '\r':
                     clean[i]=' ';
                     break;
-/*                case ',':
+                case '\t':
                     clean[i]=' ';
                     break;
-*/                default:
+                default:
                     break;
             }
         }
@@ -129,6 +132,8 @@ public class Parser {
         spacer = spaceElement("|",spacer);
         spacer = spaceElement("&",spacer);
         spacer = spaceElement("#",spacer);
+        spacer = spaceElement("{",spacer);
+        spacer = spaceElement("}",spacer);
 
 //        System.out.println("\nEvenly Spaced\n"+spacer+"\n");
         return removeRadixSpaces(spacer);
@@ -193,6 +198,10 @@ public class Parser {
             IfElse.parseElse(current, this);
         }else if( piece.equals("case")){
             Case.parseCase(current, this);
+        }else if( piece.equals("task")){
+            Task.parseTask(current, this);
+        }else if( piece.equals("function")){
+            Function.parseFunction(current, this);
         }else if( piece.equals("$#")){
             updateLineNumber();
         }
@@ -323,6 +332,18 @@ public class Parser {
         else if(piece.equals("default"))
             return true;
         else if(piece.equals("forever"))
+            return true;
+        else if(piece.equals("task"))
+            return true;
+        else if(piece.equals("function"))
+            return true;
+        else if(piece.equals("while"))
+            return true;
+        else if(piece.equals("for"))
+            return true;
+        else if(piece.equals("repeat"))
+            return true;
+        else if(piece.equals("initial"))
             return true;
         else if(piece.equals("$#"))
             return true;
@@ -484,6 +505,31 @@ public class Parser {
     public ArrayList<Error> getParserErrorList(){
         return parserErrorList;
     }
-    
+    public void getTaskAndFunctionNames(){
+        for(int i=1; i<freshPieces.size(); i++){
+            if(freshPieces.get(i-1).equals("function")){
+                taskOrFunctionNames.add("function");
+                taskOrFunctionNames.add(freshPieces.get(i));
+            }else if(freshPieces.get(i-1).equals("task")){
+                taskOrFunctionNames.add("task");
+                taskOrFunctionNames.add(freshPieces.get(i));
+            }
+        }
+    }
+    public int checkTaskOrFunctionName(String name){
+        // 1: indicates "name" is a task
+        // 2: indicates "name" is a function
+        // 0: indicates "name" is neither
+        for(int i=1; i<taskOrFunctionNames.size(); i++){
+            if(taskOrFunctionNames.get(i).equals(name)){
+                if(taskOrFunctionNames.get(i-1).equals("task")){
+                    return 1;
+                }else if(taskOrFunctionNames.get(i-1).equals("function")){
+                    return 2;
+                }
+            }
+        }
+        return 0;
+    }
     
 }

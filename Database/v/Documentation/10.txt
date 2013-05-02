@@ -1,0 +1,13 @@
+10:	This error is flagged for a vector series being preset in the sensitivity list
+	of an always block.
+
+Example:
+module VectorArrayInSensList("inputs and outputs");
+	reg [2:0] a;
+	reg c;
+	always @(a)begin //a flagged vector in sensitivity list
+		//lines
+	end	
+endmodule
+
+To fix remove the vector or list each port with its sensitivity.

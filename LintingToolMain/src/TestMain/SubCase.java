@@ -74,25 +74,63 @@ public class SubCase extends Block{
                     parser.checkForNewBlock(sub, temp);
                     if(!temp.equals("$#"))
                         sub.subCaseBlockOrder.add(new Integer(1));
-                }else {
+                }
+                else if(parser.checkTaskOrFunctionName(temp)!=0){
+                    String taskCallText = "";
+                    ArrayList<String> taskCallElements = new ArrayList();
+                    for(; !temp.equals(";") &&
+                            !temp.equals("##END_OF_MODULE_CODE");
+                            temp=parser.getNextPiece()){
+                        taskCallText += temp+" ";
+                        taskCallElements.add(temp);
+                    }
+                    sub.addVariable(new TaskCall(taskCallText,taskCallElements));
+                    sub.subCaseBlockOrder.add(new Integer(2));
+                }
+                else if( sub.findVariableInParentBlockHierarchy(temp) !=null ||
+                        !sub.findVectorNameInParentBlockHierarchy(temp).isEmpty()){
                     for(statementText=""; !temp.equals(";") && !temp.equals("##END_OF_MODULE_CODE"); temp = parser.getNextPiece()){
                         statementText+=temp+" ";
                     }
                     sub.addAssignment(new AssignmentStatement(statementText,sub));
                     sub.subCaseBlockOrder.add(new Integer(0));
                 }
+                else {
+                    //add piece identification error here
+                }
             }
         }else {
+            if(temp.equals("$#")){
+                parser.checkForNewBlock(sub, temp);
+                temp = parser.getNextPiece();
+            }
             if(parser.pieceIsKeyword(temp)){
                 parser.checkForNewBlock(sub, temp);
                 if(!temp.equals("$#"))
                     sub.subCaseBlockOrder.add(new Integer(1));
-            }else {
+            }
+            else if(parser.checkTaskOrFunctionName(temp)!=0){
+                String taskCallText = "";
+                ArrayList<String> taskCallElements = new ArrayList();
+                for(; !temp.equals(";") &&
+                        !temp.equals("##END_OF_MODULE_CODE");
+                        temp=parser.getNextPiece()){
+                    taskCallText += temp+" ";
+                    taskCallElements.add(temp);
+                }
+                sub.addVariable(new TaskCall(taskCallText,taskCallElements));
+                sub.subCaseBlockOrder.add(new Integer(2));
+            }
+            else if( sub.findVariableInParentBlockHierarchy(temp)!=null ||
+                    !sub.findVectorNameInParentBlockHierarchy(temp).isEmpty()){
                 for(statementText=""; !temp.equals(";") && !temp.equals("##END_OF_MODULE_CODE"); temp = parser.getNextPiece()){
                     statementText+=temp+" ";
                 }
                 sub.addAssignment(new AssignmentStatement(statementText,sub));
                 sub.subCaseBlockOrder.add(new Integer(0));
+            }
+            else {
+                //add piece identification error here
             }
         }
 
@@ -101,18 +139,21 @@ public class SubCase extends Block{
     @Override
     public String toString(){
         String temp="";
-        int i=0; int subBlockCount=0; int assignmentStatementCount=0;
+        int i=0; int subBlockCount=0; int assignmentStatementCount=0; int varsCount=0;
         temp += condition.toString()+": begin \\\\LINE: "+LineNumber+
                 ", Vars in Condition: "+condition.conditionVars.toString()+"\n";
 
-        for(i=0, subBlockCount=0, assignmentStatementCount=0;
+        for(i=0, subBlockCount=0, assignmentStatementCount=0, varsCount=0;
             i< this.subCaseBlockOrder.size(); i++){
             if(subCaseBlockOrder.get(i) == 1){
                 temp += this.subBlocks.get(subBlockCount).toString();
                 subBlockCount++;
-            }else {
+            }else if(!assignments.isEmpty()){
                 temp += this.assignments.get(assignmentStatementCount);
                 assignmentStatementCount++;
+            }else if(!vars.isEmpty()){
+                temp += this.vars.get(varsCount);
+                varsCount++;
             }
         }
         

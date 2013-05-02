@@ -15,6 +15,8 @@ import javax.swing.JFileChooser;
 import java.io.File;
 import java.util.Scanner;
 import java.util.ArrayList;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 /**
  *
  *

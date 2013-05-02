@@ -72,7 +72,9 @@ public class Module extends Block{
     public Variable findVariableInModule(String searchName){
         for(int i=0; i<vars.size(); i++){
             if(vars.get(i).name.equals(searchName)){
-                return vars.get(i);
+                if(vars.get(i).getClass()!=TaskCall.class && vars.get(i).getClass()!=FunctionCall.class){
+                    return vars.get(i);
+                }
             }
         }
         return null;
@@ -210,9 +212,9 @@ public class Module extends Block{
                 //set up the template
                 Variable template = findVariableInModulePortList(varNames.get(i));
                 if(vecTypes.get(i).equals("reg")){
-                    template = new Reg(varNames.get(i), vecAttributes.get(i), lastSign, 1);
+                    template = new Reg(varNames.get(i), vecAttributes.get(i), lastSign, 0);
                 }else {
-                    template = new Wire(varNames.get(i), vecAttributes.get(i), lastSign, 1);
+                    template = new Wire(varNames.get(i), vecAttributes.get(i), lastSign, 0);
                 }
 
                 //parse the vector if necessary
@@ -246,7 +248,7 @@ public class Module extends Block{
             }else if(temp.equals("signed") || temp.equals("unsigned")){
                 lastSign = temp;
             }else if(temp.equals(",")){
-                arraySize.add(new Integer(1));
+                arraySize.add(new Integer(0));
             }else if(temp.equals("[") && parVector){
                 for( temp=parser.getNextPiece(); !temp.equals(":") && !temp.equals("##END_OF_MODULE_CODE");
                     temp=parser.getNextPiece()){ vecStart += temp + " "; }
@@ -308,7 +310,7 @@ public class Module extends Block{
     }
 
     public static String parseModule(Block current, Parser parser){
-        String temp = parser.getNextPiece(); //should be equal to the module head
+        String temp = parser.getNextPiece(); //should be equal to the module head name
         String lastType="DEFAULT_NET_TYPE";
         String lastAttribute = "";
         Module module = new Module("module",current, temp);
@@ -338,7 +340,7 @@ public class Module extends Block{
                 }
                 module.assignments.add(new ContinuousAssignment(module.statementText,module));
             }
-            else if(!parser.pieceIsKeyword(temp) && (module.findVariableInModule(temp)==null)) {
+            else if(!parser.pieceIsKeyword(temp) && (module.findVariableInModule(temp)==null) && parser.checkTaskOrFunctionName(temp)==0) {
 
                 ArrayList<String> subModule = new ArrayList();
                 String subModuleText="";
@@ -355,6 +357,23 @@ public class Module extends Block{
                 }
                 module.addModuleInstantiation(new ModuleInstantiation(subModuleText, subModule, line));
             }
+            //check for a task call, and ignore it if its present
+            else if(parser.checkTaskOrFunctionName(temp)!=0){
+                int type = parser.checkTaskOrFunctionName(temp);
+                String CallText = "";
+                ArrayList<String> CallElements = new ArrayList();
+                for(; !temp.equals(";") && 
+                        !temp.equals("##END_OF_MODULE_CODE"); 
+                        temp=parser.getNextPiece()){
+                    CallText += temp+" ";
+                    CallElements.add(temp);
+                }
+                if(type == 1){
+                    module.addVariable(new TaskCall(CallText,CallElements));
+                }else if(type == 2){
+                    module.addVariable(new FunctionCall(CallText,CallElements));
+                }
+            } 
             else{
                 /* If the string temp is a keyword then once it is back in the
                  * it is checked to see if it is part of a block, and if so

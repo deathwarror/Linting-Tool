@@ -1,0 +1,17 @@
+08:	This error is flagged if the clock idenitified in one always block does not
+	match the clock identified in another always block.
+
+Example:
+module ClkErrors("inputs and outputs");
+
+	always @(posedge clk or posedge reset)begin//clk is identified as clock
+		//lines
+	end
+	always @(posedge clk2 or posedge reset)begin//clk2 is identified as clock
+						    //clk from first always and 
+						            clk2 don't match
+		//lines
+	end	
+endmodule
+
+To fix make sure the clock variables match in all always blocks.

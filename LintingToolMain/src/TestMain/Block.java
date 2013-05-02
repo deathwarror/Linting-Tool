@@ -48,7 +48,7 @@ public class Block {
     }
     public void addVariable(Variable newVariable){
         vars.add(newVariable);
-        sortVariables();
+//        sortVariables();
     }
     public void addSubBlock(Block newSubBlock){
         subBlocks.add(newSubBlock);
@@ -76,7 +76,9 @@ public class Block {
         do{
             for(i=0; i<checker.vars.size(); i++){
                 if(checker.vars.get(i).getName().equals(varToFind))
-                    return checker.vars.get(i);
+                    if(checker.vars.get(i).getClass()!=TaskCall.class && checker.vars.get(i).getClass()!=FunctionCall.class){
+                        return checker.vars.get(i);
+                    }
             }
             checker = checker.parent;
         }while(checker != null);
@@ -104,7 +106,14 @@ public class Block {
         for(int i=0; i<subBlocks.size(); i++){
             collection.addAll( subBlocks.get(i).getAllVariables());
         }
-        return collection;
+        
+        ArrayList<Variable> cleanCollection = new ArrayList();
+        for(int i=0; i<collection.size(); i++){
+            if(collection.get(i).getClass()!=TaskCall.class && collection.get(i).getClass()!=FunctionCall.class){
+                cleanCollection.add(collection.get(i));
+            }
+        }
+        return cleanCollection;
     }
 
     public ArrayList<Block> getAllBlocks(){

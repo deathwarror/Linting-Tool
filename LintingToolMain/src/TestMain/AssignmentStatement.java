@@ -38,6 +38,9 @@ public class AssignmentStatement {
         parent = blockSource;
         LineNumber = Parser.currentLineNumber;
         
+        
+        System.out.println(LineNumber);
+        
         identifyLHSvariables();
         identifyRHSvariables();
     }
@@ -46,7 +49,7 @@ public class AssignmentStatement {
         String preserve = assignmentText;
         String temp = getNextPiece();
         Variable tempVar=null;
-        for(; !temp.equals("=") && !temp.equals("<"); temp=getNextPiece()){
+        for(; !temp.equals("=") && !temp.equals("<")&& !temp.equals("##END_OF_STATEMENT"); temp=getNextPiece()){
             if( !expressionPiece(temp) ){
                 tempVar = parent.findVariableInParentBlockHierarchy(temp);
                 if(tempVar != null){
@@ -59,7 +62,8 @@ public class AssignmentStatement {
                     String vecStart = "";
                     String vecEnd = "";
                     temp = getNextPiece(); //should equal '['
-                    for(temp=getNextPiece(); !temp.equals(":") && !temp.equals("]"); temp=getNextPiece()){
+                    for(temp=getNextPiece(); !temp.equals(":") && !temp.equals("]") && 
+                            !temp.equals("##END_OF_STATEMENT"); temp=getNextPiece()){
                         vecStart += temp;
                     }
                     int MSB = Integer.parseInt( Parser.parseNumberFromExpression(vecStart+" ") );

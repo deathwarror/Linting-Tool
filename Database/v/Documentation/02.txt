@@ -1,0 +1,30 @@
+02:	This Error is reported if an always block contains blocking and non blocking
+	assignment statements.
+	This error list the first two that match the error.
+
+Example:
+module BlockingNonBLocking(input wire clk, input wire reset,
+			   input wire data1, input wire data2,
+			   input wire select, output reg c);
+	always @(posedge clk or posedge reset)begin
+		if(reset)begin	
+			out <=1'b0;//error flagged with non blocking line
+		end
+		else begin
+			if(select == 1'b0)begin
+				out <= data1;
+			end
+			else begin
+				out = data2;//error flagged with blocking line
+			end
+		end
+	end
+endmodule
+
+To fix this issue make sure all assignment statements in always block match.
+	
+Please note that using incorrect assignment statements for the type of 
+	always block will also trigger an error.
+	Follow the pattern where if an always block sensitivity list has edges
+	then all assignment statements need <= and for level sensitive lists need
+	=  in them.

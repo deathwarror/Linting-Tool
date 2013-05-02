@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jnlp spec="1.0+" codebase=
+"#$CodeBASE_URL_HERE" 
+    href="LintingTool_WebStart.jnlp"
+    version="#$Version_Here">
+    <information>
+        <title>Linting Tool</title>
+        <vendor>UCCS</vendor>
+    </information>
+    <resources>
+        <!-- Application Resources -->
+        <j2se version="#$JAVA_VERSION_HERE"
+              href="http://java.sun.com/products/autodl/j2se"/>
+        <jar href="LintingTool.jar"
+            main="true" />
+
+    </resources>
+    <application-desc
+         name="UCCS Linting Tool"
+         main-class=
+           "TestMain.MainGUI"
+         width="300"
+         height="300">
+     </application-desc>
+     <update check="background"/>
+<security>
+    <all-permissions/>
+</security>
+</jnlp>

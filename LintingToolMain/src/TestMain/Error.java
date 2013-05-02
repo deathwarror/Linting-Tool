@@ -33,6 +33,14 @@ public class Error {
         ErrorMsg = ErrorMsg_in;
     }
 
+    Error(String ErrorNum, String ErrorMsg_in, int line)
+    {
+        ErrorNumber = ErrorNum;
+        ErrorMsg = ErrorMsg_in;
+        LineNumbers = new ArrayList();
+        LineNumbers.add(line);
+    }
+
     public String setLineNumbers(ArrayList<Integer> NewLns)
     {
         LineNumbers = NewLns;

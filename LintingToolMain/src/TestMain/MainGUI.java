@@ -4,21 +4,28 @@
  */
 package TestMain;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JTextArea;
-import javax.swing.ListSelectionModel;
+import javax.swing.JScrollPane;
+
 /**
  *
  * @author Deathwarror
  */
 public class MainGUI extends javax.swing.JFrame {
 
-    DefaultListModel FileListModel;
-    DefaultListModel ErrorListModel;
-    DefaultListModel CodeListModel;
+    private String ErrorLineColor = "DF0101";
+    private DefaultListModel FileListModel;
+    private DefaultListModel ErrorListModel;
+    private DefaultListModel CodeListModel;
+    private int ScreenHeight;
+    private int ScreenWidth;
+    private Dimension dim;
     /**
      * Creates new form MainGUI
      */
@@ -32,6 +39,12 @@ public class MainGUI extends javax.swing.JFrame {
         ErrorListBox.setModel(ErrorListModel);
         CodeListBox.setModel(CodeListModel);
         RemoveButton.setEnabled(false);
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        dim = toolkit.getScreenSize();
+        ScreenHeight = (int)(dim.height*.8);
+        ScreenWidth = (int)(dim.width*.8);
+        this.setSize(new Dimension(ScreenWidth,ScreenHeight));
+        this.setLocation((int)((dim.width-ScreenWidth)/2),(int)((dim.height-ScreenHeight)/2));
     }
 
     /**
@@ -56,12 +69,10 @@ public class MainGUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Linting Tool");
+        setBounds(new java.awt.Rectangle(0, 0, 800, 600));
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setPreferredSize(new java.awt.Dimension(800, 600));
 
-        FileListBox.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
         FileListBox.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 FileListBoxValueChanged(evt);
@@ -89,11 +100,7 @@ public class MainGUI extends javax.swing.JFrame {
 
         ErrorMsgTitle.setText("Error Messages");
 
-        ErrorListBox.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
+        ErrorListBox.setToolTipText("Right Click For More Information about the Error (Requires Internet Connection)");
         ErrorListBox.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 ErrorListBoxMouseClicked(evt);
@@ -106,11 +113,6 @@ public class MainGUI extends javax.swing.JFrame {
         });
         ErrorListPane.setViewportView(ErrorListBox);
 
-        CodeListBox.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
         CodeListPane.setViewportView(CodeListBox);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -134,7 +136,7 @@ public class MainGUI extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(CodeListTitle)
-                                .addGap(0, 241, Short.MAX_VALUE))
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(CodeListPane))
                         .addContainerGap())))
         );
@@ -147,7 +149,7 @@ public class MainGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(FileListPane, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
+                        .addComponent(FileListPane)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(AddButton)
@@ -173,16 +175,18 @@ public class MainGUI extends javax.swing.JFrame {
         {
             newFile.setCode(FR.getCode());
             newFile.setName(FR.getFileName());
+            System.out.println("enter");
             parser = new Parser(newFile.getCode());
+            System.out.println("exit parser");
             newFile.setErrorList(ES.Start(parser));
+            System.out.println("exit Error list");
             FileListModel.addElement(newFile);
             FileListBox.setSelectedIndex(FileListModel.size()-1);
             FileListBox.ensureIndexIsVisible(FileListModel.size()-1);
         }
         else
         {
-            JFrame frame = new JFrame("File Read Error");
-            JOptionPane.showMessageDialog(frame, "Error the File Failed to Read");
+            JOptionPane.showMessageDialog(new JFrame(), "Error the File Failed to Read");
         }
 
     }//GEN-LAST:event_AddButtonActionPerformed
@@ -300,7 +304,7 @@ public class MainGUI extends javax.swing.JFrame {
                           {
                               if(ErrorLines.get(j).intValue()-1 == i)
                               {
-                                  FileCode = "<body bgcolor=\"#DF0101\">"+FileCode;
+                                  FileCode = "<body bgcolor="+ErrorLineColor+"\">"+FileCode;
                                   j++;
                               }
                           }
@@ -321,6 +325,8 @@ public class MainGUI extends javax.swing.JFrame {
             SimpleFileStore WorkingStore;
             ArrayList<Error> EL;
             String ErrorNumber;
+            JEditorPane ErrorD;
+            JScrollPane JSP;
             
             int FileIndex = FileListBox.getSelectedIndex();
             int index = ErrorListBox.getSelectedIndex();
@@ -328,12 +334,28 @@ public class MainGUI extends javax.swing.JFrame {
             {
                 WorkingStore = (SimpleFileStore) FileListModel.get(FileIndex);
                 EL = WorkingStore.getErrorList();
-                JFrame frame = new JFrame();
+  
                 if(EL.size()>0)
                 {
                     ErrorNumber = EL.get(index).getErrorNum();
-                    Description = EDL.load(ErrorNumber);
-                    JOptionPane.showMessageDialog(frame, Description,("Error: "+ ErrorNumber),JOptionPane.INFORMATION_MESSAGE );
+                    try{
+                        Description = EDL.getURL(ErrorNumber);
+                        ErrorD = new JEditorPane(Description);
+                        ErrorD.setEditable(false);
+                        //Create the New Pane with information in it.
+                        JSP = new JScrollPane(ErrorD);
+                        
+                        //Set the pane size to a size approxmently 72% and 68% of the window size.
+                        JSP.setPreferredSize(new Dimension((int)(ScreenWidth*.9-200),(int)(ScreenHeight*.9-30)));
+                        JSP.setLocation((int)((dim.width-ScreenWidth-200)/2),(int)((dim.height-ScreenHeight)/2));
+                        JOptionPane.showMessageDialog(null, JSP,("Error: "+ ErrorNumber),JOptionPane.INFORMATION_MESSAGE );
+                    }
+                    catch(Exception e)
+                    {
+                        Description = EDL.load(ErrorNumber);
+                        JOptionPane.showMessageDialog(new JFrame(), Description,("Error: "+ ErrorNumber),JOptionPane.INFORMATION_MESSAGE );
+                    }
+                    
                 }
             }
             
@@ -440,4 +462,6 @@ public class MainGUI extends javax.swing.JFrame {
     private javax.swing.JLabel FileListTitle;
     private javax.swing.JButton RemoveButton;
     // End of variables declaration//GEN-END:variables
+
+
 }

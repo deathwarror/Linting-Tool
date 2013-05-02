@@ -1,0 +1,16 @@
+06:	This error is flagged if the sensitivity list of an always block only has 
+	one item and if the list type is edge sensitive.
+	The item this is searching for is a reset variable included in the sensitivity
+	list for a flip flop always block.
+
+Example:
+module ClkErrors("inputs and outputs");
+
+	always @(posedge clk)begin//edge sensitive and one item in 
+							sensitivity list
+		//lines
+	end	
+endmodule
+
+To fix make sure there is atleast one unused signal and one used signal in an 
+edge sensitive always block.

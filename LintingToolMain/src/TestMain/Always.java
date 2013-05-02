@@ -48,29 +48,59 @@ public class Always extends Block{
             for(; !temp.equals("end") && !temp.equals("##END_OF_MODULE_CODE"); temp=parser.getNextPiece()){
                 //will need to handle: if, switch, assignments,
                 //Syntax error if there are: nested always,
-                if(!parser.pieceIsKeyword(temp)){
+                if(!parser.pieceIsKeyword(temp) && parser.checkTaskOrFunctionName(temp)==0){
                     for(; !temp.equals(";") && !temp.equals("##END_OF_MODULE_CODE"); temp = parser.getNextPiece()){
                         statementText += temp+" ";
                     }
                     always.addAssignment(new AssignmentStatement(statementText,always));
                     always.alwaysBlockOrder.add(new Integer(0));
                     statementText = "";
-                }else{
+                }
+                else if(parser.checkTaskOrFunctionName(temp)!=0){
+                    String taskCallText = "";
+                    ArrayList<String> taskCallElements = new ArrayList();
+                    for(; !temp.equals(";") && 
+                            !temp.equals("##END_OF_MODULE_CODE"); 
+                            temp=parser.getNextPiece()){
+                        taskCallText += temp+" ";
+                        taskCallElements.add(temp);
+                    }
+                    always.addVariable(new TaskCall(taskCallText,taskCallElements));
+                    always.alwaysBlockOrder.add(new Integer(2));
+                }
+                else{
                     parser.checkForNewBlock(always, temp);
                     if(!temp.equals("$#"))
                         always.alwaysBlockOrder.add(new Integer(1));
                 }
             }
         }else{
+            if(temp.equals("$#")){
+                parser.checkForNewBlock(always, temp);
+                temp = parser.getNextPiece();
+            }            
             if(!parser.pieceIsKeyword(temp)){
-                if(!parser.pieceIsKeyword(temp)){
+                if(!parser.pieceIsKeyword(temp) && parser.checkTaskOrFunctionName(temp)==0){
                     for(; !temp.equals(";") && !temp.equals("##END_OF_MODULE_CODE"); temp = parser.getNextPiece()){
                         statementText += temp+" ";
                     }
                     always.addAssignment(new AssignmentStatement(statementText,always));
                     always.alwaysBlockOrder.add(new Integer(0));
                     statementText = "";
-                }else{//need suppprt for adding other subBlocks
+                }
+                else if(parser.checkTaskOrFunctionName(temp)!=0){
+                    String taskCallText = "";
+                    ArrayList<String> taskCallElements = new ArrayList();
+                    for(; !temp.equals(";") && 
+                            !temp.equals("##END_OF_MODULE_CODE"); 
+                            temp=parser.getNextPiece()){
+                        taskCallText += temp+" ";
+                        taskCallElements.add(temp);
+                    }
+                    always.addVariable(new TaskCall(taskCallText,taskCallElements));
+                    always.alwaysBlockOrder.add(new Integer(2));
+                }
+                else{
                     always.alwaysBlockOrder.add(new Integer(1));
                 }
             }
@@ -213,7 +243,7 @@ public class Always extends Block{
     }
     @Override
     public String toString(){
-        int i = 0; int subBlockCount=0; int assignmentStatementCount=0;
+        int i = 0; int subBlockCount=0; int assignmentStatementCount=0; int taskCallCount=0;
         String temp = "always@( ";
         if(this.BlockType.equals("edgeSensitive") && sensitivityList.size()>0){
             temp+= sensitivityList.get(0).getEdgeSensitivity();
@@ -239,6 +269,9 @@ public class Always extends Block{
            }else if(alwaysBlockOrder.get(i) == 1){
                temp+= subBlocks.get(subBlockCount).toString();
                subBlockCount++;
+           }else if(alwaysBlockOrder.get(i) == 2){
+               temp+= vars.get(taskCallCount);
+               taskCallCount++;
            }
         }
         temp += "end //end always\n";

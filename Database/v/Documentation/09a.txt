@@ -1,0 +1,14 @@
+09a:	This error is flagged there was a variable in a level sensitive always block
+	wasn't used in a calculation, making the signal unneeded in the sensitivity 
+	list.
+
+Example:
+module IncompleteSensList("inputs and outputs");
+	reg c;
+	always @(a or b)begin //b flagged as unused
+		c = a;
+	end	
+endmodule
+
+To fix remove unused variables from sensitivity list or include it in an
+assignment statement.

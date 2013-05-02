@@ -1,3 +1,3 @@
 jar tf LintingTool.jar
-javaw.exe -jar LintingTool.jar
+java.exe -jar LintingTool.jar
 pause

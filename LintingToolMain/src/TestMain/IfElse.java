@@ -77,25 +77,63 @@ public class IfElse extends Block {
                     parser.checkForNewBlock(ie, temp);
                     if(!temp.equals("$#"))
                         ie.ifElseBlockOrder.add(new Integer(1));
-                }else {
+                }
+                else if(parser.checkTaskOrFunctionName(temp)!=0){
+                    String taskCallText = "";
+                    ArrayList<String> taskCallElements = new ArrayList();
+                    for(; !temp.equals(";") && 
+                            !temp.equals("##END_OF_MODULE_CODE"); 
+                            temp=parser.getNextPiece()){
+                        taskCallText += temp+" ";
+                        taskCallElements.add(temp);
+                    }
+                    ie.addVariable(new TaskCall(taskCallText,taskCallElements));
+                    ie.ifElseBlockOrder.add(new Integer(2));
+                }
+                else if( ie.findVariableInParentBlockHierarchy(temp)!=null ||
+                        !ie.findVectorNameInParentBlockHierarchy(temp).isEmpty()){
                     for(statementText=""; !temp.equals(";") && !temp.equals("##END_OF_MODULE_CODE"); temp = parser.getNextPiece()){
                         statementText+=temp+" ";
                     }
                     ie.addAssignment(new AssignmentStatement(statementText,ie));
                     ie.ifElseBlockOrder.add(new Integer(0));
                 }
+                else {
+                    //add piece identification error here
+                }
             }
         }else {
+            if(temp.equals("$#")){
+                parser.checkForNewBlock(ie, temp);
+                temp = parser.getNextPiece();
+            }
             if(parser.pieceIsKeyword(temp)){
                 parser.checkForNewBlock(ie, temp);
                 if(!temp.equals("$#"))
                     ie.ifElseBlockOrder.add(new Integer(1));
-            }else {
+            }
+            else if(parser.checkTaskOrFunctionName(temp)!=0){
+                String taskCallText = "";
+                ArrayList<String> taskCallElements = new ArrayList();
+                for(; !temp.equals(";") && 
+                        !temp.equals("##END_OF_MODULE_CODE"); 
+                        temp=parser.getNextPiece()){
+                    taskCallText += temp+" ";
+                    taskCallElements.add(temp);
+                }
+                ie.addVariable(new TaskCall(taskCallText,taskCallElements));
+                ie.ifElseBlockOrder.add(new Integer(2));
+            }
+            else if( ie.findVariableInParentBlockHierarchy(temp)!=null ||
+                    !ie.findVectorNameInParentBlockHierarchy(temp).isEmpty()){
                 for(statementText=""; !temp.equals(";") && !temp.equals("##END_OF_MODULE_CODE"); temp = parser.getNextPiece()){
                     statementText+=temp+" ";
                 }
                 ie.addAssignment(new AssignmentStatement(statementText,ie));
                 ie.ifElseBlockOrder.add(new Integer(0));
+            }
+            else {
+                //add piece identification error here
             }
         }
 
@@ -122,28 +160,66 @@ public class IfElse extends Block {
                     parser.checkForNewBlock(ie, temp);
                     if(!temp.equals("$#"))
                         ie.ifElseBlockOrder.add(new Integer(1));
-                }else {
+                }
+                else if(parser.checkTaskOrFunctionName(temp)!=0){
+                    String taskCallText = "";
+                    ArrayList<String> taskCallElements = new ArrayList();
+                    for(; !temp.equals(";") && 
+                            !temp.equals("##END_OF_MODULE_CODE"); 
+                            temp=parser.getNextPiece()){
+                        taskCallText += temp+" ";
+                        taskCallElements.add(temp);
+                    }
+                    ie.addVariable(new TaskCall(taskCallText,taskCallElements));
+                    ie.ifElseBlockOrder.add(new Integer(2));
+                }
+                else if( ie.findVariableInParentBlockHierarchy(temp)!=null ||
+                        !ie.findVectorNameInParentBlockHierarchy(temp).isEmpty()){
                     for(statementText=""; !temp.equals(";") && !temp.equals("##END_OF_MODULE_CODE"); temp = parser.getNextPiece()){
                         statementText+=temp+" ";
                     }
                     ie.addAssignment(new AssignmentStatement(statementText,ie));
                     ie.ifElseBlockOrder.add(new Integer(0));
                 }
+                else {
+                    //add piece identification error here
+                }
             }
         }else {
             IfElse ie = new IfElse(current, "");
             current.addSubBlock(ie);
             ie.setIfElseType(2);
+            if(temp.equals("$#")){
+                parser.checkForNewBlock(ie, temp);
+                temp = parser.getNextPiece();
+            }
             if(parser.pieceIsKeyword(temp)){
                 parser.checkForNewBlock(ie, temp);
                 if(!temp.equals("$#"))
                     ie.ifElseBlockOrder.add(new Integer(1));
-            }else {
+            }
+            else if(parser.checkTaskOrFunctionName(temp)!=0){
+                String taskCallText = "";
+                ArrayList<String> taskCallElements = new ArrayList();
+                for(; !temp.equals(";") && 
+                        !temp.equals("##END_OF_MODULE_CODE"); 
+                        temp=parser.getNextPiece()){
+                    taskCallText += temp+" ";
+                    taskCallElements.add(temp);
+                }
+                ie.addVariable(new TaskCall(taskCallText,taskCallElements));
+                ie.ifElseBlockOrder.add(new Integer(2));
+            }
+            else if( ie.findVariableInParentBlockHierarchy(temp)!=null ||
+                    !ie.findVectorNameInParentBlockHierarchy(temp).isEmpty()){
                 for(statementText=""; !temp.equals(";") && !temp.equals("##END_OF_MODULE_CODE"); temp = parser.getNextPiece()){
                     statementText+=temp+" ";
                 }
                 ie.addAssignment(new AssignmentStatement(statementText,ie));
                 ie.ifElseBlockOrder.add(new Integer(0));
+            }
+            else{
+                //add piece identification error here
             }
         }
 
@@ -163,47 +239,56 @@ public class IfElse extends Block {
     @Override
     public String toString(){
         String temp = "";
-        int i=0; int subBlockCount=0; int assignmentStatementCount=0;
+        int i=0; int subBlockCount=0; int assignmentStatementCount=0; int varsCount=0;
         if(this.ifElseType == 0){
             temp += "if("; 
             temp += this.condition.toString();
             temp += ") begin \\\\LINE: "+LineNumber+", Vars in Condition: "
                     +condition.conditionVars.toString()+"\n";
-            for(i=0, subBlockCount=0, assignmentStatementCount=0;
+            for(i=0, subBlockCount=0, assignmentStatementCount=0, varsCount=0;
                 i< this.ifElseBlockOrder.size(); i++){
                 if(ifElseBlockOrder.get(i) == 1){
                     temp += this.subBlocks.get(subBlockCount).toString();
                     subBlockCount++;
-                }else {
+                }else if(!assignments.isEmpty()){
                     temp += this.assignments.get(assignmentStatementCount);
                     assignmentStatementCount++;
+                }else if(!vars.isEmpty()){
+                    temp += this.vars.get(varsCount);
+                    varsCount++;
                 }
             }
             temp += "end //ends if()\n";
         }else if(this.ifElseType==1){
             temp += "else if("; temp += this.condition.toString(); temp += ") begin "
                     + "//Vars in Condition: "+condition.conditionVars.toString()+"\n";
-            for(i=0, subBlockCount=0, assignmentStatementCount=0;
+            for(i=0, subBlockCount=0, assignmentStatementCount=0, varsCount=0;
                 i< this.ifElseBlockOrder.size(); i++){
                 if(ifElseBlockOrder.get(i) == 1){
                     temp += this.subBlocks.get(subBlockCount).toString();
                     subBlockCount++;
-                }else {
+                }else if(!assignments.isEmpty()){
                     temp += this.assignments.get(assignmentStatementCount);
                     assignmentStatementCount++;
+                }else if(!vars.isEmpty()){
+                    temp += this.vars.get(varsCount);
+                    varsCount++;
                 }
             }
             temp += "end //ends else if()\n";
         }else {
             temp += "else begin\n";
-            for(i=0, subBlockCount=0, assignmentStatementCount=0;
+            for(i=0, subBlockCount=0, assignmentStatementCount=0, varsCount=0;
                 i< this.ifElseBlockOrder.size(); i++){
                 if(ifElseBlockOrder.get(i) == 1){
                     temp += this.subBlocks.get(subBlockCount).toString();
                     subBlockCount++;
-                }else {
+                }else if(!assignments.isEmpty()){
                     temp += this.assignments.get(assignmentStatementCount);
                     assignmentStatementCount++;
+                }else if(!vars.isEmpty()){
+                    temp += this.vars.get(varsCount);
+                    varsCount++;
                 }
             }
             temp += "end //ends else\n";
