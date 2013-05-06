@@ -6,7 +6,7 @@
 
     href="LintingTool_WebStart.jnlp"
 
-    version="20130506124059">
+    version="20130506135106">
 
     <information>
 
@@ -14,13 +14,27 @@
 
         <vendor>UCCS</vendor>
 
+        <description>This Program is the UCCS' Linting tool for Verilog</description>
+
+        <description kind="short">UCCS' Verilog Linting Tool</description>
+
+        <offline-allowed/>
+
+		<shortcut online="false">
+
+			<desktop/>
+
+		</shortcut>
+
+
+
     </information>
 
     <resources>
 
         <!-- Application Resources -->
 
-        <j2se version="1.7.0_15+"
+        <j2se version="1.7.0_21+"
 
               href="http://java.sun.com/products/autodl/j2se"/>
 
@@ -46,7 +60,7 @@
 
      </application-desc>
 
-     <update check="always"/>
+     <update check="always" policy="always"/>
 
 <security>
 
