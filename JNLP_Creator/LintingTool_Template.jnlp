@@ -8,8 +8,7 @@
         <vendor>UCCS</vendor>
         <description>This Program is the UCCS' Linting tool for Verilog</description>
         <description kind="short">UCCS' Verilog Linting Tool</description>
-        <offline-allowed/>
-		<shortcut online="false">
+		<shortcut online="false" install="true">
 			<desktop/>
 		</shortcut>
 
