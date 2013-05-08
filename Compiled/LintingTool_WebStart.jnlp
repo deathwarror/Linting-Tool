@@ -6,7 +6,7 @@
 
     href="LintingTool_WebStart.jnlp"
 
-    version="20130508152614">
+    version="20130508154109">
 
     <information>
 
@@ -18,13 +18,13 @@
 
         <description kind="short">UCCS' Verilog Linting Tool</description>
 
-		<shortcut online="true" install="true">
+		<shortcut online="false" install="true">
 
 			<desktop/>
 
 		</shortcut>
 
-
+		<offline-allowed/>
 
     </information>
 
