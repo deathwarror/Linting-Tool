@@ -6,7 +6,7 @@
 
     href="LintingTool_WebStart.jnlp"
 
-    version="20130508132651">
+    version="20130508134211">
 
     <information>
 
@@ -34,7 +34,7 @@
 
         <!-- Application Resources -->
 
-        <j2se version="1.7.0_15+"
+        <j2se version="1.7.0_21+"
 
               href="http://java.sun.com/products/autodl/j2se"/>
 
