@@ -19,7 +19,7 @@ module MultiplyDrivenSignals(
   
 	always@(one)begin
     
-		two = 0;//error report assigned in second always  
+		two = 0;<font color=#ff0000>//error report assigned in second always</font>  
 	end
   
   
