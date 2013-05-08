@@ -59,7 +59,7 @@ public class Error02IdentifyBlockingNonBlocking {
                                 {
                                     
                                     //create the error message for the line
-                                    errorOutput = "Error: Detected blocking and non blocking in following lines of code:\n";
+                                    errorOutput = "Detected blocking and non blocking in following lines of code:\n";
                                     errorOutput += "\tin always on line "+currentBlock.LineNumber+": \n";
                                     errorOutput += "\t"+statements.get(j).LineNumber+":\t"+statements.get(j).assignmentText+";\n";
                                     errorOutput += "\t"+statements.get(k).LineNumber+":\t"+statements.get(k).assignmentText+";\n";

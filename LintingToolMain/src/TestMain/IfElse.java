@@ -63,7 +63,7 @@ public class IfElse extends Block {
             }
         }
         ie.condition =
-                new ConditionStatement(statementText, ie);
+                new ConditionStatement(statementText, ie, parser);
 
         temp = parser.getNextPiece();
         // if there will be multiple sublocks or assginments
@@ -74,9 +74,16 @@ public class IfElse extends Block {
         if(temp.equals("begin")){
             for(temp=parser.getNextPiece(); !temp.equals("end") && !temp.equals("##END_OF_MODULE_CODE"); temp=parser.getNextPiece() ){
                 if(parser.pieceIsKeyword(temp)){
-                    parser.checkForNewBlock(ie, temp);
-                    if(!temp.equals("$#"))
-                        ie.ifElseBlockOrder.add(new Integer(1));
+                    if(!temp.equals("always")){
+                        parser.checkForNewBlock(ie, temp);
+                        if(!temp.equals("$#"))
+                            ie.ifElseBlockOrder.add(new Integer(1));
+                    }
+                    else{
+                        String errorText = "Error: nested always blocks not allowed";
+                        parser.addErrorToParserErrorList(new Error("19",errorText,Parser.getCurrentLineNumber()));
+                        parser.stopParsing();
+                    }
                 }
                 else if(parser.checkTaskOrFunctionName(temp)!=0){
                     String taskCallText = "";
@@ -95,7 +102,7 @@ public class IfElse extends Block {
                     for(statementText=""; !temp.equals(";") && !temp.equals("##END_OF_MODULE_CODE"); temp = parser.getNextPiece()){
                         statementText+=temp+" ";
                     }
-                    ie.addAssignment(new AssignmentStatement(statementText,ie));
+                    ie.addAssignment(new AssignmentStatement(statementText,ie,parser));
                     ie.ifElseBlockOrder.add(new Integer(0));
                 }
                 else {
@@ -108,9 +115,16 @@ public class IfElse extends Block {
                 temp = parser.getNextPiece();
             }
             if(parser.pieceIsKeyword(temp)){
-                parser.checkForNewBlock(ie, temp);
-                if(!temp.equals("$#"))
-                    ie.ifElseBlockOrder.add(new Integer(1));
+                if(!temp.equals("always")){
+                    parser.checkForNewBlock(ie, temp);
+                    if(!temp.equals("$#"))
+                        ie.ifElseBlockOrder.add(new Integer(1));
+                }
+                else{
+                    String errorText = "Error: nested always blocks not allowed";
+                    parser.addErrorToParserErrorList(new Error("19",errorText,Parser.getCurrentLineNumber()));
+                    parser.stopParsing();
+                }
             }
             else if(parser.checkTaskOrFunctionName(temp)!=0){
                 String taskCallText = "";
@@ -129,7 +143,7 @@ public class IfElse extends Block {
                 for(statementText=""; !temp.equals(";") && !temp.equals("##END_OF_MODULE_CODE"); temp = parser.getNextPiece()){
                     statementText+=temp+" ";
                 }
-                ie.addAssignment(new AssignmentStatement(statementText,ie));
+                ie.addAssignment(new AssignmentStatement(statementText,ie,parser));
                 ie.ifElseBlockOrder.add(new Integer(0));
             }
             else {
@@ -178,7 +192,7 @@ public class IfElse extends Block {
                     for(statementText=""; !temp.equals(";") && !temp.equals("##END_OF_MODULE_CODE"); temp = parser.getNextPiece()){
                         statementText+=temp+" ";
                     }
-                    ie.addAssignment(new AssignmentStatement(statementText,ie));
+                    ie.addAssignment(new AssignmentStatement(statementText,ie,parser));
                     ie.ifElseBlockOrder.add(new Integer(0));
                 }
                 else {
@@ -215,7 +229,7 @@ public class IfElse extends Block {
                 for(statementText=""; !temp.equals(";") && !temp.equals("##END_OF_MODULE_CODE"); temp = parser.getNextPiece()){
                     statementText+=temp+" ";
                 }
-                ie.addAssignment(new AssignmentStatement(statementText,ie));
+                ie.addAssignment(new AssignmentStatement(statementText,ie,parser));
                 ie.ifElseBlockOrder.add(new Integer(0));
             }
             else{

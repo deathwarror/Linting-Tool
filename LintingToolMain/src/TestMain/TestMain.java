@@ -73,34 +73,25 @@ class TestMenu
         {
             TestVariable V = new TestVariable();
             TestError E = new TestError();
-            TestFileReader fr = new TestFileReader();
             TestCode C;
             for(int i = 0; i > -1;)
             {
                 System.out.println("-1\t quit \n"
-                        + "1\tFile Reader Tester\n"
-                        + "2\tError Class Tester\n"
-                        + "3\tVariable Class Tester\n"
-                        + "4\tCode Class Tester");
+                        + "1\tError Class Tester\n"
+                        + "2\tVariable Class Tester\n"
+                        + "3\tCode Class Tester");
                 i = sc.nextInt();
                 switch(i)
                 {
                     case 1:
-                        fr.start();
-                        break;
-                    case 2:
                         E.start();
                         break;
-                    case 3:
+                    case 2:
                         V.start();
                         break;
-                    case 4:
+                    case 3:
                         C = new TestCode(V.Default(),E.Default());
                         C.start();
-                        break;
-                    case 5:
-                        break;
-                    case 6:
                         break;
                     default:
                         break;

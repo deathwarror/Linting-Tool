@@ -52,7 +52,7 @@ public class Always extends Block{
                     for(; !temp.equals(";") && !temp.equals("##END_OF_MODULE_CODE"); temp = parser.getNextPiece()){
                         statementText += temp+" ";
                     }
-                    always.addAssignment(new AssignmentStatement(statementText,always));
+                    always.addAssignment(new AssignmentStatement(statementText,always, parser));
                     always.alwaysBlockOrder.add(new Integer(0));
                     statementText = "";
                 }
@@ -69,9 +69,16 @@ public class Always extends Block{
                     always.alwaysBlockOrder.add(new Integer(2));
                 }
                 else{
-                    parser.checkForNewBlock(always, temp);
-                    if(!temp.equals("$#"))
-                        always.alwaysBlockOrder.add(new Integer(1));
+                    if(!temp.equals("always")){
+                        parser.checkForNewBlock(always, temp);
+                        if(!temp.equals("$#")) //this one
+                            always.alwaysBlockOrder.add(new Integer(1));
+                    }
+                    else{
+                        String errorText = "Error: nested always blocks not allowed";
+                        parser.addErrorToParserErrorList(new Error("19",errorText,Parser.getCurrentLineNumber()));
+                        parser.stopParsing();
+                    }
                 }
             }
         }else{
@@ -79,29 +86,36 @@ public class Always extends Block{
                 parser.checkForNewBlock(always, temp);
                 temp = parser.getNextPiece();
             }            
-            if(!parser.pieceIsKeyword(temp)){
-                if(!parser.pieceIsKeyword(temp) && parser.checkTaskOrFunctionName(temp)==0){
-                    for(; !temp.equals(";") && !temp.equals("##END_OF_MODULE_CODE"); temp = parser.getNextPiece()){
-                        statementText += temp+" ";
-                    }
-                    always.addAssignment(new AssignmentStatement(statementText,always));
-                    always.alwaysBlockOrder.add(new Integer(0));
-                    statementText = "";
+            if(!parser.pieceIsKeyword(temp) && parser.checkTaskOrFunctionName(temp)==0){
+                for(; !temp.equals(";") && !temp.equals("##END_OF_MODULE_CODE"); temp = parser.getNextPiece()){
+                    statementText += temp+" ";
                 }
-                else if(parser.checkTaskOrFunctionName(temp)!=0){
-                    String taskCallText = "";
-                    ArrayList<String> taskCallElements = new ArrayList();
-                    for(; !temp.equals(";") && 
-                            !temp.equals("##END_OF_MODULE_CODE"); 
-                            temp=parser.getNextPiece()){
-                        taskCallText += temp+" ";
-                        taskCallElements.add(temp);
-                    }
-                    always.addVariable(new TaskCall(taskCallText,taskCallElements));
-                    always.alwaysBlockOrder.add(new Integer(2));
+                always.addAssignment(new AssignmentStatement(statementText,always,parser));
+                always.alwaysBlockOrder.add(new Integer(0));
+                statementText = "";
+            }
+            else if(parser.checkTaskOrFunctionName(temp)!=0){
+                String taskCallText = "";
+                ArrayList<String> taskCallElements = new ArrayList();
+                for(; !temp.equals(";") && 
+                        !temp.equals("##END_OF_MODULE_CODE"); 
+                        temp=parser.getNextPiece()){
+                    taskCallText += temp+" ";
+                    taskCallElements.add(temp);
+                }
+                always.addVariable(new TaskCall(taskCallText,taskCallElements));
+                always.alwaysBlockOrder.add(new Integer(2));
+            }
+            else{
+                if(!temp.equals("always")){
+                    parser.checkForNewBlock(always, temp);
+                    if(!temp.equals("$#"))
+                        always.alwaysBlockOrder.add(new Integer(1));
                 }
                 else{
-                    always.alwaysBlockOrder.add(new Integer(1));
+                    String errorText = "Error: nested always blocks not allowed";
+                    parser.addErrorToParserErrorList(new Error("19",errorText,Parser.getCurrentLineNumber()));
+                    parser.stopParsing();
                 }
             }
         }
@@ -111,14 +125,18 @@ public class Always extends Block{
     private void parseAlwaysHead(Parser parser){
         statementText = "always";
         String temp = parser.getNextPiece(); //temp will equal "@"
+        if(!temp.equals("@")){
+            parser.stopParsing();
+            return;
+        }
         statementText += (" "+temp);
         Variable tempVar; Reg tempReg; Wire tempWire;
         temp = parser.getNextPiece(); //temp will equal "(" or "*"
         statementText += (" "+temp);
         if(temp.equals("*")){ //if the sensitivities are not explicitely specified
-            sensitivityList.add(new Variable("*",""));
+//            sensitivityList.add(new Variable("*",""));
             BlockType = "levelSensitive";
-        }else { //if temp == "("
+        }else if(temp.equals("(")){ //if temp == "("
             temp = parser.getNextPiece(); //temp will equal the first item of interrest
             statementText += (" "+temp);
             for(; !temp.equals(")") && !temp.equals("##END_OF_MODULE_CODE"); 
@@ -126,12 +144,12 @@ public class Always extends Block{
                 if(temp.equals("$#")){
                     parser.updateLineNumber();
                 }else if(temp.equals("*")){
-                    sensitivityList.add(new Variable("*",""));
+//                    sensitivityList.add(new Variable("*",""));
                     BlockType = "levelSensitive";
                 }
                 else if(temp.equals("posedge")){
                     if(!(BlockType.equals("") || BlockType.equals("edgeSensitive")) ){
-                        addErrorMixedSensitivity(parser);
+                        addError12MixedSensitivityInAlwaysBlock(parser);
 //                        return;
                     }
                     BlockType = "edgeSensitive";
@@ -139,25 +157,25 @@ public class Always extends Block{
                     tempVar = this.findVariableInParentBlockHierarchy(temp);
                     if(tempVar != null){
                         if(tempVar.arraySize > 1){ // if the variable in question is an array
-                            addErrorVectorArrayInSensList(temp, parser);
+                            addError10VectorOrArrayInSensList(temp, parser);
                         }
-                        else if(true){//(tempVar.setEdgeSensitivity("posedge")){
+                        else if(!tempVar.getEdgeSensitivity().equals("negedge") && !tempVar.getEdgeSensitivity().equals("levelSensitive")){
+                            tempVar.setEdgeSensitivity("posedge");
                             sensitivityList.add(tempVar);
                         }else{
-                            System.out.println("Error: Variable "+temp+" is already " +
-                                    "driven on "+tempVar.getEdgeSensitivity());
+                            addError17MixedSensitivityOfAVariable(parser, tempVar.name);
                         }
                     }else if( !this.findVectorNameInParentBlockHierarchy(temp).isEmpty() ){ //if the variable is a vector
-                        addErrorVectorArrayInSensList(temp, parser);
+                        addError10VectorOrArrayInSensList(temp, parser);
                     }
                     else{
-                        System.out.println("Error: Variable "+temp+" in sensitivity list not defined!");
+                        parser.addInstanceOfError8UndeclaredSignal(temp);
                     }
 
                 }
                 else if(temp.equals("negedge")){
                     if(!(BlockType.equals("") || BlockType.equals("edgeSensitive")) ){
-                        addErrorMixedSensitivity(parser);
+                        addError12MixedSensitivityInAlwaysBlock(parser);
 //                        return;
                     }
                     BlockType = "edgeSensitive";
@@ -165,44 +183,54 @@ public class Always extends Block{
                     tempVar = this.findVariableInParentBlockHierarchy(temp);
                     if(tempVar != null){
                         if(tempVar.arraySize > 1){ // if the variable in question is an array
-                            addErrorVectorArrayInSensList(temp, parser);
+                            addError10VectorOrArrayInSensList(temp, parser);
                         }
-                        else if(true){//(tempVar.setEdgeSensitivity("negedge")){
+                        else if(!tempVar.getEdgeSensitivity().equals("posedge") && !tempVar.getEdgeSensitivity().equals("levelSensitive")){
+                            tempVar.setEdgeSensitivity("posedge");
                             sensitivityList.add(tempVar);
                         }else{
-                            System.out.println("Error: Variable "+temp+" is already " +
-                                    "driven on "+tempVar.getEdgeSensitivity());
+                            addError17MixedSensitivityOfAVariable(parser, tempVar.name);
                         }
                     }else if( !this.findVectorNameInParentBlockHierarchy(temp).isEmpty() ){ //if the variable is a vector
-                        addErrorVectorArrayInSensList(temp, parser);
+                        addError10VectorOrArrayInSensList(temp, parser);
                     }
                     else{
-                        System.out.println("Error: Variable "+temp+" in sensitivity list not defined!");
+                        parser.addInstanceOfError8UndeclaredSignal(temp);
                     }
 
                 }
                 else if(temp.equals("or") || temp.equals(","));
                 else{
                     if(!(BlockType.equals("") || BlockType.equals("levelSensitive")) ){
-                        addErrorMixedSensitivity(parser);
+                        addError12MixedSensitivityInAlwaysBlock(parser);
 //                        return;
                     }
                     BlockType = "levelSensitive";
                     tempVar = this.findVariableInParentBlockHierarchy(temp);
                     if(tempVar != null){
                         if(tempVar.arraySize > 1){ // if the variable in question is an array
-                            addErrorVectorArrayInSensList(temp, parser);
-                        }else{
+                            addError10VectorOrArrayInSensList(temp, parser);
+                        }
+                        else if(!tempVar.getEdgeSensitivity().equals("posedge") && !tempVar.getEdgeSensitivity().equals("negedge")){
+                            tempVar.setEdgeSensitivity("levelSensitive");
                             sensitivityList.add(tempVar);
+                        }else{
+                            addError17MixedSensitivityOfAVariable(parser, tempVar.name);
                         }
                     }else if( !this.findVectorNameInParentBlockHierarchy(temp).isEmpty() ){ //if the variable is a vector
-                        addErrorVectorArrayInSensList(temp, parser);
+                        //addErrorVectorArrayInSensList(temp, parser);
+                        Variable.safelyParseVariableFromLine(parser, this, temp,
+                         sensitivityList,sensitivityList);
                     }
                     else{
-                        System.out.println("Error: Variable "+temp+" in sensitivity list not defined!");
+                        parser.addInstanceOfError8UndeclaredSignal(temp);
                     }
                 }
             }
+        }else {
+            parser.addInstanceOfError18UnexpectedToken(temp);
+            parser.stopParsing();
+            return;
         }
     }
     public void addToAlwaysBlockOrder(int num){
@@ -222,24 +250,22 @@ public class Always extends Block{
     {
         return sensitivityList;
     }
-    private void addErrorVectorArrayInSensList(String varName, Parser parser){
-        Error e = new Error();
-        e.setErrorNum("10");
-        String errorOutput = "Error: Vector or Array Series in Always Block:\n";
-        errorOutput += "\tin always on line : "+this.LineNumber+"\n\tVariable Name: ";
-        errorOutput += varName;
-        System.out.println(errorOutput+"\n");
-        e.setErrorMsg(errorOutput);
-        parser.addErrorToParserErrorList(e);
+    private void addError10VectorOrArrayInSensList(String varName, Parser parser){
+        String errorOutput = "Error: Vector or Array detected in Edge-Sensitive Always Block sensitivity list,\n"
+                + "\tor an Array variable was detected in a Level-Sensitive Always Block sensitivity list:\n";
+        errorOutput += "\t Variable ( "+varName+" ) in always on line : "+this.LineNumber+" Variable Name: ";
+        parser.addErrorToParserErrorList(new Error("10",errorOutput,this.LineNumber));
     }
-    private void addErrorMixedSensitivity(Parser parser){
-        Error e = new Error();
-        e.setErrorNum("11");
-        String errorOutput = "Error: Mixing of Level and Edge Sensitivity detected in Always Block:\n";
+    private void addError12MixedSensitivityInAlwaysBlock(Parser parser){
+        String errorOutput = "Error: Mixing of Level and Edge Sensitivity detected in Always Block :\n";
         errorOutput += "\tin always on line : "+this.LineNumber+"\n";
-        System.out.println(errorOutput);
-        e.setErrorMsg(errorOutput);
-        parser.addErrorToParserErrorList(e);
+        parser.addErrorToParserErrorList(new Error("12",errorOutput,this.LineNumber));
+    }
+    private void addError17MixedSensitivityOfAVariable(Parser parser, String var){
+        String errorOutput = "Error: Mixing of Level and Edge Sensitivity detected:\n";
+        errorOutput += "\t variable ( "+var+" ) is used in both edge-sensitive and level-sensitive always blocks"
+                + "\n first use of mixed type occued in always on line: "+this.LineNumber;
+        parser.addErrorToParserErrorList(new Error("17",errorOutput,this.LineNumber));
     }
     @Override
     public String toString(){

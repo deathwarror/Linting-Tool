@@ -297,6 +297,310 @@ public class Variable {
          return MSB+1-LSB;
      }
      
+     public static String safelyParseVariableFromLine(Parser parser, Block workingBlock, 
+             String varName,
+         ArrayList<Variable> varListToAddTo,ArrayList<Variable> arrayIndexVars){
+         ArrayList<Variable> vars = new ArrayList();
+         ArrayList<String> pieces = new ArrayList();
+         int originalIndex = parser.getFreshPieceIndex();
+         String temp = parser.getNextPiece();
+         if(workingBlock.findVariableInParentBlockHierarchy(varName) != null){
+             vars.add(workingBlock.findVariableInParentBlockHierarchy(varName));
+         }
+         else if(!workingBlock.findVectorNameInParentBlockHierarchy(varName).isEmpty()){
+             vars.addAll(workingBlock.findVectorNameInParentBlockHierarchy(varName));
+         }
+         else {
+             parser.addInstanceOfError8UndeclaredSignal(varName);
+             parser.stopParsing();
+         }
+         boolean arrayIndexParsed = false;
+         int startNum=-1, stopNum=-1, arrayIndex=-1;
+         for(;temp.equals("[") && !temp.equals("##END_OF_MODULE_CODE"); temp=parser.getNextPiece()){
+             pieces.add(temp);
+            if(temp.equals("$#")){
+                parser.updateLineNumber();
+            }
+            //if there is indexing present, and the signal is an array, handle it differently than a vector
+            else if(vars.get(0).arraySize > 1 && !arrayIndexParsed){
+                for(arrayIndexParsed=true, temp=parser.getNextPiece();
+                        !temp.equals("]") && !temp.equals("##END_OF_MODULE_CODE"); temp=parser.getNextPiece()){
+                    if(temp.equals("$#")){
+                        parser.updateLineNumber();
+                    }
+                    else {
+                        pieces.add(temp);
+                        if(workingBlock.findVariableInParentBlockHierarchy(temp)!=null 
+                                || !workingBlock.findVectorNameInParentBlockHierarchy(temp).isEmpty()){
+                            temp = Variable.safelyParseVariableFromLine(
+                                    parser, workingBlock, temp, arrayIndexVars, arrayIndexVars);
+                        }
+                        else if(Module.checkVariableName(temp) && Parser.isANumber(temp)==0){
+                            parser.addInstanceOfError8UndeclaredSignal(temp);
+                            parser.stopParsing();
+                        }
+                    }
+                }
+                arrayIndexParsed = true;
+            }
+            //this else parses the vector variables
+            else {
+                String expression = "";
+                for(temp=parser.getNextPiece();
+                        (!temp.equals("]") && !temp.equals(":")) 
+                        && !temp.equals("##END_OF_MODULE_CODE"); temp=parser.getNextPiece()){
+                    if(temp.equals("$#")){
+                        parser.updateLineNumber();
+                    }
+                    else {
+                        pieces.add(temp);
+                        if(Parser.isANumber(temp)==1 || AssignmentStatement.expressionPiece(temp)){
+                            expression += temp+" ";
+                        }
+                        else if(!temp.equals(":") && !temp.equals("]")){
+                            String errorText; String errorNum;
+                            if(!Module.checkVariableName(temp)){
+                                errorText = "Error: illegal token in vector bounds: ("+temp+")";
+                                errorNum = "20b";
+                            }
+                            else{
+                                errorText = "Warning: variable ("+temp+") in vector bounds:\n"
+                                        + "\tThis will very likely not produce the results you intend.";
+                                errorNum = "20c";
+                            }
+                            parser.addInstanceOfError20ParseError(errorNum,errorText);
+                            parser.stopParsing();
+                        }
+                    }
+                }
+                startNum = Integer.parseInt(Parser.parseNumberFromExpression(expression));
+                expression = "";
+                if(temp.equals(":")){
+                    for(temp=parser.getNextPiece();
+                            !temp.equals("]") && !temp.equals("##END_OF_MODULE_CODE"); temp=parser.getNextPiece()){
+                        if(temp.equals("$#")){
+                            parser.updateLineNumber();
+                        }
+                        else {
+                            pieces.add(temp);
+                            if(Parser.isANumber(temp)==1 || AssignmentStatement.expressionPiece(temp)){
+                                expression += temp+" ";
+                            }
+                            else if(!temp.equals("]")){
+                                String errorText; String errorNum;
+                                if(!Module.checkVariableName(temp)){
+                                    errorText = "Error: illegal token in vector bounds: ("+temp+")";
+                                    errorNum = "20b";
+                                }
+                                else{
+                                    errorText = "Warning: variable ("+temp+") in vector bounds:\n"
+                                            + "\tThis will very likely not produce the results you intend.";
+                                    errorNum = "20c";
+                                }
+                                parser.addInstanceOfError20ParseError(errorNum,errorText);
+                                parser.stopParsing();
+                            }
+                        }
+                    }
+                    stopNum = Integer.parseInt(Parser.parseNumberFromExpression(expression));
+                }
+            }
+            pieces.add(temp);
+         }
+         
+         
+         if(startNum < stopNum){
+             int tempNum = startNum; startNum = stopNum; stopNum = tempNum;
+         }
+         if(startNum != -1){
+             Variable tempVar;
+             if(stopNum == -1){
+                 stopNum = startNum;
+             }
+             for(int i=stopNum; i<startNum+1; i++){
+                 tempVar = workingBlock.findVariableInParentBlockHierarchy(varName+"_"+i);
+                 if(tempVar != null){
+                     varListToAddTo.add(tempVar);
+                 }
+                 else {
+                     String errorText = "Error: Parser error, index of ("+varName+") might be out of bounds\n";
+                     parser.addInstanceOfError20ParseError("20d",errorText);
+                     parser.stopParsing();
+                 }
+             }
+         }
+         else if(workingBlock.findVariableInParentBlockHierarchy(varName)==null
+                 && !workingBlock.findVectorNameInParentBlockHierarchy(varName).isEmpty()){
+             varListToAddTo.addAll(workingBlock.findVectorNameInParentBlockHierarchy(varName));
+         }
+         else if(workingBlock.findVariableInParentBlockHierarchy(varName)!=null
+                 && workingBlock.findVectorNameInParentBlockHierarchy(varName).isEmpty()){
+             varListToAddTo.add(workingBlock.findVariableInParentBlockHierarchy(varName));
+         }
+         else {
+             parser.addInstanceOfError20ParseError("20e","Error: unknown parser error\n\tMake sure your design compiles in modelsim.");
+             parser.stopParsing();
+         }
+         
+         parser.setFreshPieceIndex(parser.getFreshPieceIndex()-1);
+         return temp;
+     }
+     public static String safelyParseVariableForAssignmentStatement(Parser parser, Block workingBlock, AssignmentStatement statement,
+             String varName, ArrayList<Variable> varListToAddTo,ArrayList<Variable> arrayIndexVars){
+         ArrayList<Variable> vars = new ArrayList();
+         ArrayList<String> pieces = new ArrayList();
+         String temp = statement.getNextPiece();
+         if(workingBlock.findVariableInParentBlockHierarchy(varName) != null){
+             vars.add(workingBlock.findVariableInParentBlockHierarchy(varName));
+         }
+         else if(!workingBlock.findVectorNameInParentBlockHierarchy(varName).isEmpty()){
+             vars.addAll(workingBlock.findVectorNameInParentBlockHierarchy(varName));
+         }
+         else {
+             parser.addInstanceOfError8UndeclaredSignal(varName);
+             parser.stopParsing();
+         }
+         boolean arrayIndexParsed = false;
+         int startNum=-1, stopNum=-1, arrayIndex=-1;
+         for(; (temp.equals("[") || temp.equals("$#")) 
+                 && !temp.equals("##END_OF_STATEMENT"); temp=statement.getNextPiece()){
+             pieces.add(temp);
+            if(temp.equals("$#")){
+                temp=statement.getNextPiece();
+                parser.setLineNumber(Integer.parseInt(temp));
+            }
+            //if there is indexing present, and the signal is an array, handle it differently than a vector
+            else if(vars.get(0).arraySize > 1 && !arrayIndexParsed){
+                for(arrayIndexParsed=true, temp=statement.getNextPiece();
+                        !temp.equals("]") && !temp.equals("##END_OF_STATEMENT"); ){
+                    if(temp.equals("$#")){
+                        temp=statement.getNextPiece();
+                        parser.setLineNumber(Integer.parseInt(temp));
+                    }
+                    else {
+                        pieces.add(temp);
+                        if(workingBlock.findVariableInParentBlockHierarchy(temp)!=null 
+                                || !workingBlock.findVectorNameInParentBlockHierarchy(temp).isEmpty()){
+                            temp = Variable.safelyParseVariableForAssignmentStatement(
+                                    parser, workingBlock, statement, temp, arrayIndexVars, arrayIndexVars);
+//                            temp = statement.getNextPiece();
+                        }
+                        else if(Module.checkVariableName(temp) && Parser.isANumber(temp)==0){
+                            parser.addInstanceOfError8UndeclaredSignal(temp);
+                            parser.stopParsing();
+                        }
+                    }
+                    if(!temp.equals("$#") && !temp.equals("]")){
+                        temp=statement.getNextPiece();
+                    }
+                }
+                arrayIndexParsed = true;
+            }
+            //this else parses the vector variables
+            else {
+                String expression = "";
+                for(temp=statement.getNextPiece();
+                        (!temp.equals("]") && !temp.equals(":")) 
+                        && !temp.equals("##END_OF_STATEMENT"); temp=statement.getNextPiece()){
+                    if(temp.equals("$#")){
+                        temp=statement.getNextPiece();
+                        parser.setLineNumber(Integer.parseInt(temp));
+                    }
+                    else {
+                        pieces.add(temp);
+                        if(Parser.isANumber(temp)==1 || AssignmentStatement.expressionPiece(temp)){
+                            expression += temp+" ";
+                        }
+                        else if(!temp.equals(":") && !temp.equals("]")){
+                            String errorText; String errorNum;
+                            if(!Module.checkVariableName(temp)){
+                                errorText = "Error: illegal token in vector bounds: ("+temp+")";
+                                errorNum = "20b";
+                            }
+                            else{
+                                errorText = "Warning: variable ("+temp+") in vector bounds:\n"
+                                        + "\tThis will very likely not produce the results you intend.";
+                                errorNum = "20c";
+                            }
+                            parser.addInstanceOfError20ParseError(errorNum,errorText);
+                            parser.stopParsing();
+                        }
+                    }
+                }
+                startNum = Integer.parseInt(Parser.parseNumberFromExpression(expression));
+                expression = "";
+                if(temp.equals(":")){
+                    for(temp=statement.getNextPiece();
+                            !temp.equals("]") && !temp.equals("##END_OF_STATEMENT"); temp=statement.getNextPiece()){
+                        if(temp.equals("$#")){
+                            temp=statement.getNextPiece();
+                            parser.setLineNumber(Integer.parseInt(temp));
+                        }
+                        else {
+                            pieces.add(temp);
+                            if(Parser.isANumber(temp)==1 || AssignmentStatement.expressionPiece(temp)){
+                                expression += temp+" ";
+                            }
+                            else if(!temp.equals("]")){
+                                String errorText; String errorNum;
+                                if(!Module.checkVariableName(temp)){
+                                    errorText = "Error: illegal token in vector bounds: ("+temp+")";
+                                    errorNum = "20b";
+                                }
+                                else{
+                                    errorText = "Warning: variable ("+temp+") in vector bounds:\n"
+                                            + "\tThis will very likely not produce the results you intend.";
+                                    errorNum = "20c";
+                                }
+                                parser.addInstanceOfError20ParseError(errorNum,errorText);
+                                parser.stopParsing();
+                            }
+                        }
+                    }
+                    stopNum = Integer.parseInt(Parser.parseNumberFromExpression(expression));
+                }
+            }
+            pieces.add(temp);
+         }
+         
+         
+         if(startNum < stopNum){
+             int tempNum = startNum; startNum = stopNum; stopNum = tempNum;
+         }
+         if(startNum != -1){
+             Variable tempVar;
+             if(stopNum == -1){
+                 stopNum = startNum;
+             }
+             for(int i=stopNum; i<startNum+1; i++){
+                 tempVar = workingBlock.findVariableInParentBlockHierarchy(varName+"_"+i);
+                 if(tempVar != null){
+                     varListToAddTo.add(tempVar);
+                 }
+                 else {
+                     String errorText = "Error: Parser error, index of ("+varName+") might be out of bounds\n";
+                     parser.addInstanceOfError20ParseError("20d",errorText);
+                     parser.stopParsing();
+                 }
+             }
+         }
+         else if(workingBlock.findVariableInParentBlockHierarchy(varName)==null
+                 && !workingBlock.findVectorNameInParentBlockHierarchy(varName).isEmpty()){
+             varListToAddTo.addAll(workingBlock.findVectorNameInParentBlockHierarchy(varName));
+         }
+         else if(workingBlock.findVariableInParentBlockHierarchy(varName)!=null
+                 && workingBlock.findVectorNameInParentBlockHierarchy(varName).isEmpty()){
+             varListToAddTo.add(workingBlock.findVariableInParentBlockHierarchy(varName));
+         }
+         else {
+             parser.addInstanceOfError20ParseError("20e","Error: unknown parser error\n\tMake sure your design compiles in modelsim.");
+             parser.stopParsing();
+         }
+         
+         
+         return temp;
+     }
+     
     //Convert all data in the object to be outputted.
     @Override
     public String toString()

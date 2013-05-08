@@ -23,15 +23,15 @@ public class AssignmentStatement {
         RHSvars = new ArrayList();
         LineNumber = Parser.currentLineNumber;
     }
-    AssignmentStatement(String rawText){
+    AssignmentStatement(String rawText, Parser parser){
         assignmentText = rawText;
         LHSvars = new ArrayList();
         RHSvars = new ArrayList();
         LineNumber = Parser.currentLineNumber;
         
-        identifyLHSvariables();
+        identifyLHSvariables(parser);
     }
-    AssignmentStatement(String rawText, Block blockSource){
+    AssignmentStatement(String rawText, Block blockSource, Parser parser){
         assignmentText = rawText;
         LHSvars = new ArrayList();
         RHSvars = new ArrayList();
@@ -41,74 +41,69 @@ public class AssignmentStatement {
         
         System.out.println(LineNumber);
         
-        identifyLHSvariables();
-        identifyRHSvariables();
+        identifyLHSvariables(parser);
+        identifyRHSvariables(parser);
     }
 
-    protected void identifyLHSvariables(){
+    protected void identifyLHSvariables(Parser parser){
         String preserve = assignmentText;
         String temp = getNextPiece();
         Variable tempVar=null;
-        for(; !temp.equals("=") && !temp.equals("<")&& !temp.equals("##END_OF_STATEMENT"); temp=getNextPiece()){
-            if( !expressionPiece(temp) ){
+        for(; !temp.equals("=") && !temp.equals("<")&& !temp.equals("##END_OF_STATEMENT");){
+            if(temp.equals("$#")){
+                temp=getNextPiece();
+                parser.setLineNumber(Integer.parseInt(temp));
+            }
+            else {
                 tempVar = parent.findVariableInParentBlockHierarchy(temp);
                 if(tempVar != null){
-                    LHSvars.add(tempVar);
+    //                    LHSvars.add(tempVar);
+                    temp = Variable.safelyParseVariableForAssignmentStatement(
+                            parser, parent, this,temp, LHSvars,RHSvars);
                 }else if(parent.findVectorNameInParentBlockHierarchy(temp).size()>0){
-                    LHSvars.addAll(parent.findVectorNameInParentBlockHierarchy(temp));
-                }
-                else if(parent.findVectorNameInParentBlockHierarchy(temp).size()!=0){
-                    String vecName = temp;
-                    String vecStart = "";
-                    String vecEnd = "";
-                    temp = getNextPiece(); //should equal '['
-                    for(temp=getNextPiece(); !temp.equals(":") && !temp.equals("]") && 
-                            !temp.equals("##END_OF_STATEMENT"); temp=getNextPiece()){
-                        vecStart += temp;
-                    }
-                    int MSB = Integer.parseInt( Parser.parseNumberFromExpression(vecStart+" ") );
-                    int LSB = -1;
-                    if(temp.equals(":")){
-                        for(temp=getNextPiece(); !temp.equals("]"); temp=getNextPiece()){
-                            vecEnd += temp;
-                        }
-                        LSB = Integer.parseInt( Parser.parseNumberFromExpression(vecEnd+" ") );
-                    }
-                    
-                    if(LSB == -1){
-                        tempVar = parent.findVariableInParentBlockHierarchy(vecName+MSB);
-                        if(tempVar != null){
-                            LHSvars.add(tempVar);
-                        }
-                    }else{
-                        if(MSB < LSB){
-                            int num = MSB; MSB = LSB; LSB = num;
-                        }
-                        for(int i=0; MSB-i >= LSB; i++){
-                            tempVar = parent.findVariableInParentBlockHierarchy(vecName+(LSB+i));
-                            if(tempVar != null){
-                                LHSvars.add(tempVar);
-                            }
-                        }
-                    }
+    //                    LHSvars.addAll(parent.findVectorNameInParentBlockHierarchy(temp));
+                      temp=Variable.safelyParseVariableForAssignmentStatement(
+                            parser, parent, this,temp, LHSvars,RHSvars);
+
                 }else{
-                    
+
                 }
+            }
+            if(!temp.equals("=")){
+                temp=getNextPiece();
             }
         }
         assignmentText = preserve;
     }
-    protected void identifyRHSvariables(){
+    protected void identifyRHSvariables(Parser parser){
         String preserve = assignmentText;
         assignmentText = assignmentText.substring(assignmentText.indexOf("="));
-        String temp;
-        for(temp=getNextPiece(); !temp.equals("##END_OF_STATEMENT"); temp=getNextPiece()){
-                        if( parent.findVariableInParentBlockHierarchy(temp) != null){
-                RHSvars.add(parent.findVariableInParentBlockHierarchy(temp));
-            }else {
-                RHSvars.addAll(parent.findVectorNameInParentBlockHierarchy(temp));
+        String temp = getNextPiece();
+            Variable tempVar=null;
+            for(temp=getNextPiece(); !temp.equals("##END_OF_STATEMENT"); ){
+                if(temp.equals("$#")){
+                    temp=getNextPiece();
+                    parser.setLineNumber(Integer.parseInt(temp));
+                }
+                else {
+                    tempVar = parent.findVariableInParentBlockHierarchy(temp);
+                    if(tempVar != null){
+        //                    LHSvars.add(tempVar);
+                        Variable.safelyParseVariableForAssignmentStatement(
+                                parser, parent, this,temp, RHSvars,RHSvars);
+                    }else if(parent.findVectorNameInParentBlockHierarchy(temp).size()>0){
+        //                    LHSvars.addAll(parent.findVectorNameInParentBlockHierarchy(temp));
+                          Variable.safelyParseVariableForAssignmentStatement(
+                                parser, parent, this,temp, RHSvars,RHSvars);
+
+                    }else{
+
+                    }
+                }
+                if(!temp.equals("$#")){
+                    temp=getNextPiece();
+                }
             }
-        }
         assignmentText = preserve;
     }
 
@@ -136,7 +131,7 @@ public class AssignmentStatement {
         return RHSvars;
     }
 
-    protected boolean expressionPiece(String piece){
+    public static boolean expressionPiece(String piece){
         if(piece.equals("=")){
             return true;
         }else if(piece.equals("!")){

@@ -65,14 +65,14 @@ public class Error05IdentifyAssignmentVsSensType {
                     //if a blocking statement in a flip flop was detected
                     if(error == 1);
                     {
-                        errorOutput = "Error: Detected a flip flop with a Blocking Statement:\n";
+                        errorOutput = "Detected a flip flop with a Blocking Statement:\n";
                         errorOutput += "\tin always on line "+currentBlock.LineNumber+":";
                         errorOutput += "\n\tLine "+statements.get(j).LineNumber+":\t"+statements.get(j).assignmentText+";\n";
                     }
                     //if a nonblocking in a combination block was detected
                     if(error == 2)
                     {
-                        errorOutput = "Error: Detected a Combinational Always Block with a NonBlocking Statement:\n";
+                        errorOutput = "Detected a Combinational Always Block with a NonBlocking Statement:\n";
                         errorOutput += "\tin always on line "+currentBlock.LineNumber+":";
                         errorOutput += "\n\tLine "+statements.get(j).LineNumber+":\t"+statements.get(j).assignmentText+";\n";
                     }

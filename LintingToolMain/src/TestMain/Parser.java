@@ -134,6 +134,7 @@ public class Parser {
         spacer = spaceElement("#",spacer);
         spacer = spaceElement("{",spacer);
         spacer = spaceElement("}",spacer);
+        spacer = spaceElement("\"",spacer);
 
 //        System.out.println("\nEvenly Spaced\n"+spacer+"\n");
         return removeRadixSpaces(spacer);
@@ -202,6 +203,10 @@ public class Parser {
             Task.parseTask(current, this);
         }else if( piece.equals("function")){
             Function.parseFunction(current, this);
+        }else if( piece.equals("for")){
+            ForLoop.parseForLoop(current, this);
+        }else if( piece.equals("while")){
+            WhileLoop.parseWhileLoop(current, this);
         }else if( piece.equals("$#")){
             updateLineNumber();
         }
@@ -227,9 +232,9 @@ public class Parser {
                     (freshPieces.get(i-1).equals("begin") || freshPieces.get(i-1).equals("end"))){
                 freshPieces.remove(i+1);
                 freshPieces.remove(i);
-                String errorText="Error: Named Block Detected \n\ton line "+currentLineNumber;
+                String errorText="Error: Named Block Detected \n\ton line "+currentLineNumber+" (this is not supported with this tool)";
                 System.out.println(errorText);
-                addErrorToParserErrorList(new Error("17",errorText) );
+                addErrorToParserErrorList(new Error("20f",errorText,currentLineNumber) );
             }
         }
     }
@@ -241,23 +246,23 @@ public class Parser {
                     && freshPieces.get(i-1).equals("(")
                     && freshPieces.get(i-2).equals("@")
                     && !freshPieces.get(i-3).equals("always") ){
-                addTimingControlError();
+                addError2UnsynthesizableControlCodeError("@("+freshPieces.get(i)+" "+freshPieces.get(i+1)+") ");
             }else if(isANumber(freshPieces.get(i)) == 1
                     && freshPieces.get(i-1).equals("#") ){
-                addTimingControlError();
+                addError2UnsynthesizableControlCodeError("#"+freshPieces.get(i));
             }else if( freshPieces.get(i).equals("wait")){
-                addTimingControlError();
+                addError2UnsynthesizableControlCodeError("wait");
+            }else if( freshPieces.get(i).equals("while")){
+                addError2UnsynthesizableControlCodeError("while");
             }
         }
     }
-    private void addTimingControlError(){
-        Error e = new Error();
-        e.setErrorNum("2");
-        String errorOutput = "Error: Timing Control in Combinatorial Block\n";
+    private void addError2UnsynthesizableControlCodeError(String offendingControl){
+        String errorOutput = "Timing Control, or unsynthesizable Control code "
+                + "( "+offendingControl+" ) present in module";
         errorOutput += "\ton line : "+currentLineNumber;
-        System.out.println(errorOutput+"\n");
-        e.setErrorMsg(errorOutput);
-        addErrorToParserErrorList(e);
+        addErrorToParserErrorList(new Error("2",errorOutput,currentLineNumber));
+        
     }
     private static void makePieceList(ArrayList<String> tempFreshPieces, String inputString){
 //        while(tempFreshPieces.lastIndexOf("endmodule") == -1){
@@ -380,7 +385,7 @@ public class Parser {
                     num += Integer.parseInt(resolveNumberToDecimalRadix(pieces.get(i)) , 10);
                 }
             }
-            else if(pieces.get(i).equals("-")){
+            else if(pieces.get(i).equals("-") && i+1<pieces.size()){
                 i++;
                 //This commented line is the one that will ultimately need to be implemented
                 //num += parseNumberFromExpression(module, String expression);
@@ -428,7 +433,8 @@ public class Parser {
             return 0;
         }else{
             test = maybe.charAt(quoteLocation+1);
-            if( test!='b' && test!='B' && test!='o' && test!='O' && test!='x' && test!='X' && test!='d' && test!='D'){
+            if( test!='b' && test!='B' && test!='o' && test!='O' && test!='h' && test!='H' 
+                    && test!='x' && test!='X' && test!='d' && test!='D'){
                 return 0;
             }
             for(int i=quoteLocation+2; i<maybe.length(); i++){
@@ -530,6 +536,30 @@ public class Parser {
             }
         }
         return 0;
+    }
+    public void addInstanceOfError8UndeclaredSignal(String var){
+        String errorOutput = "Error: Undeclared sigal: "+var+"\n";
+        errorOutput += "\ton line : "+currentLineNumber;
+        System.out.println(errorOutput+"\n");
+        parserErrorList.add(new Error("8", errorOutput,currentLineNumber));
+    }
+    public void addInstanceOfError18UnexpectedToken(String var){
+        String errorOutput = "Error: Token ("+var+") is either unknown or out of place\n";
+        errorOutput += "\ton line : "+currentLineNumber;
+        System.out.println(errorOutput+"\n");
+        parserErrorList.add(new Error("18", errorOutput,currentLineNumber));
+    }
+    public void addInstanceOfError20ParseError(String errorNum, String errorText){
+        parserErrorList.add(new Error(errorNum,errorText,Parser.getCurrentLineNumber()));
+    }
+    public void stopParsing(){
+        freshPieceIndex = freshPieces.size();
+        System.out.println("PARSING STOPPED!");
+    }
+    public void backOneStep(){
+        if(freshPieceIndex > 0){
+            freshPieceIndex--;
+        }
     }
     
 }

@@ -12,24 +12,33 @@ import java.util.ArrayList;
 
 public class ConditionStatement extends AssignmentStatement {
     ArrayList<Variable> conditionVars;
-    ConditionStatement(String rawText, Block blockSource){
+    ConditionStatement(String rawText, Block blockSource, Parser parser){
         assignmentText = rawText;
         conditionVars = new ArrayList();
         LineNumber = Parser.currentLineNumber;
         parent = blockSource;
         
-        identifyConditionVariables();
+        identifyConditionVariables(parser);
     }
     
-    private void identifyConditionVariables(){
+    private void identifyConditionVariables(Parser parser){
         String preserve = assignmentText;
         String temp="";
         Variable var;
         for(temp=super.getNextPiece();!temp.equals("##END_OF_STATEMENT");temp=super.getNextPiece()){
-            if( parent.findVariableInParentBlockHierarchy(temp) != null){
-                conditionVars.add(parent.findVariableInParentBlockHierarchy(temp));
+            if(temp.equals("$#")){
+                temp=getNextPiece();
+                parser.setLineNumber(Integer.parseInt(temp));
+            }
+            else if( parent.findVariableInParentBlockHierarchy(temp) != null
+                    || !parent.findVectorNameInParentBlockHierarchy(temp).isEmpty()){
+//                conditionVars.add(parent.findVariableInParentBlockHierarchy(temp));
+                temp = Variable.safelyParseVariableForAssignmentStatement(
+                        parser, parent, this,temp, conditionVars,conditionVars);
             }else {
-                conditionVars.addAll(parent.findVectorNameInParentBlockHierarchy(temp));
+//                conditionVars.addAll(parent.findVectorNameInParentBlockHierarchy(temp));
+//                temp = Variable.safelyParseVariableForAssignmentStatement(
+//                        parser, parent, this,temp, conditionVars,conditionVars);
             }
         }
         assignmentText = preserve;

@@ -42,7 +42,8 @@ public class Error09a_09bIdentifyIncompleteSensList {
                     {
                         
                         statements=currentBlock.getAllAssignmentStatements();
-                        for(int j = 0; j < SensList.size() && !statements.isEmpty(); j++)
+//                        for(int j = 0; j < SensList.size() && !statements.isEmpty(); j++)
+                        for(int j = 0; j < statements.size() && !statements.isEmpty(); j++)
                         {
                             currentStatement = statements.get(j);
                             ArrayList<Variable> vl;
@@ -78,7 +79,43 @@ public class Error09a_09bIdentifyIncompleteSensList {
                                     }
                                 }
                             }
-                        }  
+                        }
+                        for(int j = 0; j < currentBlock.getAllBlocks().size();j++)
+                        {
+                            ArrayList<Block> caseBlock = currentBlock.getAllBlocks();
+                            if((caseBlock.get(j)).getClass() == Case.class)
+                            {
+                                for(int k = 0; k < statements.size() && !statements.isEmpty(); k++)
+                                {
+                                    
+                                    ArrayList<Variable> vl;
+                                    vl = ((Case)(caseBlock.get(j))).getCondition().conditionVars;
+                                    for(int l = 0; l <vl.size(); l++)
+                                    {
+                                        currentVar = vl.get(l);
+
+
+                                        //used to identify listed signals
+                                        for(int m = 0; m <SensList.size(); m++)
+                                        {
+                                            if(currentVar.compareTo(SensList.get(m)))
+                                            {
+                                                SensList.remove(m);
+                                                m--;
+                                            }
+                                        } 
+                                        //used to identify unlisted variables
+                                        for(int m = 0; m <UsedVars.size();m++)
+                                        {
+                                            if(!(currentVar.compareTo((UsedVars.get(m)))))
+                                            {
+                                                UsedVars.add(currentVar);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                     
                     
@@ -103,8 +140,8 @@ public class Error09a_09bIdentifyIncompleteSensList {
                     {
                         Error e = new Error();
                         e.setErrorNum("09b");
-                        errorOutput = "Used signal not in sensitivity list:\n";
-                        errorOutput += "\tin always on line : "+currentBlock.LineNumber +"\n\tUsed Variable(s) not listed: ";
+                        errorOutput = "Signal(s) used in always block that should be present in sensitivity list but are not:\n";
+                        errorOutput += "\tin always on line : "+currentBlock.LineNumber +"\n\tUsed Variable(s) not present in sensitivity list: ";
                         e.addLineNumber(currentBlock.LineNumber);
                         //add the unused Vars
                         for(int varCount = 0;varCount <(UsedVars.size()-1);varCount++)
@@ -123,8 +160,8 @@ public class Error09a_09bIdentifyIncompleteSensList {
                     {
                         Error e = new Error();
                         e.setErrorNum("09a");
-                        errorOutput = "Unused signal in sensitivity list:\n";
-                        errorOutput += "\tin always on line : "+currentBlock.LineNumber +"\n\tUnused Variable(s): ";
+                        errorOutput = "Signal(s) present in sensitivity list that are not used in always block:\n";
+                        errorOutput += "\tin always on line : "+currentBlock.LineNumber +"\n\tUnused Variable(s) in sensitivity list: ";
                         e.addLineNumber(currentBlock.LineNumber);
                         for(int varCount = 0;varCount <(SensList.size()-1);varCount++)
                         {

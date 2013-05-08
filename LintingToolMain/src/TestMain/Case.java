@@ -30,7 +30,12 @@ public class Case extends Block {
         parent = comesFrom;
         LineNumber = Parser.currentLineNumber;
     }
-
+    
+    public ConditionStatement getCondition()
+    {
+        return condition;
+    }
+    
     public static String parseCase(Block current, Parser parser){
         Case cs = new Case(current,"");
         current.addSubBlock(cs);
@@ -60,7 +65,7 @@ public class Case extends Block {
                 temp = parser.getNextPiece();
             }
         }
-        cs.condition = new ConditionStatement(statementText, cs);
+        cs.condition = new ConditionStatement(statementText, cs, parser);
 
         for(temp = parser.getNextPiece(); !temp.equals("endcase") && !temp.equals("##END_OF_MODULE_CODE"); temp=parser.getNextPiece()){
             if(temp.equals("$#")){
@@ -73,7 +78,8 @@ public class Case extends Block {
                     || temp.equals("{")){
                 SubCase.parseSubCase(cs, parser, temp);
             }else{
-                //add piece identification error
+                parser.addInstanceOfError8UndeclaredSignal(temp);
+                parser.stopParsing();
             }
         }
         return temp;

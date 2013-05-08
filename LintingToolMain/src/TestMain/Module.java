@@ -143,6 +143,11 @@ public class Module extends Block{
             if(let<48 || (let>57 && let<65) || (let>90 && let<97 && let!=95) || let>122){
                 return false;
             }
+            if(i == 0){
+                if(!( (let>64 && let<91) || (let>96 && let<123) )){
+                    return false;
+                }
+            }
         }
         return true;
     }
@@ -198,16 +203,16 @@ public class Module extends Block{
                         vecEnd.add(vecEndTemp);
                     }
                     vecTypes.add(vecTypeTemp);
-                    if(!checkVariableName(temp)){
-                        System.out.println("Error: Unidentified token in variable");
-                        //return and throw error?
+                    if(!checkVariableName(temp) || parser.pieceIsKeyword(temp)){
+                        parser.addInstanceOfError18UnexpectedToken(temp);
+                        parser.stopParsing();
                     }
                     varNames.add(temp);
                     vecAttributeTemp="";
                     vecStartTemp=""; vecEndTemp="";
                 }
             }
-            for(int i=0; i<varNames.size(); i++){
+            for(int i=0; i<varNames.size() && !temp.equals("##END_OF_MODULE_CODE"); i++){
                 ArrayList<Variable> newVars = new ArrayList();
                 //set up the template
                 Variable template = findVariableInModulePortList(varNames.get(i));
@@ -237,6 +242,7 @@ public class Module extends Block{
         arraySize.add(new Integer(0));
         String lastSign = "";
         boolean parVector = true;
+        boolean singleArrayParsed = false;
         for( ; !temp.equals(";") && !temp.equals("##END_OF_MODULE_CODE");
                 temp=parser.getNextPiece()){
             if(temp.equals("$#")){
@@ -255,7 +261,7 @@ public class Module extends Block{
                 for( temp=parser.getNextPiece(); !temp.equals("]") && !temp.equals("##END_OF_MODULE_CODE");
                     temp=parser.getNextPiece()){ vecEnd += temp + " "; }
                 
-            }else if(temp.equals("[") && !parVector){
+            }else if(temp.equals("[") && !parVector && !singleArrayParsed){
                 String arrayStartTemp=""; String arrayEndTemp="";
                 for( temp=parser.getNextPiece(); !temp.equals(":") && !temp.equals("##END_OF_MODULE_CODE");
                     temp=parser.getNextPiece()){ arrayStartTemp += temp + " "; }
@@ -263,16 +269,61 @@ public class Module extends Block{
                     temp=parser.getNextPiece()){ arrayEndTemp += temp + " "; }
                 arraySize.remove(arraySize.size()-1);
                 arraySize.add(Variable.parseVariableArraySize(arrayStartTemp, arrayEndTemp));
+                singleArrayParsed = true;
+            }else if(temp.equals("[") && !parVector && singleArrayParsed){
+                String errorText = "Error: Parser error on signal ("+varNames.get(varNames.size()-1)+
+                                "), (Multi-Dimentional Arrays not suppored with this tool)";
+                parser.addInstanceOfError20ParseError("20a",errorText);
+                parser.stopParsing();
+            }else if(temp.equals("=")){
+                int breakFlag = 0;
+                boolean inQuote = false;
+                boolean escapeChar = false;
+                for(temp=parser.getNextPiece(); !temp.equals(";") && breakFlag!=-1 && !temp.equals("##END_OF_MODULE_CODE");
+                        temp=parser.getNextPiece()){
+                    if(temp.equals("{")){
+                        breakFlag++;
+                    }
+                    else if(temp.equals("\\")){
+                        escapeChar = true;
+                    }
+                    else if(temp.equals("\"")){
+                        if(escapeChar){
+                            escapeChar = false;
+                        }
+                        else if(inQuote){
+                            inQuote = false;
+                        }
+                        else{
+                            inQuote = true;
+                        }
+                    }
+                    else if(temp.equals("}")){
+                        breakFlag--;
+                    }
+                    else if(Module.checkVariableName(temp) && !inQuote){
+                        String errorText = "Non-Constant value ( "+temp+" ) in signal initialization";
+                        parser.addInstanceOfError20ParseError("20g", errorText);
+                        parser.stopParsing();
+                        breakFlag=-1;
+                    }
+                    else if(temp.equals(",") && breakFlag==0){
+                        arraySize.add(new Integer(0));
+                        breakFlag = -1;
+                    }
+                }
+                parser.backOneStep();
             }else{
                 parVector = false;
                 if(!checkVariableName(temp)){
-                    System.out.println("Error: Unidentified token in variable");
-                    //return and throw error?
+                    parser.addInstanceOfError18UnexpectedToken(temp);
+                    parser.stopParsing();
                 }
                 varNames.add(temp);
+                singleArrayParsed = false;
             }
         }
-        for(int i=0; i<varNames.size(); i++){
+        for(int i=0; i<varNames.size() && !temp.equals("##END_OF_MODULE_CODE"); i++){
             ArrayList<Variable> newVars = new ArrayList();
             //set up the template
             Variable template = findVariableInModulePortList(varNames.get(i));
@@ -329,6 +380,13 @@ public class Module extends Block{
             if(temp.equals("input") || temp.equals("output") || temp.equals("reg") || temp.equals("wire")){
                 module.parseVariableInModule(temp, parser);
             }
+            else if(temp.equals("integer")){
+                ArrayList<String> integerPieces = new ArrayList();
+                for(temp=parser.getNextPiece(); !temp.equals(";") && !temp.equals("##END_OF_MODULE_CODE"); temp=parser.getNextPiece()){
+                    integerPieces.add(temp);
+                }
+                module.addVariableToModule(new IntegerVariable(integerPieces));
+            }
             //This effectively skips over the parameters, which have already been parsed
             else if(temp.equals("parameter") || temp.equals("localparam")){
                 for(; !temp.equals(";") && !temp.equals("##END_OF_MODULE_CODE"); temp = parser.getNextPiece());
@@ -338,24 +396,32 @@ public class Module extends Block{
                         !temp.equals(";") && !temp.equals("##END_OF_MODULE_CODE"); temp = parser.getNextPiece()){
                     module.statementText += temp+" ";
                 }
-                module.assignments.add(new ContinuousAssignment(module.statementText,module));
+                module.assignments.add(new ContinuousAssignment(module.statementText,module, parser));
             }
-            else if(!parser.pieceIsKeyword(temp) && (module.findVariableInModule(temp)==null) && parser.checkTaskOrFunctionName(temp)==0) {
+            else if(!parser.pieceIsKeyword(temp) && (module.findVariableInModule(temp)==null) 
+                    && parser.checkTaskOrFunctionName(temp)==0 && Module.checkVariableName(temp)) {
+                String temp2 = parser.getNextPiece(); //if this is a submodule then this will be the instantiation name
+                if(Module.checkVariableName(temp2)){
+                    ArrayList<String> subModule = new ArrayList();
+                    String subModuleText="";
+                    int line = Parser.currentLineNumber;
 
-                ArrayList<String> subModule = new ArrayList();
-                String subModuleText="";
-                int line = Parser.currentLineNumber;
-                for(subModule.add(temp), subModuleText+=temp; !temp.equals(";") && 
-                        !temp.equals("##END_OF_MODULE_CODE"); 
-                        temp=parser.getNextPiece()){
-                    if(temp.equals("$#")){
-                        parser.updateLineNumber();
-                    }else{
-                        subModuleText+=" "+temp;
-                        subModule.add(temp);
+                    subModule.add(temp); subModuleText+=temp;
+                    for(subModule.add(temp2), subModuleText+=" "+temp2; !temp.equals(";") && 
+                            !temp.equals("##END_OF_MODULE_CODE"); 
+                            temp=parser.getNextPiece()){
+                        if(temp.equals("$#")){
+                            parser.updateLineNumber();
+                        }else{
+                            subModuleText+=" "+temp;
+                            subModule.add(temp);
+                        }
                     }
+                    module.addModuleInstantiation(new ModuleInstantiation(subModuleText, subModule, line));
+                }else{
+                    parser.addInstanceOfError8UndeclaredSignal(temp);
+                    parser.stopParsing();
                 }
-                module.addModuleInstantiation(new ModuleInstantiation(subModuleText, subModule, line));
             }
             //check for a task call, and ignore it if its present
             else if(parser.checkTaskOrFunctionName(temp)!=0){
@@ -374,7 +440,7 @@ public class Module extends Block{
                     module.addVariable(new FunctionCall(CallText,CallElements));
                 }
             } 
-            else{
+            else if(!temp.equals("##END_OF_MODULE_CODE") ){
                 /* If the string temp is a keyword then once it is back in the
                  * it is checked to see if it is part of a block, and if so
                  * then it is passed back to the parser to be handled
@@ -383,7 +449,8 @@ public class Module extends Block{
                 if(parser.pieceIsKeyword(temp))
                     parser.checkForNewBlock(module, temp);
                 else{
-                    //we could choose to throw an error here
+                    parser.addInstanceOfError18UnexpectedToken(temp);
+                    parser.stopParsing();
                 }
             }
         }while( !temp.equals("endmodule") && !temp.equals("##END_OF_MODULE_CODE"));
@@ -465,13 +532,20 @@ public class Module extends Block{
             else if(temp.equals("parameter") || temp.equals("localparam") ){
                 paramType = temp;
                 temp = parser.getNextPiece();
+                if(temp.equals("[")){
+                    for(; !temp.equals("]") && !temp.equals("##END_OF_MODULE_CODE"); temp=parser.getNextPiece());
+                    temp=parser.getNextPiece(); //this last piece retrieval should be the parameter name
+                }
                 if(!checkVariableName(temp)){
-                    System.out.println("Error: Unidentified token in parameter");
-                    //throw error?
+                    parser.addInstanceOfError18UnexpectedToken(temp);
+                    parser.stopParsing();
                 }
                 paramName = temp;
                 temp = parser.getNextPiece();
-                for(temp=parser.getNextPiece(), paramAssignmentValue=""; 
+                if(!temp.equals(";")){
+                    temp = parser.getNextPiece();
+                }
+                for(paramAssignmentValue=""; 
                         !temp.equals(";") && !temp.equals("##END_OF_MODULE_CODE"); temp=parser.getNextPiece() ){
                     paramAssignmentValue += temp+" ";
                 }

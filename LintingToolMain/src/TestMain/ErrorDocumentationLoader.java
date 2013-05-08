@@ -17,15 +17,17 @@ import java.io.InputStreamReader;
 public class ErrorDocumentationLoader {
 
     //contains the base url leading to the database directory
-    final String baseURL = "https://raw.github.com/deathwarror/Linting-Tool/"
+    private String baseURL = "https://raw.github.com/deathwarror/Linting-Tool/"
             + "master/Database/v/Documentation/";
-    final String Format = ".txt";
+    private String Format;
     private BufferedReader in;
     private InputStreamReader inStream;
     URL DocumentationURL;
     //trys running the input streams
-    ErrorDocumentationLoader()
+    ErrorDocumentationLoader(String burl,String format)
     {
+        baseURL = burl;
+        Format = format;
         try{
             DocumentationURL = new URL(baseURL);
             inStream = new InputStreamReader(DocumentationURL.openStream());
@@ -56,7 +58,8 @@ public class ErrorDocumentationLoader {
             return "Could not get the Documentation for error "
                     + Number + ":\nThe page failed to load\n"
                     + "\tThis could be caused by no internet connection or \n"
-                    + "\tthe webpage that holds the information is down.";
+                    + "\tthe webpage that holds the information is down.\n"
+                    + "Documentation Web Address: \n\t"+baseURL+Number+Format+"\n";
         }
         try{
             ReadLine = in.readLine();
@@ -71,7 +74,8 @@ public class ErrorDocumentationLoader {
         {
             return "Something Went wrong while reading the file of error "
                     + Number +":\n The reading of the file was unsuccessful.\n"
-                    + "\tThis could be caused by an unstable internet connection.\n";
+                    + "\tThis could be caused by an unstable internet connection.\n"
+                    + "Documentation Web Address: \n\t"+baseURL+Number+Format+"\n";
         }
         return ed;
     }

@@ -59,10 +59,13 @@ public class Error04IdentifyOperatorsInSensList {
                 }
                 if(AlwaysStatement.contains("*"))
                 {
-                    if(CharactersIdentified.equals(""))
-                    CharactersIdentified += "*"; 
-                    else
-                    CharactersIdentified += ", *"; 
+                    if(((Always)currentBlock).getSensitivityList().size()>0)
+                    {
+                        if(CharactersIdentified.equals(""))
+                        CharactersIdentified += "*"; 
+                        else
+                        CharactersIdentified += ", *"; 
+                    }
                 }
                 if(AlwaysStatement.contains("/"))
                 {
@@ -137,7 +140,7 @@ public class Error04IdentifyOperatorsInSensList {
                 
                 if(!(CharactersIdentified.equals("")))
                 {
-                    errorOutput = "Error: Detected Mathametical or Logical operator in the Sensitivity List:\n";
+                    errorOutput = "Detected Mathametical or Logical operator in the Sensitivity List:\n";
                     errorOutput += "\tin always on line "+currentBlock.LineNumber+": \n\t Character List: "+CharactersIdentified;
                     errorOutput += "\n\tLine "+currentBlock.LineNumber+":\t"+((Always)currentBlock).getAlwaysStatement()+";\n";
                                     

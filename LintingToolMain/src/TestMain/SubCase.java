@@ -64,16 +64,23 @@ public class SubCase extends Block{
                 temp = parser.getNextPiece();
             }
         }
-        sub.condition = new ConditionStatement(statementText, sub);
+        sub.condition = new ConditionStatement(statementText, sub, parser);
 
         temp = parser.getNextPiece();
         // if there will be multiple sublocks or assginments
         if(temp.equals("begin")){
             for(temp=parser.getNextPiece(); !temp.equals("end") && !temp.equals("##END_OF_MODULE_CODE"); temp=parser.getNextPiece() ){
                 if(parser.pieceIsKeyword(temp)){
-                    parser.checkForNewBlock(sub, temp);
-                    if(!temp.equals("$#"))
-                        sub.subCaseBlockOrder.add(new Integer(1));
+                    if(!temp.equals("always")){
+                        parser.checkForNewBlock(sub, temp);
+                        if(!temp.equals("$#"))
+                            sub.subCaseBlockOrder.add(new Integer(1));
+                    }
+                    else{
+                        String errorText = "Error: nested always blocks not allowed";
+                        parser.addErrorToParserErrorList(new Error("19",errorText,Parser.getCurrentLineNumber()));
+                        parser.stopParsing();
+                    }
                 }
                 else if(parser.checkTaskOrFunctionName(temp)!=0){
                     String taskCallText = "";
@@ -92,11 +99,12 @@ public class SubCase extends Block{
                     for(statementText=""; !temp.equals(";") && !temp.equals("##END_OF_MODULE_CODE"); temp = parser.getNextPiece()){
                         statementText+=temp+" ";
                     }
-                    sub.addAssignment(new AssignmentStatement(statementText,sub));
+                    sub.addAssignment(new AssignmentStatement(statementText,sub,parser));
                     sub.subCaseBlockOrder.add(new Integer(0));
                 }
                 else {
-                    //add piece identification error here
+                    parser.addInstanceOfError8UndeclaredSignal(temp);
+                    parser.stopParsing();
                 }
             }
         }else {
@@ -105,9 +113,16 @@ public class SubCase extends Block{
                 temp = parser.getNextPiece();
             }
             if(parser.pieceIsKeyword(temp)){
-                parser.checkForNewBlock(sub, temp);
-                if(!temp.equals("$#"))
-                    sub.subCaseBlockOrder.add(new Integer(1));
+                if(!temp.equals("always")){
+                    parser.checkForNewBlock(sub, temp);
+                    if(!temp.equals("$#"))
+                        sub.subCaseBlockOrder.add(new Integer(1));
+                }
+                else{
+                    String errorText = "Error: nested always blocks not allowed";
+                    parser.addErrorToParserErrorList(new Error("19",errorText,Parser.getCurrentLineNumber()));
+                    parser.stopParsing();
+                }
             }
             else if(parser.checkTaskOrFunctionName(temp)!=0){
                 String taskCallText = "";
@@ -126,11 +141,12 @@ public class SubCase extends Block{
                 for(statementText=""; !temp.equals(";") && !temp.equals("##END_OF_MODULE_CODE"); temp = parser.getNextPiece()){
                     statementText+=temp+" ";
                 }
-                sub.addAssignment(new AssignmentStatement(statementText,sub));
+                sub.addAssignment(new AssignmentStatement(statementText,sub,parser));
                 sub.subCaseBlockOrder.add(new Integer(0));
             }
             else {
-                //add piece identification error here
+                parser.addInstanceOfError8UndeclaredSignal(temp);
+                parser.stopParsing();
             }
         }
 

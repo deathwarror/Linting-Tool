@@ -6,6 +6,13 @@
     <information>
         <title>Linting Tool</title>
         <vendor>UCCS</vendor>
+        <description>This Program is the UCCS' Linting tool for Verilog</description>
+        <description kind="short">UCCS' Verilog Linting Tool</description>
+        <offline-allowed/>
+		<shortcut online="false">
+			<desktop/>
+		</shortcut>
+
     </information>
     <resources>
         <!-- Application Resources -->
@@ -22,7 +29,7 @@
          width="300"
          height="300">
      </application-desc>
-     <update check="background"/>
+     <update check="always" policy="always"/>
 <security>
     <all-permissions/>
 </security>

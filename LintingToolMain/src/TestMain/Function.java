@@ -37,7 +37,7 @@ public class Function extends Block{
     
     @Override
     public String toString(){
-        String exit="task ";
+        String exit="function ";
         for(int i=0; i<functionText.size(); i++){
             exit += functionText.get(i) + " ";
             if(functionText.get(i).equals("begin")

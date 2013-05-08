@@ -49,7 +49,7 @@ public class Error03IdentifyBackwardPortDirection {
                         inputVar = LHSVList.get(k);
                         if(inputVar.variableAttribute.equals("input") &&lineFlagged ==0)
                         {
-                           errorOutput = "Error: Detected input being assigned:\n";
+                           errorOutput = "Detected input being assigned:\n";
                            errorOutput += "\tin always on line "+currentBlock.LineNumber+": \n\t Variable: "+LHSVList.get(k).name;
                            errorOutput += "\n\tLine "+statements.get(j).LineNumber+":\t"+statements.get(j).assignmentText+";\n";
                                     
@@ -72,9 +72,10 @@ public class Error03IdentifyBackwardPortDirection {
                     for(int k = 0; k < RHSVList.size();k++)
                     {
                         outputVar = RHSVList.get(k);
-                        if(outputVar.variableAttribute.equals("output") &&lineFlagged ==0)
+                        if(outputVar.variableAttribute.equals("output") &&lineFlagged ==0
+                                && outputVar.getClass()!= Reg.class)
                         {
-                           errorOutput = "Error: Detected output being being used in Right Side of equation:\n";
+                           errorOutput = "Detected output being being used in Right Side of equation:\n";
                            errorOutput += "\tin always on line "+currentBlock.LineNumber+": \n\t Variable: "+RHSVList.get(k).name;
                            errorOutput += "\n\tLine "+statements.get(j).LineNumber+":\t"+statements.get(j).assignmentText+";\n";
                                     

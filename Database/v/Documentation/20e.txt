@@ -1,0 +1,1 @@
+Error: unknown parser error\n\tMake sure your design compiles in modelsim.

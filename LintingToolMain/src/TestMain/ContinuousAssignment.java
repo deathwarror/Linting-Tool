@@ -11,19 +11,19 @@ import java.util.ArrayList;
  */
 
 public class ContinuousAssignment extends AssignmentStatement {
-    ContinuousAssignment(String rawText, Block blockSource){
+    ContinuousAssignment(String rawText, Block blockSource, Parser parser){
         assignmentText = rawText;
         LHSvars = new ArrayList();
         RHSvars = new ArrayList();
         parent = blockSource;
         LineNumber = Parser.currentLineNumber;
 
-        identifyLHSvariables();
-        identifyRHSvariables();
+        identifyLHSvariables(parser);
+        identifyRHSvariables(parser);
     }
-
+/*
     @Override
-    protected void identifyLHSvariables(){
+    protected void identifyLHSvariables(Parser parser){
         String preserve = assignmentText;
         String temp = super.getNextPiece();
         Variable tempVar=null;
@@ -39,7 +39,7 @@ public class ContinuousAssignment extends AssignmentStatement {
     }
 
     @Override
-    protected void identifyRHSvariables(){
+    protected void identifyRHSvariables(Parser parser){
         String preserve = assignmentText;
         assignmentText = assignmentText.substring(assignmentText.indexOf("="));
         String temp;
@@ -52,6 +52,7 @@ public class ContinuousAssignment extends AssignmentStatement {
         }
         assignmentText = preserve;
     }
+*/     
     @Override
     public String toString(){
         String text = "";

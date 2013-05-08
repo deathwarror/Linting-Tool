@@ -88,7 +88,7 @@ public class Error11LogicalNotWithVector {
                                     {
                                         Error e = new Error();
                                         e.setErrorNum("11");
-                                        errorOutput = "Error: Vector or Array Series is being operated on with the logical not operator:\n";
+                                        errorOutput = "Vector or Array Series is being operated on with the logical not operator:\n";
                                         errorOutput += "\tin always on line : "+As.get(j).LineNumber+"\n\tVariable Name: ";
                                         errorOutput += currentVar;
                                         e.addLineNumber(As.get(j).LineNumber);
@@ -107,7 +107,7 @@ public class Error11LogicalNotWithVector {
                                         {
                                            Error e = new Error();
                                             e.setErrorNum("11");
-                                            errorOutput = "Error: Vector or Array Series is being operated on with the logical not operator:\n";
+                                            errorOutput = "Vector or Array Series is being operated on with the logical not operator:\n";
                                             errorOutput += "\tin always on line : "+As.get(j).LineNumber+"\n\tVariable Name: ";
                                             errorOutput += currentVar;
                                             e.addLineNumber(As.get(j).LineNumber);
