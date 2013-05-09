@@ -1,16 +1,20 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @Author:     Kenneth Hassey
+ * @Date:       1/7/2013
+ * @Version:    1.000
+ * Function:
+ *      This File is for verification of correct blocking and non blocking statements
+ *      blocking statements for combinational blocks
+ *      non blocking for timing blocks
+ *
+ * Status: Tested Working;
  */
 
 package TestMain;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author Deathwarror
- */
+
 public class Error05IdentifyAssignmentVsSensType {
      public static ArrayList<Error> getErrors(Parser parser)
     {

@@ -1,15 +1,16 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @Author:     Kenneth Hassey
+ * @Date:       5/8/2013
+ * @Version:    1.001
+ * Function:
+ *      looks for vectors with a logical not in front of the vector
+ *
+ * Status: Tested Working;
  */
 package TestMain;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author Deathwarror
- */
 public class Error11LogicalNotWithVector {
     public static ArrayList<Error> getErrors(Parser parser)
     {

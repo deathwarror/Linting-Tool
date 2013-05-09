@@ -1,6 +1,12 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @Author:     Kenneth Hassey
+ * @Date:       5/8/2013
+ * @Version:    1.000
+ * Function:
+ *      Looks for vectors in the sensitivity list of always blocks
+ *      in edge sensitivity blocks only
+ *
+ * Status: Tested Working;
  */
 package TestMain;
 

@@ -73,13 +73,11 @@ class TestMenu
         {
             TestVariable V = new TestVariable();
             TestError E = new TestError();
-            TestCode C;
             for(int i = 0; i > -1;)
             {
                 System.out.println("-1\t quit \n"
                         + "1\tError Class Tester\n"
-                        + "2\tVariable Class Tester\n"
-                        + "3\tCode Class Tester");
+                        + "2\tVariable Class Tester\n");
                 i = sc.nextInt();
                 switch(i)
                 {
@@ -88,10 +86,6 @@ class TestMenu
                         break;
                     case 2:
                         V.start();
-                        break;
-                    case 3:
-                        C = new TestCode(V.Default(),E.Default());
-                        C.start();
                         break;
                     default:
                         break;

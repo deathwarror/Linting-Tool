@@ -1,12 +1,21 @@
-//detects any always blocks that a for flip flops and searches to see if they
-//are missing any reset variables.
+/**
+ * @Author:     Kenneth Hassey
+ * @Date:       5/8/2013
+ * @Version:    1.100
+ * Function:
+ *      detects any always blocks that a for flip flops and searches to see if they
+ *      are missing any reset variables.
+ *      then detect to see if there is an unused signal for the clock and then
+ *      checks to see if there is more than one unused signal making the block 
+ *      have multiple clocks
+ *      last checks to see if there are multiple clocks per module
+ *
+ * Status: Tested Working;
+ */
 
 package TestMain;
 import java.util.ArrayList;
-/**
- *
- * @author Deathwarror
- */
+
 public class Error06_07_08IdentifyClockErrors {
     public static ArrayList<Error> getErrors(Parser parser)
     {

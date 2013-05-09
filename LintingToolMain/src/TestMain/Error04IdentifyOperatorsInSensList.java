@@ -1,16 +1,18 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @Author:     Kenneth Hassey
+ * @Date:       5/8/2013
+ * @Version:    1.010
+ * Function:
+ *      This File is for detection of operators in the sensitivity list of an
+ *      always block
+ *
+ * Status: Tested Working;
  */
 
 package TestMain;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author Deathwarror
- */
 public class Error04IdentifyOperatorsInSensList {
      //This function identifies any operators in the sensitivity list
     public static ArrayList<Error> getErrors(Parser parser)

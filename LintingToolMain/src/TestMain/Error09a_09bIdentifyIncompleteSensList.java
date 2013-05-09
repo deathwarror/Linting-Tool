@@ -1,12 +1,20 @@
 package TestMain;
 
+/**
+ * @Author:     Kenneth Hassey
+ * @Date:       5/8/2013
+ * @Version:    1.000
+ * Function:
+ *      Finds sensitivity lists that have unused variables or ports and also 
+ *      identifies used signals that are not in the sensitivity list.
+ *      Combinational blocks only.
+ *
+ * Status: Tested Working;
+ */
+
 import java.util.ArrayList;
 
-//Finds any incomplete sensitivity lists
-/**
- *
- * @author Deathwarror
- */
+
 public class Error09a_09bIdentifyIncompleteSensList {
     public static ArrayList<Error> getErrors(Parser parser)
     {

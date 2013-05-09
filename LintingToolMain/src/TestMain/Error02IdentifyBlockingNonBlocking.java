@@ -1,16 +1,18 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @Author:     Kenneth Hassey
+ * @Date:       5/8/2013
+ * @Version:    1.001
+ * Function:
+ *      This File is for detection of blocking and non blocking statements used
+ *      in the same always block.
+ *
+ * Status: Tested Working;
  */
 
 package TestMain;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author Deathwarror
- */
 public class Error02IdentifyBlockingNonBlocking {
     public static ArrayList<Error> getErrors(Parser parser)
     {
@@ -54,7 +56,7 @@ public class Error02IdentifyBlockingNonBlocking {
                             {
                                 int index = currentStatement.assignmentText.indexOf("=");
                                 
-                                //verify that it is a blocking line
+                                //verify that it is a blocking line by making sure there is not a non blocking symbol at the start
                                 if (currentStatement.assignmentText.charAt(index-2) != '<'&&blockFlagged == 0)
                                 {
                                     
