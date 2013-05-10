@@ -13,7 +13,7 @@ package TestMain;
 
 import java.util.ArrayList;
 
-public class Error02IdentifyBlockingNonBlocking {
+public class Error15IdentifyBlockingNonBlocking {
     public static ArrayList<Error> getErrors(Parser parser)
     {
         ArrayList<Error> ErrorList = new ArrayList();
@@ -69,7 +69,7 @@ public class Error02IdentifyBlockingNonBlocking {
                                     //put the error message into the error list
                                     Error e = new Error();
                                     e.setErrorMsg(errorOutput);
-                                    e.setErrorNum("02");
+                                    e.setErrorNum("15");
                                     e.addLineNumber(statements.get(j).LineNumber);
                                     e.addLineNumber(statements.get(k).LineNumber);
                                     ErrorList.add(e);
