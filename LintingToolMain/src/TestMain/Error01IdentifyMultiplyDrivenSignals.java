@@ -19,13 +19,15 @@ public class Error01IdentifyMultiplyDrivenSignals {
         ArrayList<Variable> vars = parser.getVariableList();
         ArrayList<Block> blocks = parser.getBlockList();
         ArrayList<AssignmentStatement> statements;
+        ArrayList<Integer> lineNumbers = new ArrayList();
+        ArrayList<Integer> tempLineNumbers = new ArrayList();
         Variable currentVar = null;
         Block currentBlock = null;
         AssignmentStatement currentStatement = null;
 
         int i=0; int j=0; int k=0;
         // The first loop goes through every register and wire in the module
-        for(i=0; i<vars.size(); i++, tempString = new ArrayList()){
+        for(i=0; i<vars.size(); i++, tempString = new ArrayList(), tempLineNumbers=new ArrayList()){
             currentVar = vars.get(i);
             if(currentVar.getClass() == Reg.class){ //if currentVar is of type reg
                 //The second loop goes through every block lookin for each always block
@@ -47,11 +49,14 @@ public class Error01IdentifyMultiplyDrivenSignals {
                                         " \"always\" block at line "+ currentBlock.getBlockLineNumber() +": "+
                                         currentStatement.assignmentText + "; (line: "+currentStatement.getAssignmentStatementLineNumber() +")\n"
                                         );
+                                tempLineNumbers.add(currentStatement.getAssignmentStatementLineNumber());
                                 break;
                             }
                         }
                         if(tempString.size() > 1){
                             errorOutput += tempString+ "\n";
+                            tempString = new ArrayList();
+                            lineNumbers.addAll(tempLineNumbers);
                         }
                     }
                 }
@@ -59,7 +64,7 @@ public class Error01IdentifyMultiplyDrivenSignals {
 
 
             else if( currentVar.getClass() == Wire.class){ //if currentVar is of type wire
-                for(j=0, tempString=new ArrayList(); j<blocks.size(); j++, tempString=new ArrayList() ){
+                for(j=0, tempString=new ArrayList(); j<blocks.size(); j++, tempString=new ArrayList(), tempLineNumbers=new ArrayList() ){
                     currentBlock=blocks.get(j);
                     if(currentBlock.getClass() == Module.class){
                         //Should retrive all assignment statements in the module
@@ -73,11 +78,13 @@ public class Error01IdentifyMultiplyDrivenSignals {
                                         +currentStatement.assignmentText 
                                         + "; (line: "+ currentStatement.getAssignmentStatementLineNumber() +")\n"
                                 );
+                                tempLineNumbers.add(currentStatement.getAssignmentStatementLineNumber());
                             }
                         }
                     }
                     if(tempString.size() > 1){
                         errorOutput += tempString+ "\n";
+                        lineNumbers.addAll(tempLineNumbers);
                     }
                 }
             }
@@ -88,6 +95,7 @@ public class Error01IdentifyMultiplyDrivenSignals {
             Error e = new Error();
             e.setErrorMsg(errorOutput);
             e.setErrorNum("01");
+            e.setLineNumbers(lineNumbers);
             ErrorList.add(e);
             System.out.println(errorOutput);
             return ErrorList;

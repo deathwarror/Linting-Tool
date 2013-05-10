@@ -1,4 +1,4 @@
-02:	This Error is reported if an always block contains blocking and non blocking
+15:	This Error is reported if an always block contains blocking and non blocking
 	assignment statements.
 	This error list the first two that match the error.
 

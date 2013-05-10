@@ -9,10 +9,14 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.WindowConstants;
 
 /**
  *
@@ -24,8 +28,7 @@ public class MainGUI extends javax.swing.JFrame {
     private String CommentColor = "04B404";
     private String KeywordColor = "0404B4";
     private String QuoteColor = "FFD006";
-    private String DocumentationURL = "https://linting-tool.googlecode.com/git/"
-            + "Database/v/Documentation/";
+    private String DocumentationURL = "https://linting-tool.googlecode.com/git/Database/v/Documentation/";
     private String DocumentationType = ".html";
     private String DefaultDocType = ".txt";
     private DefaultListModel FileListModel;
@@ -312,7 +315,8 @@ public class MainGUI extends javax.swing.JFrame {
                     CodeListModel.clear();
                     
                     e = EL.get(index);
-                    ErrorLines = SortNumberList(e.getLineNumbers());
+                    ErrorLines = e.getLineNumbers();
+                    sortLineNumbers(ErrorLines);
                     //fill the cell with 
                     int j = 0;
 
@@ -359,34 +363,9 @@ public class MainGUI extends javax.swing.JFrame {
                 {
                     ErrorNumber = EL.get(index).getErrorNum();
                     //try using the gui based load method
-                    try{
-                        Description = EDL.getURL(ErrorNumber);
-                        //try loading the html version of the description
-                        try{
-                            ErrorD = new JEditorPane(Description);
-                        }
-                        //try loading the txt version of he description
-                        catch(Exception e)
-                        {
-                            Description = EDL2.getURL(ErrorNumber);
-                            ErrorD = new JEditorPane(Description);
-                        }
-                        ErrorD.setEditable(false);
-                        //Create the New Pane with information in it.
-                        JSP = new JScrollPane(ErrorD);
-                        
-                        //Set the pane size to a size approxmently 72% and 68% of the window size.
-                        JSP.setPreferredSize(new Dimension((int)(ScreenWidth*.9-200),(int)(ScreenHeight*.9-30)));
-                        JSP.setLocation((int)((dim.width-ScreenWidth-200)/2),(int)((dim.height-ScreenHeight)/2));
-                        JOptionPane.showMessageDialog(null, JSP,("Error: "+ ErrorNumber),JOptionPane.INFORMATION_MESSAGE );
-                    }
                     
-                    //try the default which generates based on url status
-                    catch(Exception e)
-                    {
-                        Description = EDL.load(ErrorNumber);
-                        JOptionPane.showMessageDialog(new JFrame(), Description,("Error: "+ ErrorNumber),JOptionPane.INFORMATION_MESSAGE );
-                    }
+                        DocumentationGui dialog = new DocumentationGui(new javax.swing.JFrame(), true, ErrorNumber,DocumentationURL,DocumentationType,DefaultDocType);
+                        
                     
                 }
             }
@@ -394,39 +373,25 @@ public class MainGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_ErrorListBoxMouseClicked
 
+
+    
     //converts the arraylist of numbers to an integer array
-    private ArrayList<Integer> SortNumberList(ArrayList<Integer> AL){
-        ArrayList<Integer> intA = new ArrayList();
-        ArrayList<Integer> Temp = new ArrayList();
-        Temp.addAll(AL);
-        int Lowest;
-        int LowestIndex;
-        while(Temp.size()>0)
-        {
-            Lowest = Temp.get(0);
-            LowestIndex = 0;
-            for(int i = 1; i <Temp.size();i++)
-            {
-                if(Temp.get(i) != null)
-                {
-                    if(Lowest>Temp.get(i))
-                    {
-                        Lowest = Temp.get(i).intValue();
-                    }
-                    //Remove Same line index
-                    else if(Lowest == Temp.get(i))
-                    {
-                        Temp.remove(i);
-                        i--;
-                    }
+    public static void sortLineNumbers(ArrayList<Integer> arr){
+        int i=0, j=0;
+        Integer temp = new Integer(0);
+        for(i=0; i<arr.size(); i++){
+            for(j=0; j<arr.size()-(i+1); j++){
+                if(arr.get(j).compareTo(arr.get(j+1)) == 1){
+                    temp = arr.get(j);
+                    arr.set(j, arr.get(j+1));
+                    arr.set(j+1, temp);
+                }
+                else if(arr.get(j).compareTo(arr.get(j+1)) == 0){
+                    arr.remove(j);
+                    i--; j--;
                 }
             }
-            //add the next Highest number to the list
-            Temp.remove(LowestIndex);
-            intA.add(Lowest);
         }
-        return intA;
-        
     }
     /**
      * @param args the command line arguments

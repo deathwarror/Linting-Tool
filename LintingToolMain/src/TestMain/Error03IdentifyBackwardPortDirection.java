@@ -33,7 +33,7 @@ public class Error03IdentifyBackwardPortDirection {
         Variable outputVar;
         Block currentBlock;
         
-        
+        if(!blocks.isEmpty()){
         //get the top block
         currentBlock = blocks.get(0);
         
@@ -104,5 +104,7 @@ public class Error03IdentifyBackwardPortDirection {
         {
             return ErrorList;
         }
+    }
+    return ErrorList;
     }
 }

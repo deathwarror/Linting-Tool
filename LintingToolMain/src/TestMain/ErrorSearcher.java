@@ -21,7 +21,7 @@ public class ErrorSearcher {
         merge(parser.getParserErrorList());
         if(EL.isEmpty()){
             merge(Error01IdentifyMultiplyDrivenSignals.getErrors(parser));
-            merge(Error02IdentifyBlockingNonBlocking.getErrors(parser));
+            merge(Error15IdentifyBlockingNonBlocking.getErrors(parser));
             merge(Error03IdentifyBackwardPortDirection.getErrors(parser));
             merge(Error04IdentifyOperatorsInSensList.getErrors(parser));
             merge(Error05IdentifyAssignmentVsSensType.getErrors(parser));

@@ -168,7 +168,7 @@ public class Error09a_09bIdentifyIncompleteSensList {
                     {
                         Error e = new Error();
                         e.setErrorNum("09a");
-                        errorOutput = "Signal(s) present in sensitivity list that are not used in always block:\n";
+                        errorOutput = "Signal(s) present in sensitivity list that are not used as inputs to combinatorial logic modeled in always block:\n";
                         errorOutput += "\tin always on line : "+currentBlock.LineNumber +"\n\tUnused Variable(s) in sensitivity list: ";
                         e.addLineNumber(currentBlock.LineNumber);
                         for(int varCount = 0;varCount <(SensList.size()-1);varCount++)
