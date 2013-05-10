@@ -101,7 +101,7 @@ public class Error16IdentifyLatches {
     }
     private static Error error16MissingAssignments(Variable var, Block block){
         String text = "\tSub-Error:\n"+
-                "variable ("+var.name+") not assigned in block ("+block.BlockName+") on line ("+block.LineNumber+")";
+                "variable ("+var.name+") not assigned in block on line ("+block.LineNumber+")";
         Error err = new Error("16",text, block.LineNumber);
         return err;
     }

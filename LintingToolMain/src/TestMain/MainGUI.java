@@ -229,6 +229,7 @@ public class MainGUI extends javax.swing.JFrame {
             {
                 WorkingStore = (SimpleFileStore) FileListModel.get(index);
                 Code = WorkingStore.getCode();
+                Code = ReplaceSpecialCharacter(Code);
                 Code = HighlightKeyWords(Code);
                 Errors = WorkingStore.getErrorList();
                 RemoveButton.setEnabled(true);
@@ -242,10 +243,12 @@ public class MainGUI extends javax.swing.JFrame {
                 {
                     Error e = Errors.get(i);
                     if(!e.getLineNumbers().isEmpty()){
-                        String Temp = convertToHTML(e.getLineNumbers().get(0)+":  Error "+e.getErrorNum()+": "+e.getErrorMsg()+"\n\n");
+                        String Temp = ReplaceSpecialCharacterS(e.getLineNumbers().get(0)+":  Error "+e.getErrorNum()+": "+e.getErrorMsg()+"\n\n");
+                        Temp = convertToHTML(Temp);
                         ErrorListModel.addElement("<html>"+Temp+"</html>");
                     }else {
-                        String Temp = convertToHTML("Error "+e.getErrorNum()+":  "+e.getErrorMsg()+"\n\n");
+                        String Temp = ReplaceSpecialCharacterS("Error "+e.getErrorNum()+":  "+e.getErrorMsg()+"\n\n");
+                        Temp = convertToHTML(Temp);
                         ErrorListModel.addElement("<html>"+Temp+"</html>");
                     }
                 }
@@ -307,6 +310,7 @@ public class MainGUI extends javax.swing.JFrame {
               WorkingStore = (SimpleFileStore) FileListModel.get(FileIndex);
               EL = WorkingStore.getErrorList();
               Code = WorkingStore.getCode();
+              Code = ReplaceSpecialCharacter(Code);
               Code = HighlightKeyWords(Code);
               
               if(EL.size() >0)
@@ -373,10 +377,30 @@ public class MainGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_ErrorListBoxMouseClicked
 
-
-    
+    private String ReplaceSpecialCharacterS(String s)
+    {
+        s=s.replace("&","&#38");
+        s=s.replace("<","&#60");
+        s=s.replace("<","&#62");
+        return s;
+    }
+    private ArrayList<String> ReplaceSpecialCharacter(ArrayList<String>al)
+    {
+        ArrayList<String> temp = new ArrayList();
+        String s;
+        for(int i = 0; i <al.size();i++)
+        {
+            s = al.get(i);
+            s=s.replace("&","&#38");
+            s=s.replace("<","&#60");
+            s=s.replace("<","&#62");
+            temp.add(s);
+        }
+     
+        return temp;
+    }
     //converts the arraylist of numbers to an integer array
-    public static void sortLineNumbers(ArrayList<Integer> arr){
+    private static void sortLineNumbers(ArrayList<Integer> arr){
         int i=0, j=0;
         Integer temp = new Integer(0);
         for(i=0; i<arr.size(); i++){
