@@ -9,30 +9,30 @@ xmlns="http://www.w3.org/TR/REC-html40">
 <meta name=ProgId content=Word.Document>
 <meta name=Generator content="Microsoft Word 15">
 <meta name=Originator content="Microsoft Word 15">
-<link rel=File-List href="01_files/filelist.xml">
+<link rel=File-List href="07_files/filelist.xml">
 <!--[if gte mso 9]><xml>
  <o:DocumentProperties>
   <o:Author>Danny</o:Author>
   <o:Template>Normal</o:Template>
   <o:LastAuthor>Deathwarror</o:LastAuthor>
   <o:Revision>5</o:Revision>
-  <o:TotalTime>41</o:TotalTime>
-  <o:Created>2013-05-10T03:05:00Z</o:Created>
-  <o:LastSaved>2013-05-10T04:33:00Z</o:LastSaved>
+  <o:TotalTime>44</o:TotalTime>
+  <o:Created>2013-05-10T03:09:00Z</o:Created>
+  <o:LastSaved>2013-05-10T03:14:00Z</o:LastSaved>
   <o:Pages>1</o:Pages>
-  <o:Words>87</o:Words>
-  <o:Characters>496</o:Characters>
+  <o:Words>91</o:Words>
+  <o:Characters>525</o:Characters>
   <o:Lines>4</o:Lines>
   <o:Paragraphs>1</o:Paragraphs>
-  <o:CharactersWithSpaces>582</o:CharactersWithSpaces>
+  <o:CharactersWithSpaces>615</o:CharactersWithSpaces>
   <o:Version>15.00</o:Version>
  </o:DocumentProperties>
  <o:OfficeDocumentSettings>
   <o:AllowPNG/>
  </o:OfficeDocumentSettings>
 </xml><![endif]-->
-<link rel=themeData href="01_files/themedata.thmx">
-<link rel=colorSchemeMapping href="01_files/colorschememapping.xml">
+<link rel=themeData href="07_files/themedata.thmx">
+<link rel=colorSchemeMapping href="07_files/colorschememapping.xml">
 <!--[if gte mso 9]><xml>
  <w:WordDocument>
   <w:View>Print</w:View>
@@ -715,21 +715,17 @@ div.WordSection1
    <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
     <td style='padding:.75pt .75pt .75pt .75pt'>
     <p class=MsoNormal align=center style='text-align:center'><b><span
-    style='mso-fareast-font-family:"Times New Roman"'>Error 01: <o:p></o:p></span></b></p>
+    style='mso-fareast-font-family:"Times New Roman"'>Error 07: <o:p></o:p></span></b></p>
     </td>
    </tr>
    <tr style='mso-yfti-irow:1;mso-yfti-lastrow:yes'>
     <td style='padding:.75pt .75pt .75pt .75pt'></td>
     <td style='padding:.75pt .75pt .75pt .75pt'>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>The
+    Signal used for the clock could be explicitly used in an if statement<o:p></o:p></span></p>
     <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>This
-    error is flagged if the sensitivity list of an <span style='color:blue'>always</span>
-    block only has <o:p></o:p></span></p>
-    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>one
-    item and if the list type is edge sensitive.<span
-    style='mso-spacerun:yes'>&nbsp; </span>The item this is searching <o:p></o:p></span></p>
-    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>for
-    is a reset variable included in the sensitivity list for a flip flop <span
-    style='color:blue'>always</span> block.<o:p></o:p></span></p>
+    is usually flagged for an always block that has no unused signals in the sensitivity
+    list.<o:p></o:p></span></p>
     </td>
    </tr>
   </table>
@@ -765,13 +761,31 @@ div.WordSection1
     ClkErrors(&#8220;inputs and outputs&#8221;<span style='color:blue'> </span>);<o:p></o:p></span></p>
     <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'><br>
     <span style='color:blue'><span style='mso-spacerun:yes'>&nbsp;
-    </span>always</span>@(<span style='color:blue'>posedge</span> clk)<span
-    style='color:blue'>begin</span><span style='color:lime'>//Edge sensitive
-    and one time in the sensitivity list</span><br>
-    <span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span><span
-    style='color:lime'>//lines of code here</span><br>
+    </span>always</span>@(&#8220;Sensitivity List&#8221;)<span
+    style='color:blue'>begin</span><span style='color:lime'><o:p></o:p></span></span></p>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'><span
+    style='mso-spacerun:yes'>&nbsp;</span><span
+    style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+    style='color:blue'>if</span>(&#8220;One of the Sensitivity List Items&#8221;)
+    <span style='color:blue'>begin</span><o:p></o:p></span></p>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'><span
+    style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </span><span style='color:lime'>//Lines of code</span><o:p></o:p></span></p>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'><span
+    style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+    style='color:blue'>end</span><o:p></o:p></span></p>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'><span
+    style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+    style='color:blue'>else if</span>(&#8220;Last unused sensitivity list item
+    causing all to be used&#8221;)<span style='color:blue'> begin</span><o:p></o:p></span></p>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'><span
+    style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </span><span style='color:lime'>//Lines of code<o:p></o:p></span></span></p>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'><span
+    style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+    style='color:blue'>end</span><br>
     <span style='color:blue'><span style='mso-spacerun:yes'>&nbsp; </span>end</span><br>
-    <span style='color:blue'>endmodule<o:p></o:p></span></span></p>
+    <span style='color:blue'>endmodule</span><o:p></o:p></span></p>
     </td>
    </tr>
    <tr style='mso-yfti-irow:1;mso-yfti-lastrow:yes'>
@@ -820,8 +834,7 @@ div.WordSection1
     <td style='padding:.75pt .75pt .75pt .75pt'></td>
     <td style='padding:.75pt .75pt .75pt .75pt'>
     <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>To
-    Fix make sure there is at least one unused signal and one used signal in
-    the edge sensitivity <span style='color:blue'>always</span> block.<o:p></o:p></span></p>
+    Fix make sure there is at least one unused signal from the sensitivity list<o:p></o:p></span></p>
     </td>
    </tr>
   </table>

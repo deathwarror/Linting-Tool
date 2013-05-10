@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author Deathwarror
  */
-public class Error01IdentifyMultiplyDrivenSignals {
+public class Error06IdentifyMultiplyDrivenSignals {
      public static ArrayList<Error> getErrors(Parser parser){
         ArrayList<Error> ErrorList = new ArrayList();
         String errorOutput="Error: Multiply Driven Signals were detected in the following lines of code:\n";
@@ -94,7 +94,7 @@ public class Error01IdentifyMultiplyDrivenSignals {
         if(!errorOutput.equals("Error: Multiply Driven Signals were detected in the following lines of code:\n")){
             Error e = new Error();
             e.setErrorMsg(errorOutput);
-            e.setErrorNum("01");
+            e.setErrorNum("06");
             e.setLineNumbers(lineNumbers);
             ErrorList.add(e);
             System.out.println(errorOutput);

@@ -1,16 +1,46 @@
-06:	This error is flagged if the sensitivity list of an always block only has 
-	one item and if the list type is edge sensitive.
-	The item this is searching for is a reset variable included in the sensitivity
-	list for a flip flop always block.
+06:	This error is generated if the same signal is being assigned
+	in multiple always blocks and/or assign statements.
+	The error lists what line they are on.
+	The List will also contain ports of vectors that are falling under
+	this rule.
 
 Example:
-module ClkErrors("inputs and outputs");
+module MultiplyDrivenSignals(
+  input wire one,
+  output reg two,
+  output wire three
+  );
+  
+	wire four;
+  
+	reg five;
 
-	always @(posedge clk)begin//edge sensitive and one item in 
-							sensitivity list
-		//lines
-	end	
+  
+  
+	always@(one)begin
+    
+		two = 0;<font color=#ff0000>//error report assigned in second always</font>  
+	end
+  
+  
+	always@(two)begin
+    
+		five = 0;
+    
+		two = 1;//error report assigned in first always
+  
+	end
+
+  
+  
+	assign three = 0;//error report assigned in assign statement below
+  
+	assign three = 1;
+//error report assigned in error statement above  
+	assign four = 0;
+  
+
 endmodule
 
-To fix make sure there is atleast one unused signal and one used signal in an 
-edge sensitive always block.
+To Fix make sure there is only one assign statement per variable and that the
+variable is not being set in multiple always blocks

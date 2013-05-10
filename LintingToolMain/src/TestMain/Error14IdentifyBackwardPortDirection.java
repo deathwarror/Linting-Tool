@@ -16,7 +16,7 @@ package TestMain;
 import java.util.ArrayList;
 
 
-public class Error03IdentifyBackwardPortDirection {
+public class Error14IdentifyBackwardPortDirection {
     //This function Detects if there is an improper used port either on the left
     //or on the right hand side of an assignment statement
     public static ArrayList<Error> getErrors(Parser parser)
@@ -58,7 +58,7 @@ public class Error03IdentifyBackwardPortDirection {
                      Error e = new Error();
                      e.setErrorMsg(errorOutput);
                      e.addLineNumber(statements.get(j).LineNumber);
-                     e.setErrorNum("03");
+                     e.setErrorNum("14");
                      ErrorList.add(e);
                      System.out.println(errorOutput);
                                     
@@ -83,7 +83,7 @@ public class Error03IdentifyBackwardPortDirection {
                       //put the error message into the error list
                       Error e = new Error();
                       e.setErrorMsg(errorOutput);
-                      e.setErrorNum("03");
+                      e.setErrorNum("14");
                       e.addLineNumber(statements.get(j).LineNumber);
                       ErrorList.add(e);
                       System.out.println(errorOutput);

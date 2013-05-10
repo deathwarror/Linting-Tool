@@ -16,7 +16,7 @@
 package TestMain;
 import java.util.ArrayList;
 
-public class Error06_07_08IdentifyClockErrors {
+public class Error01_05_07IdentifyClockErrors {
     public static ArrayList<Error> getErrors(Parser parser)
     {
         ArrayList<Error> ErrorList = new ArrayList();
@@ -48,7 +48,7 @@ public class Error06_07_08IdentifyClockErrors {
                     if(SensList.size() == 1)
                     {
                         Error e = new Error();
-                        e.setErrorNum("06");
+                        e.setErrorNum("01");
                         errorOutput = "No Reset or clock Detected in Flip Flop type always block:\n";
                         errorOutput += "\tin always on line :"+currentBlock.LineNumber;
                         e.addLineNumber(currentBlock.LineNumber);
@@ -131,7 +131,7 @@ public class Error06_07_08IdentifyClockErrors {
             if(currentVar.compareTo(Clocks.get(i))==false)
             {
                 Error e = new Error();
-                e.setErrorNum("08");
+                e.setErrorNum("05");
                 errorOutput = "Multible Clocks detected in module\n";
                 errorOutput += "\tFirst Clock: "+currentVar.getName()+"\n\tSecond Clock: "+Clocks.get(i).getName();
                 e.setErrorMsg(errorOutput);

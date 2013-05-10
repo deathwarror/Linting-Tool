@@ -1,0 +1,1 @@
+Error: mixing level and edge sensitivity, for example, always @(posedge clk or reset)

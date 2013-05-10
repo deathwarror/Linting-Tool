@@ -13,7 +13,7 @@ package TestMain;
 
 import java.util.ArrayList;
 
-public class Error04IdentifyOperatorsInSensList {
+public class Error13IdentifyOperatorsInSensList {
      //This function identifies any operators in the sensitivity list
     public static ArrayList<Error> getErrors(Parser parser)
     {
@@ -149,7 +149,7 @@ public class Error04IdentifyOperatorsInSensList {
                     //put the error message into the error list
                     Error e = new Error();
                     e.setErrorMsg(errorOutput);
-                    e.setErrorNum("04");
+                    e.setErrorNum("13");
                     e.addLineNumber(currentBlock.LineNumber);
                     ErrorList.add(e);
                     System.out.println(errorOutput);

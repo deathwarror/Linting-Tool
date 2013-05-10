@@ -1,4 +1,4 @@
-04:	This error is flagged if any operator character is found in the sensitivity
+13:	This error is flagged if any operator character is found in the sensitivity
 	list.
 	
 	List of characters:

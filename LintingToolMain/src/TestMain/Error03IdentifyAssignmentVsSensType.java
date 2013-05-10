@@ -15,7 +15,7 @@ package TestMain;
 import java.util.ArrayList;
 
 
-public class Error05IdentifyAssignmentVsSensType {
+public class Error03IdentifyAssignmentVsSensType {
      public static ArrayList<Error> getErrors(Parser parser)
     {
         ArrayList<Error> ErrorList = new ArrayList();
@@ -88,7 +88,7 @@ public class Error05IdentifyAssignmentVsSensType {
                            Error e = new Error();
                            e.setErrorMsg(errorOutput);
                            e.addLineNumber(statements.get(j).LineNumber);
-                           e.setErrorNum("05");
+                           e.setErrorNum("03");
                            ErrorList.add(e);
                     }
                 }

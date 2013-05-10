@@ -9,30 +9,30 @@ xmlns="http://www.w3.org/TR/REC-html40">
 <meta name=ProgId content=Word.Document>
 <meta name=Generator content="Microsoft Word 15">
 <meta name=Originator content="Microsoft Word 15">
-<link rel=File-List href="01_files/filelist.xml">
+<link rel=File-List href="05old_files/filelist.xml">
 <!--[if gte mso 9]><xml>
  <o:DocumentProperties>
   <o:Author>Danny</o:Author>
   <o:Template>Normal</o:Template>
   <o:LastAuthor>Deathwarror</o:LastAuthor>
-  <o:Revision>5</o:Revision>
-  <o:TotalTime>41</o:TotalTime>
-  <o:Created>2013-05-10T03:05:00Z</o:Created>
-  <o:LastSaved>2013-05-10T04:33:00Z</o:LastSaved>
+  <o:Revision>11</o:Revision>
+  <o:TotalTime>36</o:TotalTime>
+  <o:Created>2013-05-10T02:46:00Z</o:Created>
+  <o:LastSaved>2013-05-10T04:36:00Z</o:LastSaved>
   <o:Pages>1</o:Pages>
-  <o:Words>87</o:Words>
-  <o:Characters>496</o:Characters>
-  <o:Lines>4</o:Lines>
+  <o:Words>134</o:Words>
+  <o:Characters>769</o:Characters>
+  <o:Lines>6</o:Lines>
   <o:Paragraphs>1</o:Paragraphs>
-  <o:CharactersWithSpaces>582</o:CharactersWithSpaces>
+  <o:CharactersWithSpaces>902</o:CharactersWithSpaces>
   <o:Version>15.00</o:Version>
  </o:DocumentProperties>
  <o:OfficeDocumentSettings>
   <o:AllowPNG/>
  </o:OfficeDocumentSettings>
 </xml><![endif]-->
-<link rel=themeData href="01_files/themedata.thmx">
-<link rel=colorSchemeMapping href="01_files/colorschememapping.xml">
+<link rel=themeData href="05old_files/themedata.thmx">
+<link rel=colorSchemeMapping href="05old_files/colorschememapping.xml">
 <!--[if gte mso 9]><xml>
  <w:WordDocument>
   <w:View>Print</w:View>
@@ -715,21 +715,16 @@ div.WordSection1
    <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
     <td style='padding:.75pt .75pt .75pt .75pt'>
     <p class=MsoNormal align=center style='text-align:center'><b><span
-    style='mso-fareast-font-family:"Times New Roman"'>Error 01: <o:p></o:p></span></b></p>
+    style='mso-fareast-font-family:"Times New Roman"'>Error 03: <o:p></o:p></span></b></p>
     </td>
    </tr>
    <tr style='mso-yfti-irow:1;mso-yfti-lastrow:yes'>
     <td style='padding:.75pt .75pt .75pt .75pt'></td>
     <td style='padding:.75pt .75pt .75pt .75pt'>
     <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>This
-    error is flagged if the sensitivity list of an <span style='color:blue'>always</span>
-    block only has <o:p></o:p></span></p>
-    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>one
-    item and if the list type is edge sensitive.<span
-    style='mso-spacerun:yes'>&nbsp; </span>The item this is searching <o:p></o:p></span></p>
-    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>for
-    is a reset variable included in the sensitivity list for a flip flop <span
-    style='color:blue'>always</span> block.<o:p></o:p></span></p>
+    error is flagged if the assignment operators in an <span style='color:blue'>always</span>
+    block do not match the type of <span style='color:blue'>always</span>
+    block.<o:p></o:p></span></p>
     </td>
    </tr>
   </table>
@@ -762,16 +757,68 @@ div.WordSection1
     <td style='padding:.75pt .75pt .75pt .75pt'>
     <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman";
     color:blue'>Module</span><span style='mso-fareast-font-family:"Times New Roman"'>
-    ClkErrors(&#8220;inputs and outputs&#8221;<span style='color:blue'> </span>);<o:p></o:p></span></p>
+    AssignmentVsSensType(<br>
+    &nbsp;&nbsp; <span style='color:blue'>input</span> <span style='color:blue'>wire</span>
+    clk,<br>
+    &nbsp;&nbsp; <span style='color:blue'>input wire </span>reset,<span
+    style='color:blue'> <o:p></o:p></span></span></p>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman";
+    color:blue'><span style='mso-spacerun:yes'>&nbsp;&nbsp; </span>input wire </span><span
+    style='mso-fareast-font-family:"Times New Roman"'>a,<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'><span
+    style='mso-spacerun:yes'>&nbsp;&nbsp; </span><span style='color:blue'>input
+    wire </span>b,<br>
+    &nbsp;&nbsp; <span style='color:blue'>output reg </span>c<span
+    style='color:blue'><o:p></o:p></span></span></p>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman";
+    color:blue'><span style='mso-spacerun:yes'>&nbsp;&nbsp; </span>output reg </span><span
+    style='mso-fareast-font-family:"Times New Roman"'>d<span style='color:blue'>
+    </span>);<o:p></o:p></span></p>
     <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'><br>
     <span style='color:blue'><span style='mso-spacerun:yes'>&nbsp;
-    </span>always</span>@(<span style='color:blue'>posedge</span> clk)<span
-    style='color:blue'>begin</span><span style='color:lime'>//Edge sensitive
-    and one time in the sensitivity list</span><br>
-    <span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span><span
-    style='color:lime'>//lines of code here</span><br>
-    <span style='color:blue'><span style='mso-spacerun:yes'>&nbsp; </span>end</span><br>
-    <span style='color:blue'>endmodule<o:p></o:p></span></span></p>
+    </span>always</span>@(a)<span style='color:blue'>begin</span><span
+    style='color:lime'>//level sensitive</span><br>
+    <span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span>c<span
+    style='mso-spacerun:yes'>&nbsp; </span>&lt;=<span
+    style='mso-spacerun:yes'>&nbsp; </span>a;<span style='color:lime'> // line
+    will be flagged because a non blocking statement is used in a <o:p></o:p></span></span></p>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'><span
+    style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </span><span style='color:lime'>level sensitive block</span><br>
+    <span style='color:blue'><span style='mso-spacerun:yes'>&nbsp; </span>end<o:p></o:p></span></span></p>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman";
+    color:blue'><span style='mso-spacerun:yes'>&nbsp; </span>always</span><span
+    style='mso-fareast-font-family:"Times New Roman"'>@(<span style='color:
+    blue'>posedge</span> clk or <span style='color:blue'>posedge</span> reset)<span
+    style='color:blue'>begin</span><span style='color:lime'>//edge sensitive<o:p></o:p></span></span></p>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman";
+    color:lime'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span></span><span
+    style='mso-fareast-font-family:"Times New Roman";color:blue'>if</span><span
+    style='mso-fareast-font-family:"Times New Roman";color:lime'><span
+    style='mso-spacerun:yes'>&nbsp; </span></span><span style='mso-fareast-font-family:
+    "Times New Roman"'>(reset) <span style='color:blue'>begin</span><span
+    style='color:lime'><o:p></o:p></span></span></p>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'><span
+    style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </span>d&lt;=0;<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'><span
+    style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span><span style='color:blue'>end<o:p></o:p></span></span></p>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman";
+    color:blue'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span>else<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'><span
+    style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </span>d = b;<span style='color:lime'> // line will be flagged because a
+    blocking statement is used in a <o:p></o:p></span></span></p>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'><span
+    style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </span><span style='color:lime'>edge sensitive block</span><o:p></o:p></span></p>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'><span
+    style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span><span style='color:blue'>end</span><br>
+    <span style='color:blue'><span style='mso-spacerun:yes'>&nbsp; </span>end</span><o:p></o:p></span></p>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman";
+    color:lime'><o:p>&nbsp;</o:p></span></p>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'><br>
+    <span style='color:blue'>endmodule</span><o:p></o:p></span></p>
     </td>
    </tr>
    <tr style='mso-yfti-irow:1;mso-yfti-lastrow:yes'>
@@ -781,6 +828,18 @@ div.WordSection1
     </td>
    </tr>
   </table>
+  <p class=MsoNormal><span style='font-size:10.0pt;mso-fareast-font-family:
+  "Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+  <p class=MsoNormal><span style='font-size:10.0pt;mso-fareast-font-family:
+  "Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+  <p class=MsoNormal><span style='font-size:10.0pt;mso-fareast-font-family:
+  "Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+  <p class=MsoNormal><span style='font-size:10.0pt;mso-fareast-font-family:
+  "Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+  <p class=MsoNormal><span style='font-size:10.0pt;mso-fareast-font-family:
+  "Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+  <p class=MsoNormal><span style='font-size:10.0pt;mso-fareast-font-family:
+  "Times New Roman"'><o:p>&nbsp;</o:p></span></p>
   <p class=MsoNormal><span style='font-size:10.0pt;mso-fareast-font-family:
   "Times New Roman"'><o:p>&nbsp;</o:p></span></p>
   <p class=MsoNormal><span style='font-size:10.0pt;mso-fareast-font-family:
@@ -820,8 +879,8 @@ div.WordSection1
     <td style='padding:.75pt .75pt .75pt .75pt'></td>
     <td style='padding:.75pt .75pt .75pt .75pt'>
     <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>To
-    Fix make sure there is at least one unused signal and one used signal in
-    the edge sensitivity <span style='color:blue'>always</span> block.<o:p></o:p></span></p>
+    Fix make all edge sensitive blocks contain non blocking statements and all
+    level sensitive blocks contain blocking statements.<o:p></o:p></span></p>
     </td>
    </tr>
   </table>

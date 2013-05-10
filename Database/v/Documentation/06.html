@@ -9,30 +9,30 @@ xmlns="http://www.w3.org/TR/REC-html40">
 <meta name=ProgId content=Word.Document>
 <meta name=Generator content="Microsoft Word 15">
 <meta name=Originator content="Microsoft Word 15">
-<link rel=File-List href="01_files/filelist.xml">
+<link rel=File-List href="06_files/filelist.xml">
 <!--[if gte mso 9]><xml>
  <o:DocumentProperties>
   <o:Author>Danny</o:Author>
   <o:Template>Normal</o:Template>
   <o:LastAuthor>Deathwarror</o:LastAuthor>
-  <o:Revision>5</o:Revision>
-  <o:TotalTime>41</o:TotalTime>
-  <o:Created>2013-05-10T03:05:00Z</o:Created>
-  <o:LastSaved>2013-05-10T04:33:00Z</o:LastSaved>
+  <o:Revision>11</o:Revision>
+  <o:TotalTime>12</o:TotalTime>
+  <o:Created>2013-05-10T01:19:00Z</o:Created>
+  <o:LastSaved>2013-05-10T04:36:00Z</o:LastSaved>
   <o:Pages>1</o:Pages>
-  <o:Words>87</o:Words>
-  <o:Characters>496</o:Characters>
-  <o:Lines>4</o:Lines>
+  <o:Words>138</o:Words>
+  <o:Characters>792</o:Characters>
+  <o:Lines>6</o:Lines>
   <o:Paragraphs>1</o:Paragraphs>
-  <o:CharactersWithSpaces>582</o:CharactersWithSpaces>
+  <o:CharactersWithSpaces>929</o:CharactersWithSpaces>
   <o:Version>15.00</o:Version>
  </o:DocumentProperties>
  <o:OfficeDocumentSettings>
   <o:AllowPNG/>
  </o:OfficeDocumentSettings>
 </xml><![endif]-->
-<link rel=themeData href="01_files/themedata.thmx">
-<link rel=colorSchemeMapping href="01_files/colorschememapping.xml">
+<link rel=themeData href="06_files/themedata.thmx">
+<link rel=colorSchemeMapping href="06_files/colorschememapping.xml">
 <!--[if gte mso 9]><xml>
  <w:WordDocument>
   <w:View>Print</w:View>
@@ -715,21 +715,24 @@ div.WordSection1
    <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
     <td style='padding:.75pt .75pt .75pt .75pt'>
     <p class=MsoNormal align=center style='text-align:center'><b><span
-    style='mso-fareast-font-family:"Times New Roman"'>Error 01: <o:p></o:p></span></b></p>
+    style='mso-fareast-font-family:"Times New Roman"'>Error 06: <o:p></o:p></span></b></p>
     </td>
    </tr>
    <tr style='mso-yfti-irow:1;mso-yfti-lastrow:yes'>
     <td style='padding:.75pt .75pt .75pt .75pt'></td>
     <td style='padding:.75pt .75pt .75pt .75pt'>
     <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>This
-    error is flagged if the sensitivity list of an <span style='color:blue'>always</span>
-    block only has <o:p></o:p></span></p>
-    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>one
-    item and if the list type is edge sensitive.<span
-    style='mso-spacerun:yes'>&nbsp; </span>The item this is searching <o:p></o:p></span></p>
-    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>for
-    is a reset variable included in the sensitivity list for a flip flop <span
-    style='color:blue'>always</span> block.<o:p></o:p></span></p>
+    error is generated if the same signal is being assigned<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>in
+    multiple <span style='color:#0000CC'>always</span> blocks and/or &#8220;<span
+    style='color:#0000CC'>assign&#8221;</span> statements.<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>The
+    error will list what line the multiply driven signals are on.<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>The
+    List will also contain a list of individual vector ports that<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>are
+    falling under this rule.<o:p></o:p></span></p>
     </td>
    </tr>
   </table>
@@ -754,53 +757,52 @@ div.WordSection1
  <tr style='mso-yfti-irow:2'>
   <td style='padding:.75pt .75pt .75pt .75pt'>
   <table class=MsoNormalTable border=0 cellspacing=3 cellpadding=0 align=left
-   width=0 style='width:0in;mso-cellspacing:1.5pt;background:#FF7F7F;
-   mso-yfti-tbllook:1184;mso-table-lspace:2.25pt;margin-left:.45pt;mso-table-rspace:
-   2.25pt;margin-right:.45pt;mso-table-anchor-vertical:paragraph;mso-table-anchor-horizontal:
+   style='mso-cellspacing:1.5pt;background:#FF7F7F;mso-yfti-tbllook:1184;
+   mso-table-lspace:2.25pt;margin-left:.45pt;mso-table-rspace:2.25pt;
+   margin-right:.45pt;mso-table-anchor-vertical:paragraph;mso-table-anchor-horizontal:
    column;mso-table-left:left;mso-padding-alt:0in 5.4pt 0in 5.4pt'>
-   <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+   <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
     <td style='padding:.75pt .75pt .75pt .75pt'>
-    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman";
-    color:blue'>Module</span><span style='mso-fareast-font-family:"Times New Roman"'>
-    ClkErrors(&#8220;inputs and outputs&#8221;<span style='color:blue'> </span>);<o:p></o:p></span></p>
-    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'><br>
+    <p class=MsoNormal style='margin-bottom:12.0pt'><span style='mso-fareast-font-family:
+    "Times New Roman";color:blue'>module</span><span style='mso-fareast-font-family:
+    "Times New Roman"'> MultiplyDrivenSignals(<br>
+    &nbsp;&nbsp; <span style='color:blue'>input</span> <span style='color:blue'>wire</span>
+    one,<br>
+    &nbsp;&nbsp; <span style='color:blue'>output reg </span>two,<br>
+    &nbsp;&nbsp; <span style='color:blue'>output wire </span>three<br>
+    &nbsp;&nbsp; );<br>
+    <span style='color:blue'><span style='mso-spacerun:yes'>&nbsp; </span>wire</span>
+    four;<br>
+    <span style='color:blue'><span style='mso-spacerun:yes'>&nbsp; </span>reg</span>
+    five;<br>
+    <br>
     <span style='color:blue'><span style='mso-spacerun:yes'>&nbsp;
-    </span>always</span>@(<span style='color:blue'>posedge</span> clk)<span
-    style='color:blue'>begin</span><span style='color:lime'>//Edge sensitive
-    and one time in the sensitivity list</span><br>
-    <span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span><span
-    style='color:lime'>//lines of code here</span><br>
+    </span>always</span>@(one)<span style='color:blue'>begin</span><br>
+    <span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span>two = 0;<span
+    style='color:lime'>//error report assigned in second always</span><br>
     <span style='color:blue'><span style='mso-spacerun:yes'>&nbsp; </span>end</span><br>
-    <span style='color:blue'>endmodule<o:p></o:p></span></span></p>
-    </td>
-   </tr>
-   <tr style='mso-yfti-irow:1;mso-yfti-lastrow:yes'>
-    <td style='padding:.75pt .75pt .75pt .75pt'>
-    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman";
-    color:blue'><o:p>&nbsp;</o:p></span></p>
+    <br>
+    <span style='color:blue'><span style='mso-spacerun:yes'>&nbsp;
+    </span>always</span>@(two)<span style='color:blue'>begin</span><br>
+    <span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span>five = 0;<br>
+    <span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span>two = 1;<span
+    style='color:lime'>//error report assigned in first always</span><br>
+    <span style='mso-spacerun:yes'>&nbsp; </span><span style='color:blue'>end</span><o:p></o:p></span></p>
+    <p class=MsoNormal style='margin-bottom:12.0pt'><span style='mso-fareast-font-family:
+    "Times New Roman"'><br>
+    <span style='color:blue'><span style='mso-spacerun:yes'>&nbsp;
+    </span>assign</span> three = 0; <span style='color:lime'>//error report
+    assigned in assign statement below</span><br>
+    <br>
+    <span style='color:blue'><span style='mso-spacerun:yes'>&nbsp;
+    </span>assign</span> three = 1; <span style='color:lime'>//error report
+    assigned in error statement above</span> <br>
+    <span style='color:blue'><span style='mso-spacerun:yes'>&nbsp;
+    </span>assign</span> four = 0;<br>
+    <span style='color:blue'>endmodule</span><o:p></o:p></span></p>
     </td>
    </tr>
   </table>
-  <p class=MsoNormal><span style='font-size:10.0pt;mso-fareast-font-family:
-  "Times New Roman"'><o:p>&nbsp;</o:p></span></p>
-  <p class=MsoNormal><span style='font-size:10.0pt;mso-fareast-font-family:
-  "Times New Roman"'><o:p>&nbsp;</o:p></span></p>
-  <p class=MsoNormal><span style='font-size:10.0pt;mso-fareast-font-family:
-  "Times New Roman"'><o:p>&nbsp;</o:p></span></p>
-  <p class=MsoNormal><span style='font-size:10.0pt;mso-fareast-font-family:
-  "Times New Roman"'><o:p>&nbsp;</o:p></span></p>
-  <p class=MsoNormal><span style='font-size:10.0pt;mso-fareast-font-family:
-  "Times New Roman"'><o:p>&nbsp;</o:p></span></p>
-  <p class=MsoNormal><span style='font-size:10.0pt;mso-fareast-font-family:
-  "Times New Roman"'><o:p>&nbsp;</o:p></span></p>
-  <p class=MsoNormal><span style='font-size:10.0pt;mso-fareast-font-family:
-  "Times New Roman"'><o:p>&nbsp;</o:p></span></p>
-  <p class=MsoNormal><span style='font-size:10.0pt;mso-fareast-font-family:
-  "Times New Roman"'><o:p>&nbsp;</o:p></span></p>
-  <p class=MsoNormal><span style='font-size:10.0pt;mso-fareast-font-family:
-  "Times New Roman"'><o:p>&nbsp;</o:p></span></p>
-  <p class=MsoNormal><span style='font-size:10.0pt;mso-fareast-font-family:
-  "Times New Roman"'><o:p>&nbsp;</o:p></span></p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:3;mso-yfti-lastrow:yes'>
@@ -820,8 +822,10 @@ div.WordSection1
     <td style='padding:.75pt .75pt .75pt .75pt'></td>
     <td style='padding:.75pt .75pt .75pt .75pt'>
     <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>To
-    Fix make sure there is at least one unused signal and one used signal in
-    the edge sensitivity <span style='color:blue'>always</span> block.<o:p></o:p></span></p>
+    Fix make sure there is only one &quot;<span style='color:#0000CC'>assign</span>&quot;
+    statement per variable and that the<br>
+    variable is not being set in multiple <span style='color:#0000CC'>always</span>
+    blocks<o:p></o:p></span></p>
     </td>
    </tr>
   </table>

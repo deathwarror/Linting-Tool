@@ -1,4 +1,4 @@
-11:	This error is flagged for a vector series with a logical not (!) symbol proceding 
+11:	This error is flagged for a vector series with a logical not (!) symbol preceding 
 	the vector name.  This will not flag if the vector is inside parathesis.
 	!(vector) will not trigger the error because it assumes some sort of calculation.
 	

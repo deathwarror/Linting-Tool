@@ -9,33 +9,35 @@ xmlns="http://www.w3.org/TR/REC-html40">
 <meta name=ProgId content=Word.Document>
 <meta name=Generator content="Microsoft Word 15">
 <meta name=Originator content="Microsoft Word 15">
-<link rel=File-List href="01_files/filelist.xml">
+<link rel=File-List href="02_files/filelist.xml">
 <!--[if gte mso 9]><xml>
  <o:DocumentProperties>
   <o:Author>Danny</o:Author>
   <o:Template>Normal</o:Template>
   <o:LastAuthor>Deathwarror</o:LastAuthor>
-  <o:Revision>5</o:Revision>
-  <o:TotalTime>41</o:TotalTime>
-  <o:Created>2013-05-10T03:05:00Z</o:Created>
-  <o:LastSaved>2013-05-10T04:33:00Z</o:LastSaved>
+  <o:Revision>9</o:Revision>
+  <o:TotalTime>28</o:TotalTime>
+  <o:Created>2013-05-10T02:35:00Z</o:Created>
+  <o:LastSaved>2013-05-10T03:04:00Z</o:LastSaved>
   <o:Pages>1</o:Pages>
-  <o:Words>87</o:Words>
-  <o:Characters>496</o:Characters>
+  <o:Words>88</o:Words>
+  <o:Characters>508</o:Characters>
   <o:Lines>4</o:Lines>
   <o:Paragraphs>1</o:Paragraphs>
-  <o:CharactersWithSpaces>582</o:CharactersWithSpaces>
+  <o:CharactersWithSpaces>595</o:CharactersWithSpaces>
   <o:Version>15.00</o:Version>
  </o:DocumentProperties>
  <o:OfficeDocumentSettings>
   <o:AllowPNG/>
  </o:OfficeDocumentSettings>
 </xml><![endif]-->
-<link rel=themeData href="01_files/themedata.thmx">
-<link rel=colorSchemeMapping href="01_files/colorschememapping.xml">
+<link rel=themeData href="02_files/themedata.thmx">
+<link rel=colorSchemeMapping href="02_files/colorschememapping.xml">
 <!--[if gte mso 9]><xml>
  <w:WordDocument>
   <w:View>Print</w:View>
+  <w:SpellingState>Clean</w:SpellingState>
+  <w:GrammarState>Clean</w:GrammarState>
   <w:TrackMoves>false</w:TrackMoves>
   <w:TrackFormatting/>
   <w:ValidateAgainstSchemas/>
@@ -657,6 +659,9 @@ xmlns="http://www.w3.org/TR/REC-html40">
 	font-family:"Times New Roman","serif";
 	mso-fareast-font-family:"Times New Roman";
 	mso-fareast-theme-font:minor-fareast;}
+span.SpellE
+	{mso-style-name:"";
+	mso-spl-e:yes;}
 .MsoChpDefault
 	{mso-style-type:export-only;
 	mso-default-props:yes;
@@ -702,9 +707,9 @@ div.WordSection1
 
 <div class=WordSection1>
 
-<table class=MsoNormalTable border=0 cellspacing=3 cellpadding=0
- style='mso-cellspacing:1.5pt;background:#F5F1DE;mso-yfti-tbllook:1184;
- mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+<table class=MsoNormalTable border=0 cellspacing=3 cellpadding=0 width=0
+ style='width:0in;mso-cellspacing:1.5pt;background:#F5F1DE;mso-yfti-tbllook:
+ 1184;mso-padding-alt:0in 5.4pt 0in 5.4pt'>
  <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
   <td style='padding:.75pt .75pt .75pt .75pt'>
   <table class=MsoNormalTable border=0 cellspacing=3 cellpadding=0 align=left
@@ -715,21 +720,21 @@ div.WordSection1
    <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
     <td style='padding:.75pt .75pt .75pt .75pt'>
     <p class=MsoNormal align=center style='text-align:center'><b><span
-    style='mso-fareast-font-family:"Times New Roman"'>Error 01: <o:p></o:p></span></b></p>
+    style='mso-fareast-font-family:"Times New Roman"'>Error 02: <o:p></o:p></span></b></p>
     </td>
    </tr>
    <tr style='mso-yfti-irow:1;mso-yfti-lastrow:yes'>
     <td style='padding:.75pt .75pt .75pt .75pt'></td>
     <td style='padding:.75pt .75pt .75pt .75pt'>
     <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>This
-    error is flagged if the sensitivity list of an <span style='color:blue'>always</span>
-    block only has <o:p></o:p></span></p>
-    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>one
-    item and if the list type is edge sensitive.<span
-    style='mso-spacerun:yes'>&nbsp; </span>The item this is searching <o:p></o:p></span></p>
-    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>for
-    is a reset variable included in the sensitivity list for a flip flop <span
-    style='color:blue'>always</span> block.<o:p></o:p></span></p>
+    error is generated if there are any timing controls in a combinatorial
+    block like @(<span class=SpellE><span style='color:blue'>posedge</span></span>
+    <span class=SpellE>clk</span>), <span style='color:blue'>wait</span>(<span
+    class=SpellE>clk</span>),<span style='mso-spacerun:yes'>&nbsp;
+    </span>#1;<span style='mso-spacerun:yes'>&nbsp;&nbsp; </span><o:p></o:p></span></p>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>Or
+    if <span class=SpellE>unsynthesizable</span> code constructs like <span
+    style='color:blue'>while</span> loops are present in the Verilog code.<o:p></o:p></span></p>
     </td>
    </tr>
   </table>
@@ -754,57 +759,52 @@ div.WordSection1
  <tr style='mso-yfti-irow:2'>
   <td style='padding:.75pt .75pt .75pt .75pt'>
   <table class=MsoNormalTable border=0 cellspacing=3 cellpadding=0 align=left
-   width=0 style='width:0in;mso-cellspacing:1.5pt;background:#FF7F7F;
-   mso-yfti-tbllook:1184;mso-table-lspace:2.25pt;margin-left:.45pt;mso-table-rspace:
-   2.25pt;margin-right:.45pt;mso-table-anchor-vertical:paragraph;mso-table-anchor-horizontal:
+   style='mso-cellspacing:1.5pt;background:#FF7F7F;mso-yfti-tbllook:1184;
+   mso-table-lspace:2.25pt;margin-left:.45pt;mso-table-rspace:2.25pt;
+   margin-right:.45pt;mso-table-anchor-vertical:paragraph;mso-table-anchor-horizontal:
    column;mso-table-left:left;mso-padding-alt:0in 5.4pt 0in 5.4pt'>
-   <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+   <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
     <td style='padding:.75pt .75pt .75pt .75pt'>
     <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman";
-    color:blue'>Module</span><span style='mso-fareast-font-family:"Times New Roman"'>
-    ClkErrors(&#8220;inputs and outputs&#8221;<span style='color:blue'> </span>);<o:p></o:p></span></p>
-    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'><br>
-    <span style='color:blue'><span style='mso-spacerun:yes'>&nbsp;
-    </span>always</span>@(<span style='color:blue'>posedge</span> clk)<span
-    style='color:blue'>begin</span><span style='color:lime'>//Edge sensitive
-    and one time in the sensitivity list</span><br>
-    <span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span><span
-    style='color:lime'>//lines of code here</span><br>
-    <span style='color:blue'><span style='mso-spacerun:yes'>&nbsp; </span>end</span><br>
-    <span style='color:blue'>endmodule<o:p></o:p></span></span></p>
-    </td>
-   </tr>
-   <tr style='mso-yfti-irow:1;mso-yfti-lastrow:yes'>
-    <td style='padding:.75pt .75pt .75pt .75pt'>
-    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman";
-    color:blue'><o:p>&nbsp;</o:p></span></p>
+    color:blue'>module</span><span style='mso-fareast-font-family:"Times New Roman"'>
+    <span class=SpellE>timingControl</span>(<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'><span
+    style='mso-spacerun:yes'>&nbsp; </span><span style='color:blue'>input wire </span>in,<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'><span
+    style='mso-spacerun:yes'>&nbsp; </span><span style='color:blue'>output <span
+    class=SpellE>reg</span> </span>out);<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'><span
+    style='mso-spacerun:yes'>&nbsp; </span><span style='color:blue'>always</span>@(bob)<span
+    style='color:blue'>begin</span><o:p></o:p></span></p>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'><span
+    style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span>#1<span
+    style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </span><span style='color:lime'>//<span class=SpellE>Unsynthesizable</span></span><o:p></o:p></span></p>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'><span
+    style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span><span style='color:blue'>wait</span>(in);<span
+    style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </span><span style='color:lime'>//<span class=SpellE>Unsynthesizable</span></span><o:p></o:p></span></p>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'><span
+    style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span>@(<span class=SpellE><span
+    style='color:blue'>posedge</span></span> in);<span
+    style='mso-spacerun:yes'>&nbsp; </span><span style='color:lime'>//<span
+    class=SpellE>Unsynthesizable</span></span><o:p></o:p></span></p>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'><span
+    style='mso-spacerun:yes'>&nbsp; </span><span style='color:blue'>end</span><o:p></o:p></span></p>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+    <p class=MsoNormal><span class=SpellE><span style='mso-fareast-font-family:
+    "Times New Roman";color:blue'>endmodule</span></span><span
+    style='mso-fareast-font-family:"Times New Roman";color:blue'> </span><span
+    style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
     </td>
    </tr>
   </table>
-  <p class=MsoNormal><span style='font-size:10.0pt;mso-fareast-font-family:
-  "Times New Roman"'><o:p>&nbsp;</o:p></span></p>
-  <p class=MsoNormal><span style='font-size:10.0pt;mso-fareast-font-family:
-  "Times New Roman"'><o:p>&nbsp;</o:p></span></p>
-  <p class=MsoNormal><span style='font-size:10.0pt;mso-fareast-font-family:
-  "Times New Roman"'><o:p>&nbsp;</o:p></span></p>
-  <p class=MsoNormal><span style='font-size:10.0pt;mso-fareast-font-family:
-  "Times New Roman"'><o:p>&nbsp;</o:p></span></p>
-  <p class=MsoNormal><span style='font-size:10.0pt;mso-fareast-font-family:
-  "Times New Roman"'><o:p>&nbsp;</o:p></span></p>
-  <p class=MsoNormal><span style='font-size:10.0pt;mso-fareast-font-family:
-  "Times New Roman"'><o:p>&nbsp;</o:p></span></p>
-  <p class=MsoNormal><span style='font-size:10.0pt;mso-fareast-font-family:
-  "Times New Roman"'><o:p>&nbsp;</o:p></span></p>
-  <p class=MsoNormal><span style='font-size:10.0pt;mso-fareast-font-family:
-  "Times New Roman"'><o:p>&nbsp;</o:p></span></p>
-  <p class=MsoNormal><span style='font-size:10.0pt;mso-fareast-font-family:
-  "Times New Roman"'><o:p>&nbsp;</o:p></span></p>
-  <p class=MsoNormal><span style='font-size:10.0pt;mso-fareast-font-family:
-  "Times New Roman"'><o:p>&nbsp;</o:p></span></p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:3;mso-yfti-lastrow:yes'>
   <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><o:p>&nbsp;</o:p></p>
   <table class=MsoNormalTable border=0 cellspacing=3 cellpadding=0 align=left
    style='mso-cellspacing:1.5pt;mso-yfti-tbllook:1184;mso-table-lspace:2.25pt;
    margin-left:.45pt;mso-table-rspace:2.25pt;margin-right:.45pt;mso-table-anchor-vertical:
@@ -820,11 +820,13 @@ div.WordSection1
     <td style='padding:.75pt .75pt .75pt .75pt'></td>
     <td style='padding:.75pt .75pt .75pt .75pt'>
     <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>To
-    Fix make sure there is at least one unused signal and one used signal in
-    the edge sensitivity <span style='color:blue'>always</span> block.<o:p></o:p></span></p>
+    fix this error make sure there you must make sure you do not include timing
+    controls in your code.<o:p></o:p></span></p>
     </td>
    </tr>
   </table>
+  <p class=MsoNormal><span style='font-size:10.0pt;mso-fareast-font-family:
+  "Times New Roman"'><o:p></o:p></span></p>
   </td>
  </tr>
 </table>

@@ -1,0 +1,17 @@
+14:	This error is reported if the an input port is being assigned a value or
+	if an output port is being used in the right hand side of an assignment statement
+
+
+Example:
+module BackwardPortDirection(input wire a, input wire b,
+			     output wire c, output reg d);
+	
+	assign c = b&&d;//will flag output used in calculation
+	assign b = a;//will flag input is being assigned
+	always @(b)begin
+		a = d;//will flag both output used in calculation and input being 
+				assigned
+	end
+endmodule
+
+To fix verify that variables are being used on the correct side of the = or <= sign

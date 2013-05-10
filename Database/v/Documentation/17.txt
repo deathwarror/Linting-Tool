@@ -1,0 +1,1 @@
+Error: Assigning to a variable in both a level and edge sensitive blocks
