@@ -386,9 +386,13 @@ public class MainGUI extends javax.swing.JFrame {
                     arr.set(j, arr.get(j+1));
                     arr.set(j+1, temp);
                 }
-                else if(arr.get(j).compareTo(arr.get(j+1)) == 0){
-                    arr.remove(j);
-                    i--; j--;
+            }
+            for(int k = 0; k <arr.size()-1;k++)
+            {
+                if(arr.get(k).compareTo(arr.get(k+1))==0)
+                {
+                    arr.remove(k);
+                    k--;
                 }
             }
         }

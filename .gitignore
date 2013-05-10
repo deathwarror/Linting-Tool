@@ -11,3 +11,117 @@
 /My Version/LintingToolMain_Kenneth/build/
 /.gitignore
 /My Version
+/LintingToolMain/Temporary Source Code backup/old/src/TestMain/MainGUI.form
+/LintingToolMain/Temporary Source Code backup/old/src/TestMain/Always.java
+/LintingToolMain/Temporary Source Code backup/old/src/TestMain/AssignmentStatement.java
+/LintingToolMain/Temporary Source Code backup/old/src/TestMain/Block.java
+/LintingToolMain/Temporary Source Code backup/old/src/TestMain/Case.java
+/LintingToolMain/Temporary Source Code backup/old/src/TestMain/Code.java
+/LintingToolMain/Temporary Source Code backup/old/src/TestMain/ConditionStatement.java
+/LintingToolMain/Temporary Source Code backup/old/src/TestMain/ContinuousAssignment.java
+/LintingToolMain/Temporary Source Code backup/old/src/TestMain/DatabaseLoader.java
+/LintingToolMain/Temporary Source Code backup/old/src/TestMain/Error.java
+/LintingToolMain/Temporary Source Code backup/old/src/TestMain/ErrorDatabase.java
+/LintingToolMain/Temporary Source Code backup/old/src/TestMain/ErrorSearcher.java
+/LintingToolMain/Temporary Source Code backup/old/src/TestMain/FileRead.java
+/LintingToolMain/Temporary Source Code backup/old/src/TestMain/FileStore.java
+/LintingToolMain/Temporary Source Code backup/old/src/TestMain/IfElse.java
+/LintingToolMain/Temporary Source Code backup/old/src/TestMain/MainGUI.java
+/LintingToolMain/Temporary Source Code backup/old/src/TestMain/Module.java
+/LintingToolMain/Temporary Source Code backup/old/src/TestMain/Parameter.java
+/LintingToolMain/Temporary Source Code backup/old/src/TestMain/Parser.java
+/LintingToolMain/Temporary Source Code backup/old/src/TestMain/ParserMain.java
+/LintingToolMain/Temporary Source Code backup/old/src/TestMain/Reg.java
+/LintingToolMain/Temporary Source Code backup/old/src/TestMain/SimpleFileStore.java
+/LintingToolMain/Temporary Source Code backup/old/src/TestMain/SubCase.java
+/LintingToolMain/Temporary Source Code backup/old/src/TestMain/TestCode.java
+/LintingToolMain/Temporary Source Code backup/old/src/TestMain/TestDatabaseLoader.java
+/LintingToolMain/Temporary Source Code backup/old/src/TestMain/TestError.java
+/LintingToolMain/Temporary Source Code backup/old/src/TestMain/TestFileReader.java
+/LintingToolMain/Temporary Source Code backup/old/src/TestMain/TestMain.java
+/LintingToolMain/Temporary Source Code backup/old/src/TestMain/TestVariable.java
+/LintingToolMain/Temporary Source Code backup/old/src/TestMain/Variable.java
+/LintingToolMain/Temporary Source Code backup/old/src/TestMain/vParser.java
+/LintingToolMain/Temporary Source Code backup/old/src/TestMain/Wire.java
+/Database/v/Documentation/01_files/themedata.thmx
+/Database/v/Documentation/02_files/themedata.thmx
+/Database/v/Documentation/05old_files/themedata.thmx
+/Database/v/Documentation/06_files/themedata.thmx
+/Database/v/Documentation/07_files/themedata.thmx
+/Database/v/Documentation/09a_files/themedata.thmx
+/Database/v/Documentation/09b_files/themedata.thmx
+/Database/v/Documentation/10_files/themedata.thmx
+/Database/v/Documentation/11_files/themedata.thmx
+/Database/v/Documentation/12_files/themedata.thmx
+/Database/v/Documentation/13_files/themedata.thmx
+/Database/v/Documentation/14_files/themedata.thmx
+/Database/v/Documentation/15_files/themedata.thmx
+/Database/v/Documentation/16_files/themedata.thmx
+/Database/v/Documentation/17_files/themedata.thmx
+/Database/v/Documentation/18_files/themedata.thmx
+/Database/v/Documentation/19_files/themedata.thmx
+/Database/v/Documentation/20a_files/themedata.thmx
+/Database/v/Documentation/20b_files/themedata.thmx
+/Database/v/Documentation/20c_files/themedata.thmx
+/Database/v/Documentation/20d_files/themedata.thmx
+/Database/v/Documentation/20e_files/themedata.thmx
+/Database/v/Documentation/20f_files/themedata.thmx
+/Database/v/Documentation/20g_files/themedata.thmx
+/Database/v/Documentation/01_files/colorschememapping.xml
+/Database/v/Documentation/01_files/filelist.xml
+/Database/v/Documentation/02_files/colorschememapping.xml
+/Database/v/Documentation/02_files/filelist.xml
+/Database/v/Documentation/05old_files/colorschememapping.xml
+/Database/v/Documentation/05old_files/filelist.xml
+/Database/v/Documentation/06_files/colorschememapping.xml
+/Database/v/Documentation/06_files/filelist.xml
+/Database/v/Documentation/07_files/colorschememapping.xml
+/Database/v/Documentation/07_files/filelist.xml
+/Database/v/Documentation/09a_files/colorschememapping.xml
+/Database/v/Documentation/09a_files/filelist.xml
+/Database/v/Documentation/09b_files/colorschememapping.xml
+/Database/v/Documentation/09b_files/filelist.xml
+/Database/v/Documentation/10_files/colorschememapping.xml
+/Database/v/Documentation/10_files/filelist.xml
+/Database/v/Documentation/11_files/colorschememapping.xml
+/Database/v/Documentation/11_files/filelist.xml
+/Database/v/Documentation/12_files/colorschememapping.xml
+/Database/v/Documentation/12_files/filelist.xml
+/Database/v/Documentation/12_files/item0006.xml
+/Database/v/Documentation/12_files/props007.xml
+/Database/v/Documentation/13_files/colorschememapping.xml
+/Database/v/Documentation/13_files/filelist.xml
+/Database/v/Documentation/14_files/colorschememapping.xml
+/Database/v/Documentation/14_files/filelist.xml
+/Database/v/Documentation/15_files/colorschememapping.xml
+/Database/v/Documentation/15_files/filelist.xml
+/Database/v/Documentation/16_files/colorschememapping.xml
+/Database/v/Documentation/16_files/filelist.xml
+/Database/v/Documentation/16_files/item0006.xml
+/Database/v/Documentation/16_files/props007.xml
+/Database/v/Documentation/17_files/colorschememapping.xml
+/Database/v/Documentation/17_files/filelist.xml
+/Database/v/Documentation/17_files/item0006.xml
+/Database/v/Documentation/17_files/props007.xml
+/Database/v/Documentation/18_files/colorschememapping.xml
+/Database/v/Documentation/18_files/filelist.xml
+/Database/v/Documentation/18_files/item0006.xml
+/Database/v/Documentation/18_files/props007.xml
+/Database/v/Documentation/19_files/colorschememapping.xml
+/Database/v/Documentation/19_files/filelist.xml
+/Database/v/Documentation/19_files/item0004.xml
+/Database/v/Documentation/19_files/props005.xml
+/Database/v/Documentation/20a_files/colorschememapping.xml
+/Database/v/Documentation/20a_files/filelist.xml
+/Database/v/Documentation/20b_files/colorschememapping.xml
+/Database/v/Documentation/20b_files/filelist.xml
+/Database/v/Documentation/20c_files/colorschememapping.xml
+/Database/v/Documentation/20c_files/filelist.xml
+/Database/v/Documentation/20d_files/colorschememapping.xml
+/Database/v/Documentation/20d_files/filelist.xml
+/Database/v/Documentation/20e_files/colorschememapping.xml
+/Database/v/Documentation/20e_files/filelist.xml
+/Database/v/Documentation/20f_files/colorschememapping.xml
+/Database/v/Documentation/20f_files/filelist.xml
+/Database/v/Documentation/20g_files/colorschememapping.xml
+/Database/v/Documentation/20g_files/filelist.xml
