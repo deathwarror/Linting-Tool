@@ -379,9 +379,9 @@ public class MainGUI extends javax.swing.JFrame {
 
     private String ReplaceSpecialCharacterS(String s)
     {
-        s=s.replace("&","&#38");
-        s=s.replace("<","&#60");
-        s=s.replace("<","&#62");
+        s=s.replaceAll("&","&#38");
+        s=s.replaceAll("<","&#60");
+        s=s.replaceAll("<","&#62");
         return s;
     }
     private ArrayList<String> ReplaceSpecialCharacter(ArrayList<String>al)
@@ -391,9 +391,9 @@ public class MainGUI extends javax.swing.JFrame {
         for(int i = 0; i <al.size();i++)
         {
             s = al.get(i);
-            s=s.replace("&","&#38");
-            s=s.replace("<","&#60");
-            s=s.replace("<","&#62");
+            s=s.replaceAll("&","&#38");
+            s=s.replaceAll("<","&#60");
+            s=s.replaceAll("<","&#62");
             temp.add(s);
         }
      
