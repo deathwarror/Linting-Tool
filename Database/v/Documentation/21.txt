@@ -1,0 +1,28 @@
+
+Error 21:
+Code has been detected where the name of the function or task is either unknown or a module instantiation is missing its defining name
+
+Example:
+module MissingModuleNameOrTask_FunctionDeclaration(
+  input wire in,
+  input wire b,
+  input wire a,
+  output reg sum,
+  output reg c_out,
+  output reg out);
+ 
+   //These are OK because they are known as modelsim default functions
+   and(c_out,a,b);
+   xor(sum,a,b);
+ 
+   //These will produce Errors!
+   Custom2(out,in); //This is not a known function or task because it is a
+                      custom task or function.
+ 
+endmodule
+ 
+
+
+
+Probable Solution:
+To fix this error give the module a name. Tasks or Functions in Separate files are currently not supported by the parser
