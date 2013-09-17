@@ -20,9 +20,9 @@ public class Parser {
     private ArrayList<String> taskOrFunctionNames;
     private int freshPieceIndex;
     public static int currentLineNumber;
-    
+
     public ArrayList<Error> parserErrorList;
-    
+
     Parser(ArrayList<String> original){
         //initializes "Parser" class members
         top = new Block("Top",null);
@@ -34,7 +34,7 @@ public class Parser {
         taskOrFunctionNames = new ArrayList();
         freshPieceIndex = -1;
         currentLineNumber=0;
-        
+
         //Checks to see if the ArrayList is Empty, and returns an error
         if(original.isEmpty()){
             System.out.println("Error, the file contians no code\n");
@@ -43,22 +43,22 @@ public class Parser {
 
         cleanInput = removeComments(original);
         cleanInput = spaceEvenly(cleanInput);
-        
-        makePieceList(freshPieces, cleanInput); 
+
+        makePieceList(freshPieces, cleanInput);
         removeBlockNames();
         checkForTimingControl();
         if(!parserErrorList.isEmpty()){
             return;
         }
         getTaskAndFunctionNames();
-        
+
         //this gets to the module declaration, where the major parsing can begin
         String bob = "";
         while(!bob.equals("module") && !bob.equals("##END_OF_MODULE_CODE") ){
             bob = getNextPiece();
-            checkForNewBlock(top,bob); 
+            checkForNewBlock(top,bob);
         }
-        
+
         bob = getNextPiece();
         checkForNewBlock(top,bob); // this starts actally parsing the module
         System.out.println("\n"+top.toString());
@@ -148,7 +148,7 @@ public class Parser {
         char rad = ' ';
         for(int i = 2; i<orig.length(); i++){
             rad = orig.charAt(i-1);
-            if(orig.charAt(i-2)=='\'' && 
+            if(orig.charAt(i-2)=='\'' &&
                     (rad=='b' || rad=='B' || rad=='d' || rad=='D' || rad=='o' || rad=='O' || rad=='h' || rad=='H') &&
                     (orig.charAt(i)==' ' || orig.charAt(i)=='\n')){
                 for(;orig.charAt(i)==' ' || orig.charAt(i)=='\n' || orig.charAt(i)=='$'; i++){
@@ -159,8 +159,8 @@ public class Parser {
             }
             unspaced += orig.charAt(i);
         }
-        
-//            temp += " $# " + (i+1) + " ";        
+
+//            temp += " $# " + (i+1) + " ";
         return unspaced;
     }
     private String spaceElement(String delim, String original){
@@ -232,7 +232,7 @@ public class Parser {
         for(int i=1; i<freshPieces.size()-1; i++){
             if(freshPieces.get(i-1).equals("$#")){
                 currentLineNumber = Integer.parseInt( freshPieces.get(i));
-            }else if(freshPieces.get(i).equals(":") && 
+            }else if(freshPieces.get(i).equals(":") &&
                     (freshPieces.get(i-1).equals("begin") || freshPieces.get(i-1).equals("end"))){
                 freshPieces.remove(i+1);
                 freshPieces.remove(i);
@@ -266,7 +266,7 @@ public class Parser {
                 + "( "+offendingControl+" ) present in module";
         errorOutput += "\ton line : "+currentLineNumber;
         addErrorToParserErrorList(new Error("2",errorOutput,currentLineNumber));
-        
+
     }
     private static void makePieceList(ArrayList<String> tempFreshPieces, String inputString){
 //        while(tempFreshPieces.lastIndexOf("endmodule") == -1){
@@ -302,7 +302,7 @@ public class Parser {
     public void parseCompilerDerective(Block current) {
         String piece = getNextPiece();
         while(!pieceIsKeyword(piece)){
-            
+
             piece = getNextPiece();
         }
         checkForNewBlock(current, piece);
@@ -379,7 +379,7 @@ public class Parser {
         makePieceList(pieces,expression);
         int num = 0;//Integer.parseInt(expression, 10);
         //Integer.parseInt(expression);
-        
+
         for(int i=0; i<pieces.size(); i++){
             if(pieces.get(i).equals("+")){
                 i++;
@@ -405,7 +405,7 @@ public class Parser {
                 }
             }
         }
-        
+
         return Integer.toString(num);
     }
     public static int parseNumberForParameter(Module module, String expression){
@@ -423,7 +423,7 @@ public class Parser {
         }
         int quoteLocation = maybe.indexOf("'");
         char test;
-        
+
         //if there is no quote ("'") specifing a radix then check to see if
         // the number is a decimal value, otherwise it is not a number
         if( quoteLocation == -1 ){
@@ -437,13 +437,13 @@ public class Parser {
             return 0;
         }else{
             test = maybe.charAt(quoteLocation+1);
-            if( test!='b' && test!='B' && test!='o' && test!='O' && test!='h' && test!='H' 
+            if( test!='b' && test!='B' && test!='o' && test!='O' && test!='h' && test!='H'
                     && test!='x' && test!='X' && test!='d' && test!='D'){
                 return 0;
             }
             for(int i=quoteLocation+2; i<maybe.length(); i++){
                 test = maybe.charAt(i);
-                if( ( test<48 || (test>57 && test<65) || (test>70 && test<97) || test>102) && 
+                if( ( test<48 || (test>57 && test<65) || (test>70 && test<97) || test>102) &&
                         (test!='_' && test!='z' && test!='Z' && test!='x' && test!='X') ){
                     return 0;
                 }
@@ -465,7 +465,7 @@ public class Parser {
                 numText += inputString.charAt(i);
             }
         }
-        
+
         if( isANumber(numText)==0){
             //this probably should never happen!
             return "NOT_A_NUMBER";
@@ -474,7 +474,7 @@ public class Parser {
         }else{
             int quoteLocation = numText.indexOf("'");
             String num = "";
-            
+
             if(quoteLocation == -1){
                 for(int i=0; i<numText.length(); i++){
                     if(numText.charAt(i)!='_'){
@@ -550,15 +550,15 @@ public class Parser {
         else if(name.equals("add"))
         {
             return 2;
-        }  
+        }
         else if(name.equals("and"))
         {
             return 2;
-        }         
+        }
         else if(name.equals("nor"))
         {
             return 2;
-        }   
+        }
         else if(name.equals("not"))
         {
             return 2;
@@ -570,7 +570,7 @@ public class Parser {
         else if(name.equals("nand"))
         {
             return 2;
-        }  
+        }
         return 0;
     }
     public void addInstanceOfError8UndeclaredSignal(String var){
@@ -592,7 +592,7 @@ public class Parser {
         String errorOutput = "Error: Unknown function or task, or module with no name: "+var+"\n";
         errorOutput += "\ton line : "+currentLineNumber;
         System.out.println(errorOutput+"\n");
-        parserErrorList.add(new Error("8", errorOutput,currentLineNumber));
+        parserErrorList.add(new Error("21", errorOutput,currentLineNumber));
     }
     public void stopParsing(){
         freshPieceIndex = freshPieces.size();
@@ -603,5 +603,5 @@ public class Parser {
             freshPieceIndex--;
         }
     }
-    
+
 }
