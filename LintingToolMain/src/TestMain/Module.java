@@ -419,7 +419,7 @@ public class Module extends Block{
                     }
                     module.addModuleInstantiation(new ModuleInstantiation(subModuleText, subModule, line));
                 }else{
-                    parser.addInstanceOfError8UndeclaredSignal(temp);
+                    parser.addInstanceOfError21UndeclaredModuleTaskOrFunction(temp);
                     parser.stopParsing();
                 }
             }
@@ -525,12 +525,14 @@ public class Module extends Block{
         String paramName="";
         String paramAssignmentValue="";
         String temp=parser.getNextPiece();
+        boolean multiParamList = false;
         for(; !temp.equals("endmodule") && !temp.equals("##END_OF_MODULE_CODE"); temp=parser.getNextPiece()){
             if(temp.equals("$#")){
                 parser.updateLineNumber();
             }
-            else if(temp.equals("parameter") || temp.equals("localparam") ){
+            else if((temp.equals("parameter") || temp.equals("localparam")) && !multiParamList ){
                 paramType = temp;
+                multiParamList = true;
                 temp = parser.getNextPiece();
                 if(temp.equals("[")){
                     for(; !temp.equals("]") && !temp.equals("##END_OF_MODULE_CODE"); temp=parser.getNextPiece());
@@ -546,12 +548,48 @@ public class Module extends Block{
                     temp = parser.getNextPiece();
                 }
                 for(paramAssignmentValue=""; 
-                        !temp.equals(";") && !temp.equals("##END_OF_MODULE_CODE"); temp=parser.getNextPiece() ){
+                        !temp.equals(";") && !temp.equals(",") 
+                        && !temp.equals("##END_OF_MODULE_CODE"); temp=parser.getNextPiece() ){
                     paramAssignmentValue += temp+" ";
                 }
                 param = new Parameter(paramName,paramType,paramAssignmentValue);
                 current.vars.add(param);
                 current.parameters.add(param);
+                if(temp.equals(";")){multiParamList = false;}
+//*
+                currentParameterIndex = parser.getFreshPieceIndex();
+                //This loop replaces all instances of the current parameter with the parameter's actual value
+                for(; !temp.equals("##END_OF_MODULE_CODE"); temp=parser.getNextPiece()){
+                    if(temp.equals(paramName))
+                        parser.replaceCurrentPieceText( param.getParameterValue() );
+                }
+                parser.setFreshPieceIndex(currentParameterIndex);
+//*/
+            }
+            else if( multiParamList ){
+                paramType = paramType;
+                if(temp.equals("[")){
+                    for(; !temp.equals("]") && !temp.equals("##END_OF_MODULE_CODE"); temp=parser.getNextPiece());
+                    temp=parser.getNextPiece(); //this last piece retrieval should be the parameter name
+                }
+                if(!checkVariableName(temp)){
+                    parser.addInstanceOfError18UnexpectedToken(temp);
+                    parser.stopParsing();
+                }
+                paramName = temp;
+                temp = parser.getNextPiece();
+                if(!temp.equals(";")){
+                    temp = parser.getNextPiece();
+                }
+                for(paramAssignmentValue=""; 
+                        !temp.equals(";") && !temp.equals(",") 
+                        && !temp.equals("##END_OF_MODULE_CODE"); temp=parser.getNextPiece() ){
+                    paramAssignmentValue += temp+" ";
+                }
+                param = new Parameter(paramName,paramType,paramAssignmentValue);
+                current.vars.add(param);
+                current.parameters.add(param);
+                if(temp.equals(";")){multiParamList = false;}
 //*
                 currentParameterIndex = parser.getFreshPieceIndex();
                 //This loop replaces all instances of the current parameter with the parameter's actual value

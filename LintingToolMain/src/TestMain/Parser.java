@@ -52,9 +52,13 @@ public class Parser {
         }
         getTaskAndFunctionNames();
         
-        String bob = getNextPiece();
-        checkForNewBlock(top,bob); //this gets the first line number,
-
+        //this gets to the module declaration, where the major parsing can begin
+        String bob = "";
+        while(!bob.equals("module") && !bob.equals("##END_OF_MODULE_CODE") ){
+            bob = getNextPiece();
+            checkForNewBlock(top,bob); 
+        }
+        
         bob = getNextPiece();
         checkForNewBlock(top,bob); // this starts actally parsing the module
         System.out.println("\n"+top.toString());
@@ -270,7 +274,7 @@ public class Parser {
             String[] piece = inputString.split(" ",2);
             if(piece.length != 1)
                 inputString = piece[1];
-            while( piece[0].equals("")){
+            while( piece[0].equals("") && !inputString.isEmpty()){
                 piece = inputString.split(" ",2);
                 inputString = piece[1];
             }
@@ -535,10 +539,42 @@ public class Parser {
                 }
             }
         }
+        if(name.equals("xor"))
+        {
+            return 2;
+        }
+        else if(name.equals("or"))
+        {
+            return 2;
+        }
+        else if(name.equals("add"))
+        {
+            return 2;
+        }  
+        else if(name.equals("and"))
+        {
+            return 2;
+        }         
+        else if(name.equals("nor"))
+        {
+            return 2;
+        }   
+        else if(name.equals("not"))
+        {
+            return 2;
+        }
+        else if(name.equals("sub"))
+        {
+            return 2;
+        }
+        else if(name.equals("nand"))
+        {
+            return 2;
+        }  
         return 0;
     }
     public void addInstanceOfError8UndeclaredSignal(String var){
-        String errorOutput = "Error: Undeclared sigal: "+var+"\n";
+        String errorOutput = "Error: Undeclared signal: "+var+"\n";
         errorOutput += "\ton line : "+currentLineNumber;
         System.out.println(errorOutput+"\n");
         parserErrorList.add(new Error("8", errorOutput,currentLineNumber));
@@ -551,6 +587,12 @@ public class Parser {
     }
     public void addInstanceOfError20ParseError(String errorNum, String errorText){
         parserErrorList.add(new Error(errorNum,errorText,Parser.getCurrentLineNumber()));
+    }
+    public void addInstanceOfError21UndeclaredModuleTaskOrFunction(String var){
+        String errorOutput = "Error: Unknown function or task, or module with no name: "+var+"\n";
+        errorOutput += "\ton line : "+currentLineNumber;
+        System.out.println(errorOutput+"\n");
+        parserErrorList.add(new Error("8", errorOutput,currentLineNumber));
     }
     public void stopParsing(){
         freshPieceIndex = freshPieces.size();

@@ -91,6 +91,7 @@ public class Error03IdentifyAssignmentVsSensType {
                            e.setErrorNum("03");
                            ErrorList.add(e);
                     }
+                    error = 0;
                 }
             }
         }
