@@ -85,8 +85,47 @@ public class Always extends Block{
             if(temp.equals("$#")){
                 parser.checkForNewBlock(always, temp);
                 temp = parser.getNextPiece();
-            }            
-            if(!parser.pieceIsKeyword(temp) && parser.checkTaskOrFunctionName(temp)==0){
+            }
+            if(temp.equals("begin")){
+                temp = parser.getNextPiece();
+                for(; !temp.equals("end") && !temp.equals("##END_OF_MODULE_CODE"); temp=parser.getNextPiece()){
+                    //will need to handle: if, switch, assignments,
+                    //Syntax error if there are: nested always,
+                    if(!parser.pieceIsKeyword(temp) && parser.checkTaskOrFunctionName(temp)==0){
+                        for(; !temp.equals(";") && !temp.equals("##END_OF_MODULE_CODE"); temp = parser.getNextPiece()){
+                            statementText += temp+" ";
+                        }
+                        always.addAssignment(new AssignmentStatement(statementText,always, parser));
+                        always.alwaysBlockOrder.add(new Integer(0));
+                        statementText = "";
+                    }
+                    else if(parser.checkTaskOrFunctionName(temp)!=0){
+                        String taskCallText = "";
+                        ArrayList<String> taskCallElements = new ArrayList();
+                        for(; !temp.equals(";") && 
+                                !temp.equals("##END_OF_MODULE_CODE"); 
+                                temp=parser.getNextPiece()){
+                            taskCallText += temp+" ";
+                            taskCallElements.add(temp);
+                        }
+                        always.addVariable(new TaskCall(taskCallText,taskCallElements));
+                        always.alwaysBlockOrder.add(new Integer(2));
+                    }
+                    else{
+                        if(!temp.equals("always")){
+                            parser.checkForNewBlock(always, temp);
+                            if(!temp.equals("$#")) //this one
+                                always.alwaysBlockOrder.add(new Integer(1));
+                        }
+                        else{
+                            String errorText = "Error: nested always blocks not allowed";
+                            parser.addErrorToParserErrorList(new Error("19",errorText,Parser.getCurrentLineNumber()));
+                            parser.stopParsing();
+                        }
+                    }
+                }
+            }
+            else if(!parser.pieceIsKeyword(temp) && parser.checkTaskOrFunctionName(temp)==0){
                 for(; !temp.equals(";") && !temp.equals("##END_OF_MODULE_CODE"); temp = parser.getNextPiece()){
                     statementText += temp+" ";
                 }

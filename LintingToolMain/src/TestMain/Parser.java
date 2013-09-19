@@ -539,35 +539,14 @@ public class Parser {
                 }
             }
         }
-        if(name.equals("xor"))
-        {
-            return 2;
-        }
-        else if(name.equals("or"))
-        {
-            return 2;
-        }
-        else if(name.equals("add"))
-        {
-            return 2;
-        }
-        else if(name.equals("and"))
-        {
-            return 2;
-        }
-        else if(name.equals("nor"))
-        {
-            return 2;
-        }
-        else if(name.equals("not"))
-        {
-            return 2;
-        }
-        else if(name.equals("sub"))
-        {
-            return 2;
-        }
-        else if(name.equals("nand"))
+        if(name.equals("xor")||name.equals("or")||name.equals("xnor")||name.equals("and")
+                ||name.equals("nor")||name.equals("not")||name.equals("buf")||name.equals("nand")
+                ||name.equals("bufif0")||name.equals("bufif1")||name.equals("notif0")
+                ||name.equals("notif1")||name.equals("pulldown")||name.equals("pullup")
+                ||name.equals("pmos")||name.equals("rpmos")||name.equals("nmos")||name.equals("rnmos")
+                ||name.equals("cmos")||name.equals("rcmos")||name.equals("tranif1")
+                ||name.equals("tranif0")||name.equals("rtranif1")||name.equals("rtranif0")
+                ||name.equals("tran")||name.equals("rtran"))//list of verilog primitives
         {
             return 2;
         }
