@@ -88,6 +88,59 @@ public class Error09a_09bIdentifyIncompleteSensList {
                                 }
                             }
                         }
+                        
+                        
+                        
+                        //for if else blocks
+                        for(int j = 0; j < currentBlock.getAllBlocks().size();j++)
+                        {
+                            ArrayList<Block> IfElseBlock = currentBlock.getAllBlocks();
+                            if((IfElseBlock.get(j)).getClass() == IfElse.class)
+                            {
+                                for(int k = 0; k < statements.size() && !statements.isEmpty(); k++)
+                                {
+                                    
+                                    ArrayList<Variable> vl;
+                                    ConditionStatement c = ((IfElse)(IfElseBlock.get(j))).getConditionStatement();
+                                    if(c != null)
+                                    {
+                                        vl = c.conditionVars;
+                                    
+                                    
+                                    for(int l = 0; l <vl.size(); l++)
+                                    {
+                                        currentVar = vl.get(l);
+
+
+                                        //used to identify listed signals
+                                        for(int m = 0; m <SensList.size(); m++)
+                                        {
+                                            if(currentVar.compareTo(SensList.get(m)))
+                                            {
+                                                SensList.remove(m);
+                                                m--;
+                                            }
+                                        } 
+                                        int add = 1;
+                                        //used to identify unlisted variables
+                                        for(int m = 0; m <UsedVars.size();m++)
+                                        {
+                                            if((currentVar.compareTo((UsedVars.get(m))))&&add==1)
+                                            {
+                                               add = 0;
+                                            }
+                                        }
+                                        if(add == 1){
+                                            UsedVars.add(currentVar);
+                                        }
+                                    }
+                                    }
+                                }
+                            }
+                        }
+                        
+                        
+                        //for case blocks
                         for(int j = 0; j < currentBlock.getAllBlocks().size();j++)
                         {
                             ArrayList<Block> caseBlock = currentBlock.getAllBlocks();
@@ -113,17 +166,30 @@ public class Error09a_09bIdentifyIncompleteSensList {
                                             }
                                         } 
                                         //used to identify unlisted variables
+                                        int add = 1;
                                         for(int m = 0; m <UsedVars.size();m++)
                                         {
-                                            if(!(currentVar.compareTo((UsedVars.get(m)))))
+                                            //if the variable does exist
+                                            if((currentVar.compareTo((UsedVars.get(m))))&&add==1)
                                             {
-                                                UsedVars.add(currentVar);
+                                                //do not add
+                                               add = 0;
                                             }
+                                        }
+                                        //add if value never changed
+                                        if(add == 1){
+                                            UsedVars.add(currentVar);
                                         }
                                     }
                                 }
                             }
                         }
+                        
+                        
+                        
+                        
+                        
+                        
                     }
                     
                     
@@ -157,6 +223,7 @@ public class Error09a_09bIdentifyIncompleteSensList {
                             errorOutput+= UsedVars.get(varCount).getName()+", ";
                         }
                         errorOutput+=UsedVars.get(UsedVars.size()-1).getName();
+                        errorOutput+= "\t\t Please Note that this Error Maybe ignored but in only Specific circumstances. Data may not change as expected.";
                         System.out.println(errorOutput+"\n");
                         e.setErrorMsg(errorOutput);
                         ErrorList.add(e);
@@ -176,6 +243,8 @@ public class Error09a_09bIdentifyIncompleteSensList {
                             errorOutput+= SensList.get(varCount).getName()+", ";
                         }
                         errorOutput+=SensList.get(SensList.size()-1).getName();
+                        
+                        errorOutput+= "\t\t Please Note that this Error Maybe ignored but in only Specific circumstances. Data May change for one of the extra sensitivity list items.";
                         System.out.println(errorOutput+"\n");
                         e.setErrorMsg(errorOutput);
                         ErrorList.add(e);
